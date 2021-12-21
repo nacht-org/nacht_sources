@@ -12,4 +12,6 @@ class Chapter {
     this.content,
     this.updated,
   });
+
+  Chapter.withUrl(String url) : this(index: -1, title: '', url: url);
 }

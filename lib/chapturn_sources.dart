@@ -1,7 +1,13 @@
 library chapturn_sources;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+import 'package:chapturn_sources/impls/scribblehub.dart';
+import 'package:chapturn_sources/interfaces/crawler.dart';
+import 'package:http/http.dart';
+import 'package:tuple/tuple.dart';
+import './impls/impls.dart';
+import './models/models.dart';
+
+List<Tuple3<Meta Function(), Crawler Function(), Crawler Function(Client)>>
+    sources = [
+  Tuple3(ScribbleHub.constMeta, ScribbleHub.make, ScribbleHub.makeWith)
+];

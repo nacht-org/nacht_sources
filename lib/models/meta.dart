@@ -4,7 +4,7 @@ enum Feature {
   login,
 }
 
-// Defines the support of a crawler
+/// Defines the support of a crawler
 enum Support {
   full,
   browserOnly,
@@ -30,26 +30,29 @@ enum TranslationType {
 class Meta {
   final String name;
   final String lang;
-  final List<int> lastUpdated;
+
+  /// list is used as a stop gap measure since
+  /// [DateTime] does not have a const constructor
+  final List<int> updated;
   final Set<String> baseUrls;
   final Set<Feature> features;
   final Support support;
-  final bool mtl;
+  final TranslationType translationType;
   final ReadingDirection readingDirection;
 
   const Meta({
     required this.name,
     required this.lang,
-    required this.lastUpdated,
+    required this.updated,
     required this.baseUrls,
     this.features = const {},
     this.support = Support.full,
-    this.mtl = false,
+    this.translationType = TranslationType.original,
     this.readingDirection = ReadingDirection.left,
   });
 
-  DateTime get updated {
-    return DateTime(lastUpdated[0], lastUpdated[1], lastUpdated[2]);
+  DateTime get updatedDate {
+    return DateTime(updated[0], updated[1], updated[2]);
   }
 
   /// Check whether the url is from the this source

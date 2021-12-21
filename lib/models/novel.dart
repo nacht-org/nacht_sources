@@ -23,4 +23,8 @@ class Novel {
     this.volumes = const [],
     this.metadata = const [],
   });
+
+  void meta(String name, String value, [others = const {}]) {
+    metadata.add(MetaData(name, value, others));
+  }
 }
