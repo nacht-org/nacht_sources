@@ -1,10 +1,12 @@
 import 'package:chapturn_sources/models/chapter.dart';
 import 'package:chapturn_sources/models/meta.dart';
 import 'package:chapturn_sources/models/metadata.dart';
+import 'package:chapturn_sources/models/models.dart';
 import 'package:chapturn_sources/models/novel.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:collection/collection.dart';
+import 'package:intl/intl.dart';
 
 import '../interfaces/interfaces.dart';
 
@@ -23,13 +25,15 @@ class ScribbleHub extends NovelCrawler {
     return _meta;
   }
 
+  DateFormat formatter = DateFormat('MMM d, y hh:mm a');
+
   @override
   Future<Novel> parseNovel(String url) async {
     var doc = await pullDoc(url);
-    doc.querySelector("");
 
     var novel = Novel(
       title: doc.querySelector('div.fic_title')?.text.trim() ?? '',
+      author: doc.querySelector('span.auth_name_fic')?.text.trim(),
       url: url,
       lang: meta.lang,
       thumbnailUrl: doc.querySelector('.fic_image img')?.attributes['src'],
@@ -40,8 +44,15 @@ class ScribbleHub extends NovelCrawler {
     );
 
     for (var a in doc.querySelectorAll("a.fic_genre")) {
-      novel.meta('subject', a.text.trim());
+      novel.addMeta('subject', a.text.trim());
     }
+
+    for (var a in doc.querySelectorAll('a.stag')) {
+      novel.addMeta('tag', a.text.trim());
+    }
+
+    var id = url.split('/')[4];
+    novel.volumes.add(await toc(id));
 
     return novel;
   }
@@ -51,32 +62,48 @@ class ScribbleHub extends NovelCrawler {
     // TODO: implement parseChapter
   }
 
-  Future<List<Chapter>> toc(int id) async {
+  Future<Volume> toc(String id) async {
     var response = await client.post(
-      Uri.https(
-        "www.scribblehub.com",
-        "/wp-admin/admin-ajax.php",
-        {
-          "action": "wi_getreleases_pagination",
-          "pagenum": -1,
-          "mypostid": id,
-        },
-      ),
+      Uri.parse("https://www.scribblehub.com/wp-admin/admin-ajax.php"),
+      body: {
+        "action": "wi_getreleases_pagination",
+        "pagenum": '-1',
+        "mypostid": id,
+      },
     );
 
     var fragment = parseFragment(response.body);
 
-    var chapters =
-        fragment.querySelectorAll('li.toc_w').reversed.mapIndexed((i, li) {
-      var a = li.querySelector("a");
+    var volume = Volume.def();
+    var index = 0;
+    for (var li in fragment.querySelectorAll('li.toc_w').reversed) {
+      var a = li.querySelector('a');
+      if (a == null || a.attributes['href'] == null) {
+        continue;
+      }
 
-      return Chapter(
-        index: i,
-        title: a?.text.trim() ?? 'Chapter $i',
-        url: a?.attributes['href'] ?? '',
+      var time = li.querySelector('.fic_date_pub')?.attributes['title'];
+
+      // TODO add support to parse relative time ex: 20 hours ago
+      DateTime? updated;
+      try {
+        updated = time != null ? formatter.parse(time) : null;
+      } on FormatException {
+        updated = null;
+      }
+
+      volume.chapters.add(
+        Chapter(
+          index: index,
+          title: a.text.trim(),
+          url: a.attributes['href']!,
+          updated: updated,
+        ),
       );
-    }).toList();
 
-    return chapters;
+      index++;
+    }
+
+    return volume;
   }
 }

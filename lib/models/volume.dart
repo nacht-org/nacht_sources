@@ -8,8 +8,13 @@ class Volume {
   Volume({
     required this.index,
     required this.name,
-    this.chapters = const [],
-  });
+    List<Chapter>? chapters,
+  }) : this.chapters = chapters ?? [];
 
-  Volume.def() : this(index: -1, name: '_default');
+  Volume.def([List<Chapter>? chapters])
+      : this(
+          index: -1,
+          name: '_default',
+          chapters: chapters,
+        );
 }

@@ -39,7 +39,7 @@ abstract class Crawler {
       throw http.ClientException(
           "Did not get a valid response: ${response.statusCode}", uri);
     }
-
-    return parser.parse(response.stream.bytesToString());
+    var content = await response.stream.bytesToString();
+    return parser.parse(content);
   }
 }
