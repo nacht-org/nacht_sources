@@ -1,14 +1,10 @@
-import 'package:chapturn_sources/models/chapter.dart';
-import 'package:chapturn_sources/models/meta.dart';
-import 'package:chapturn_sources/models/metadata.dart';
-import 'package:chapturn_sources/models/models.dart';
-import 'package:chapturn_sources/models/novel.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
+import 'package:tuple/tuple.dart';
 
 import '../interfaces/interfaces.dart';
+import '../models/models.dart';
 
 class ScribbleHub extends NovelCrawler {
   ScribbleHub.make() : super(client: Crawler.defaultClient(), meta: _meta);
@@ -17,7 +13,7 @@ class ScribbleHub extends NovelCrawler {
   static const _meta = Meta(
     name: 'ScribbleHub',
     lang: 'en',
-    updated: [2021, 12, 18],
+    updated: Tuple3(2021, 12, 18),
     baseUrls: {'https://www.scribblehub.com'},
   );
 
@@ -59,7 +55,14 @@ class ScribbleHub extends NovelCrawler {
 
   @override
   Future<void> parseChapter(Chapter chapter) async {
-    // TODO: implement parseChapter
+    var doc = await pullDoc(chapter.url);
+
+    var titleNode = doc.querySelector('.chapter-title');
+    if (titleNode == null) {
+      chapter.title = titleNode!.text.trim();
+    }
+
+    chapter.content = doc.querySelector('#chp_raw')?.outerHtml;
   }
 
   Future<Volume> toc(String id) async {

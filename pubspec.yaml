@@ -11,11 +11,11 @@ dependencies:
     html: ^0.15.0
     http: ^0.13.4
     intl: ^0.17.0
-    mockito: ^3.0.2
     tuple: ^2.0.0
 
-dev_dependencies: 
+dev_dependencies:
     test: ^1.20.0
+    mockito: ^3.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

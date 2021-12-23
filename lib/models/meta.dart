@@ -1,3 +1,5 @@
+import 'package:tuple/tuple.dart';
+
 /// Defines the optional features of a crawler
 enum Feature {
   search,
@@ -33,7 +35,7 @@ class Meta {
 
   /// list is used as a stop gap measure since
   /// [DateTime] does not have a const constructor
-  final List<int> updated;
+  final Tuple3<int, int, int> updated;
   final Set<String> baseUrls;
   final Set<Feature> features;
   final Support support;
@@ -51,8 +53,9 @@ class Meta {
     this.readingDirection = ReadingDirection.left,
   });
 
+  /// Getter for the last updated date of time crawler
   DateTime get updatedDate {
-    return DateTime(updated[0], updated[1], updated[2]);
+    return DateTime(updated.item1, updated.item2, updated.item3);
   }
 
   /// Check whether the url is from the this source
