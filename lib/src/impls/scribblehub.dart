@@ -1,7 +1,6 @@
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-import 'package:tuple/tuple.dart';
 
 import '../interfaces/interfaces.dart';
 import '../models/models.dart';
@@ -13,13 +12,11 @@ class ScribbleHub extends NovelCrawler {
   static const _meta = Meta(
     name: 'ScribbleHub',
     lang: 'en',
-    updated: Tuple3(2021, 12, 18),
+    updated: DateHolder(2021, 12, 18),
     baseUrls: {'https://www.scribblehub.com'},
   );
 
-  static Meta constMeta() {
-    return _meta;
-  }
+  static Meta constMeta() => _meta;
 
   DateFormat formatter = DateFormat('MMM d, y hh:mm a');
 

@@ -1,4 +1,4 @@
-import 'package:chapturn_sources/models/chapter.dart';
+import 'chapter.dart';
 
 class Volume {
   int index;

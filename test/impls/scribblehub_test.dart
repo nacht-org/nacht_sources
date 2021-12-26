@@ -1,5 +1,5 @@
-import 'package:chapturn_sources/impls/impls.dart';
-import 'package:chapturn_sources/models/models.dart';
+import 'package:chapturn_sources/src/impls/impls.dart';
+import 'package:chapturn_sources/src/models/models.dart';
 import 'package:test/test.dart';
 
 void main() {

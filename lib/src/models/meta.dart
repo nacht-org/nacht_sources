@@ -1,5 +1,3 @@
-import 'package:tuple/tuple.dart';
-
 /// Defines the optional features of a crawler
 enum Feature {
   search,
@@ -27,6 +25,21 @@ enum TranslationType {
   mtl,
   human,
   mixed,
+  unknown,
+}
+
+/// Constant date holder class, because DateTime
+/// does not have a constant constructor
+///
+/// use [datetime] method to get [DateTime] equivalent
+class DateHolder {
+  final int year;
+  final int month;
+  final int day;
+
+  const DateHolder(this.year, this.month, this.day);
+
+  DateTime datetime() => DateTime(year, month, day);
 }
 
 class Meta {
@@ -35,7 +48,7 @@ class Meta {
 
   /// list is used as a stop gap measure since
   /// [DateTime] does not have a const constructor
-  final Tuple3<int, int, int> updated;
+  final DateHolder updated;
   final Set<String> baseUrls;
   final Set<Feature> features;
   final Support support;
@@ -52,11 +65,6 @@ class Meta {
     this.translationType = TranslationType.original,
     this.readingDirection = ReadingDirection.left,
   });
-
-  /// Getter for the last updated date of time crawler
-  DateTime get updatedDate {
-    return DateTime(updated.item1, updated.item2, updated.item3);
-  }
 
   /// Check whether the url is from the this source
   ///

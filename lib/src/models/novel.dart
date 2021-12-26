@@ -49,4 +49,10 @@ class Novel {
 
     return volume;
   }
+
+  int chapterCount() {
+    return volumes
+        .map((v) => v.chapters.length)
+        .reduce((total, count) => total + count);
+  }
 }

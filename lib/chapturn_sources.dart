@@ -1,22 +1,32 @@
 library chapturn_sources;
 
-import 'package:chapturn_sources/impls/scribblehub.dart';
+import 'package:chapturn_sources/src/interfaces/novel.dart';
+import 'package:chapturn_sources/src/models/meta.dart';
 import 'package:http/http.dart';
-import 'package:tuple/tuple.dart';
-import './impls/impls.dart';
-import './models/models.dart';
-import './interfaces/interfaces.dart';
+import './src/impls/impls.dart';
 
-List<
-    Tuple3<Meta Function(), NovelCrawler Function(),
-        NovelCrawler Function(Client)>> sources = [
-  Tuple3(ScribbleHub.constMeta, ScribbleHub.make, ScribbleHub.makeWith)
+export './src/models/models.dart';
+export './src/interfaces/interfaces.dart';
+export './src/impls/impls.dart';
+
+/// A crawler factory class used to hold crawler
+/// helper methods
+class CrawlerFactory {
+  final Meta Function() meta;
+  final NovelCrawler Function() create;
+  final NovelCrawler Function(Client) createWith;
+
+  const CrawlerFactory(this.meta, this.create, this.createWith);
+}
+
+const sources = [
+  CrawlerFactory(ScribbleHub.constMeta, ScribbleHub.make, ScribbleHub.makeWith)
 ];
 
-NovelCrawler? crawlerByUrl(String url, [Client? client]) {
+CrawlerFactory? crawlerByUrl(String url, [Client? client]) {
   for (var tuple in sources) {
-    if (tuple.item1().of(url)) {
-      return client == null ? tuple.item2() : tuple.item3(client);
+    if (tuple.meta().of(url)) {
+      return tuple;
     }
   }
 }
