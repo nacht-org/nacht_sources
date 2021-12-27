@@ -37,8 +37,8 @@ class HasSupport extends Support {
   List<Object?> get props => [platforms];
 }
 
-/// Defines that support for crawler has
-/// either been discontinued or rejected
+/// Defines that support for crawler has either
+/// been discontinued or rejected
 ///
 /// See [reason] for more information
 class NoSupport extends Support {

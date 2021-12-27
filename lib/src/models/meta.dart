@@ -1,4 +1,5 @@
 import './support.dart';
+import './work_type.dart';
 
 /// Defines the optional features of a crawler
 enum Feature {
@@ -11,15 +12,6 @@ enum ReadingDirection {
   ltr,
   rtl,
   mixed,
-}
-
-/// Defines the translation types
-enum TranslationType {
-  original,
-  mtl,
-  human,
-  mixed,
-  unknown,
 }
 
 /// Constant date holder class, because DateTime
@@ -43,7 +35,11 @@ class Meta {
   final Set<String> baseUrls;
   final Set<Feature> features;
   final Support support;
-  final TranslationType translationType;
+
+  /// Identifies the type of work provided by this source
+  ///
+  /// [UnknownWorkType] identifies either mixed or unknown
+  final WorkType workType;
   final ReadingDirection readingDirection;
 
   const Meta({
@@ -53,7 +49,7 @@ class Meta {
     required this.baseUrls,
     this.features = const {},
     this.support = HasSupport.full,
-    this.translationType = TranslationType.original,
+    this.workType = const UnknownWorkType(),
     this.readingDirection = ReadingDirection.ltr,
   });
 
