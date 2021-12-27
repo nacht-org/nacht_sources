@@ -11,6 +11,9 @@ enum Feature {
 enum ReadingDirection {
   ltr,
   rtl,
+
+  /// Identifies that a source [Meta] has mixed reading direction
+  /// and the reading direction of [Novel] is not known
   mixed,
 }
 
@@ -40,6 +43,9 @@ class Meta {
   ///
   /// [UnknownWorkType] identifies either mixed or unknown
   final WorkType workType;
+
+  /// Identifies the reading direction of novels
+  /// offered by this source
   final ReadingDirection readingDirection;
 
   const Meta({

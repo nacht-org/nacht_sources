@@ -2,6 +2,7 @@ import './work_type.dart';
 
 import './volume.dart';
 import './metadata.dart';
+import 'meta.dart';
 
 class Novel {
   String title;
@@ -13,8 +14,8 @@ class Novel {
   String lang;
   List<Volume> volumes;
   List<MetaData> metadata;
-
   WorkType workType;
+  ReadingDirection readingDirection;
 
   Novel({
     required this.title,
@@ -27,6 +28,7 @@ class Novel {
     List<Volume>? volumes,
     List<MetaData>? metadata,
     this.workType = const UnknownWorkType(),
+    this.readingDirection = ReadingDirection.ltr,
   })  : this.description = description ?? [],
         this.volumes = volumes ?? [],
         this.metadata = metadata ?? [];
