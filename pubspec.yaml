@@ -8,6 +8,7 @@ environment:
     flutter: ">=1.17.0"
 
 dependencies:
+    equatable: ^2.0.3
     html: ^0.15.0
     http: ^0.13.4
     intl: ^0.17.0

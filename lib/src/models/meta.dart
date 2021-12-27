@@ -1,21 +1,15 @@
+import './support.dart';
+
 /// Defines the optional features of a crawler
 enum Feature {
   search,
   login,
 }
 
-/// Defines the support of a crawler
-enum Support {
-  full,
-  browserOnly,
-  discontinued,
-  rejected,
-}
-
 /// Defines the reading direction of crawler
 enum ReadingDirection {
-  right,
-  left,
+  ltr,
+  rtl,
   mixed,
 }
 
@@ -31,7 +25,7 @@ enum TranslationType {
 /// Constant date holder class, because DateTime
 /// does not have a constant constructor
 ///
-/// use [datetime] method to get [DateTime] equivalent
+/// use [datetime] method to convert to [DateTime] equivalent
 class DateHolder {
   final int year;
   final int month;
@@ -45,9 +39,6 @@ class DateHolder {
 class Meta {
   final String name;
   final String lang;
-
-  /// list is used as a stop gap measure since
-  /// [DateTime] does not have a const constructor
   final DateHolder updated;
   final Set<String> baseUrls;
   final Set<Feature> features;
@@ -61,9 +52,9 @@ class Meta {
     required this.updated,
     required this.baseUrls,
     this.features = const {},
-    this.support = Support.full,
+    this.support = HasSupport.full,
     this.translationType = TranslationType.original,
-    this.readingDirection = ReadingDirection.left,
+    this.readingDirection = ReadingDirection.ltr,
   });
 
   /// Check whether the url is from the this source
