@@ -20,8 +20,8 @@ mixin HtmlParsing {
 
   /// Element attributes that contain meaningful content
   /// and should be kept with in the element during attribute cleanup.
-  List<String> get preserveTags {
-    return constants.preserveTags;
+  List<String> get preserveAttrs {
+    return constants.preserveAttrs;
   }
 
   /// List of regex patterns denoting text that
@@ -81,7 +81,7 @@ mixin HtmlParsing {
   ///   (undesirable text such as ads and watermarks)
   ///
   /// If none of the conditions are met, all the attributes except those marked
-  /// important :attr:`preserve_attrs` are removed from this element
+  /// important [preserveAttrs] are removed from this element
   void cleanNode(dom.Node node) {
     if (node.nodeType == dom.Node.COMMENT_NODE) {
       node.remove();
@@ -110,7 +110,7 @@ mixin HtmlParsing {
     } else {
       // remove useless tags
       element.attributes.removeWhere(
-        (key, value) => !preserveTags.contains(key),
+        (key, value) => !preserveAttrs.contains(key),
       );
     }
   }

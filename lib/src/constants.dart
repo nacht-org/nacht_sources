@@ -44,7 +44,7 @@ const notextTags = [
   "img",
 ];
 
-const preserveTags = [
+const preserveAttrs = [
   "href",
   "src",
   "alt",
