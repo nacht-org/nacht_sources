@@ -19,6 +19,13 @@ enum ReadingDirection {
   rtl,
 }
 
+/// Special attributes that can be used to define
+/// a source or a novel
+enum Attribute {
+  /// Identifies that the source offers fanfiction novels
+  fanfiction
+}
+
 /// Constant date holder class, because DateTime
 /// does not have a constant constructor
 ///
@@ -72,11 +79,16 @@ class Meta {
   /// Identifies the type of work provided by this source
   ///
   /// [UnknownWorkType] identifies either mixed or unknown
-  final WorkType workType;
+  final List<WorkType> workTypes;
 
   /// Identifies the reading directions of novels
   /// offered by this source
   final List<ReadingDirection> readingDirections;
+
+  /// Identifies special attributes about the source
+  ///
+  /// ex: fanfiction sites
+  final List<Attribute> attributes;
 
   const Meta({
     required this.name,
@@ -85,9 +97,12 @@ class Meta {
     required this.baseUrls,
     this.features = const {},
     this.support = HasSupport.full,
-    this.workType = const UnknownWorkType(),
+    List<WorkType>? workTypes,
     List<ReadingDirection>? readingDirections,
-  }) : readingDirections = readingDirections ?? const [ReadingDirection.ltr];
+    List<Attribute>? attributes,
+  })  : workTypes = workTypes ?? const [UnknownWorkType()],
+        readingDirections = readingDirections ?? const [ReadingDirection.ltr],
+        attributes = attributes ?? const [];
 
   /// Check whether the url is from the this source
   ///
