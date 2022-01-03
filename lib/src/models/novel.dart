@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import './work_type.dart';
 
 import './volume.dart';
@@ -58,8 +60,6 @@ class Novel {
   }
 
   int chapterCount() {
-    return volumes
-        .map((v) => v.chapters.length)
-        .reduce((total, count) => total + count);
+    return volumes.map((v) => v.chapters.length).sum;
   }
 }
