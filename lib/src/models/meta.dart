@@ -1,5 +1,4 @@
-import './support.dart';
-import './work_type.dart';
+import 'package:chapturn_sources/chapturn_sources.dart';
 
 /// Defines the optional features of a crawler
 enum Feature {
@@ -18,10 +17,6 @@ enum ReadingDirection {
 
   /// Right to left
   rtl,
-
-  /// Identifies that a source [Meta] has mixed reading direction
-  /// and the reading direction of [Novel] is not known
-  mixed,
 }
 
 /// Constant date holder class, because DateTime
@@ -79,9 +74,9 @@ class Meta {
   /// [UnknownWorkType] identifies either mixed or unknown
   final WorkType workType;
 
-  /// Identifies the reading direction of novels
+  /// Identifies the reading directions of novels
   /// offered by this source
-  final ReadingDirection readingDirection;
+  final List<ReadingDirection> readingDirections;
 
   const Meta({
     required this.name,
@@ -91,8 +86,8 @@ class Meta {
     this.features = const {},
     this.support = HasSupport.full,
     this.workType = const UnknownWorkType(),
-    this.readingDirection = ReadingDirection.ltr,
-  });
+    List<ReadingDirection>? readingDirections,
+  }) : readingDirections = readingDirections ?? const [ReadingDirection.ltr];
 
   /// Check whether the url is from the this source
   ///
