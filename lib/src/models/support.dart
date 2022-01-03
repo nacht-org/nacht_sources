@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 /// Defines platform categories
-enum Platform {
+enum SupportPlatform {
   /// windows, linux, and macos
   desktop,
 
@@ -26,12 +26,12 @@ abstract class Support extends Equatable {
 class HasSupport extends Support {
   /// Identifies all the platforms that
   /// are supported
-  final List<Platform> platforms;
+  final List<SupportPlatform> platforms;
 
   const HasSupport(this.platforms);
 
-  static const HasSupport full = HasSupport(Platform.values);
-  static const HasSupport browserOnly = HasSupport([Platform.browser]);
+  static const HasSupport full = HasSupport(SupportPlatform.values);
+  static const HasSupport browserOnly = HasSupport([SupportPlatform.browser]);
 
   @override
   List<Object?> get props => [platforms];
