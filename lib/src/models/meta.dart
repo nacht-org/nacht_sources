@@ -37,7 +37,7 @@ class DateHolder {
 
   const DateHolder(this.year, this.month, this.day);
 
-  DateTime datetime() => DateTime(year, month, day);
+  DateTime get datetime => DateTime(year, month, day);
 }
 
 /// Defines the metadata of a crawler
