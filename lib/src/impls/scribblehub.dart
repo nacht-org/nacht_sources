@@ -14,6 +14,7 @@ class ScribbleHub extends NovelCrawler {
     lang: 'en',
     updated: DateHolder(2021, 12, 18),
     baseUrls: {'https://www.scribblehub.com'},
+    workTypes: [const OriginalWork()],
   );
 
   static Meta constMeta() => _meta;
@@ -22,9 +23,12 @@ class ScribbleHub extends NovelCrawler {
 
   @override
   Future<Novel> parseNovel(String url) async {
-    var doc = await pullDoc(url);
+    final doc = await pullDoc(url);
 
-    var novel = Novel(
+    final statusElement = doc
+        .querySelector('.widget_fic_similar > li:last-child > span:last-child');
+
+    final novel = Novel(
       title: doc.querySelector('div.fic_title')?.text.trim() ?? '',
       author: doc.querySelector('span.auth_name_fic')?.text.trim(),
       url: url,
@@ -34,14 +38,29 @@ class ScribbleHub extends NovelCrawler {
           .querySelectorAll('.wi_fic_desc > p')
           .map((e) => e.text.trim())
           .toList(),
+      status: statusElement?.text.split('-').first,
+      workType: const OriginalWork(),
     );
 
+    // Genre
     for (var a in doc.querySelectorAll("a.fic_genre")) {
       novel.addMeta('subject', a.text.trim());
     }
 
+    // Tags
     for (var a in doc.querySelectorAll('a.stag')) {
       novel.addMeta('tag', a.text.trim());
+    }
+
+    // Content Warning
+    for (var a in doc.querySelectorAll('.mature_contains > a')) {
+      novel.addMeta('warning', a.text.trim());
+    }
+
+    // Rating
+    final ratingElement = doc.querySelector('#ratefic_user > span');
+    if (ratingElement != null) {
+      novel.addMeta('rating', ratingElement.text.trim());
     }
 
     var id = url.split('/')[4];
