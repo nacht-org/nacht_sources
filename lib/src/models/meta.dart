@@ -38,6 +38,11 @@ class DateHolder {
   const DateHolder(this.year, this.month, this.day);
 
   DateTime get datetime => DateTime(year, month, day);
+
+  @override
+  String toString() {
+    return '$year-$month-$day';
+  }
 }
 
 /// Defines the metadata of a crawler
