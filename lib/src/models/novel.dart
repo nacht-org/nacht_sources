@@ -1,10 +1,8 @@
+import 'package:chapturn_sources/src/models/meta.dart';
+import 'package:chapturn_sources/src/models/metadata.dart';
+import 'package:chapturn_sources/src/models/volume.dart';
+import 'package:chapturn_sources/src/models/work_type.dart';
 import 'package:collection/collection.dart';
-
-import './work_type.dart';
-
-import './volume.dart';
-import './metadata.dart';
-import 'meta.dart';
 
 class Novel {
   String title;
@@ -31,9 +29,9 @@ class Novel {
     List<MetaData>? metadata,
     this.workType = const UnknownWorkType(),
     this.readingDirection = ReadingDirection.ltr,
-  })  : this.description = description ?? [],
-        this.volumes = volumes ?? [],
-        this.metadata = metadata ?? [];
+  })  : description = description ?? [],
+        volumes = volumes ?? [],
+        metadata = metadata ?? [];
 
   /// Add new metadata to the novel
   void addMeta(
@@ -48,7 +46,7 @@ class Novel {
   /// to be used when novel has no defined
   /// volumes
   Volume singleVolume() {
-    var volume;
+    Volume volume;
     if (volumes.isEmpty) {
       volume = Volume.def();
       volumes.add(volume);

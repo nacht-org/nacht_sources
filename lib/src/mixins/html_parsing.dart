@@ -1,6 +1,5 @@
+import 'package:chapturn_sources/src/constants.dart' as constants;
 import 'package:html/dom.dart' as dom;
-
-import '../constants.dart' as constants;
 
 mixin HtmlParsing {
   /// List of names of tags that should be removed from
@@ -38,16 +37,13 @@ mixin HtmlParsing {
 
   /// [_cachedPatterns] should be accessed through this getter
   List<RegExp> get cachedPatterns {
-    if (_cachedPatterns == null) {
-      _cachedPatterns = blacklistPatterns.map((p) => RegExp(p)).toList();
-    }
-
-    return cachedPatterns;
+    _cachedPatterns ??= blacklistPatterns.map((p) => RegExp(p)).toList();
+    return _cachedPatterns!;
   }
 
   /// Whether the [input] is blacklisted
   bool isBlacklisted(String input) {
-    for (var pattern in cachedPatterns) {
+    for (final pattern in cachedPatterns) {
       if (pattern.hasMatch(input)) {
         return true;
       }
@@ -63,7 +59,7 @@ mixin HtmlParsing {
     }
 
     tree.attributes.clear();
-    for (var node in tree.nodes) {
+    for (final node in tree.nodes) {
       cleanNode(node);
     }
 
@@ -91,7 +87,7 @@ mixin HtmlParsing {
     if (node.nodeType != dom.Node.ELEMENT_NODE) {
       return;
     }
-    var element = node as dom.Element;
+    final element = node as dom.Element;
 
     // bad tag
     if (badTags.contains(element.localName)) {

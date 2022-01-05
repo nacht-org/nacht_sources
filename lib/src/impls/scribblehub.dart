@@ -1,9 +1,8 @@
+import 'package:chapturn_sources/src/interfaces/interfaces.dart';
+import 'package:chapturn_sources/src/models/models.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-
-import '../interfaces/interfaces.dart';
-import '../models/models.dart';
 
 class ScribbleHub extends NovelCrawler {
   ScribbleHub.make() : super(client: Crawler.defaultClient(), meta: _meta);
@@ -14,7 +13,7 @@ class ScribbleHub extends NovelCrawler {
     lang: 'en',
     updated: DateHolder(2021, 12, 18),
     baseUrls: {'https://www.scribblehub.com'},
-    workTypes: [const OriginalWork()],
+    workTypes: [OriginalWork()],
   );
 
   static Meta constMeta() => _meta;
@@ -43,17 +42,17 @@ class ScribbleHub extends NovelCrawler {
     );
 
     // Genre
-    for (var a in doc.querySelectorAll("a.fic_genre")) {
+    for (final a in doc.querySelectorAll("a.fic_genre")) {
       novel.addMeta('subject', a.text.trim());
     }
 
     // Tags
-    for (var a in doc.querySelectorAll('a.stag')) {
+    for (final a in doc.querySelectorAll('a.stag')) {
       novel.addMeta('tag', a.text.trim());
     }
 
     // Content Warning
-    for (var a in doc.querySelectorAll('.mature_contains > a')) {
+    for (final a in doc.querySelectorAll('.mature_contains > a')) {
       novel.addMeta('warning', a.text.trim());
     }
 
@@ -63,7 +62,7 @@ class ScribbleHub extends NovelCrawler {
       novel.addMeta('rating', ratingElement.text.trim());
     }
 
-    var id = url.split('/')[4];
+    final id = url.split('/')[4];
     novel.volumes.add(await toc(id));
 
     return novel;
@@ -71,9 +70,9 @@ class ScribbleHub extends NovelCrawler {
 
   @override
   Future<void> parseChapter(Chapter chapter) async {
-    var doc = await pullDoc(chapter.url);
+    final doc = await pullDoc(chapter.url);
 
-    var titleNode = doc.querySelector('.chapter-title');
+    final titleNode = doc.querySelector('.chapter-title');
     if (titleNode == null) {
       chapter.title = titleNode!.text.trim();
     }
@@ -82,7 +81,7 @@ class ScribbleHub extends NovelCrawler {
   }
 
   Future<Volume> toc(String id) async {
-    var response = await client.post(
+    final response = await client.post(
       Uri.parse("https://www.scribblehub.com/wp-admin/admin-ajax.php"),
       body: {
         "action": "wi_getreleases_pagination",
@@ -91,17 +90,17 @@ class ScribbleHub extends NovelCrawler {
       },
     );
 
-    var fragment = parseFragment(response.body);
+    final fragment = parseFragment(response.body);
 
-    var volume = Volume.def();
+    final volume = Volume.def();
     var index = 0;
-    for (var li in fragment.querySelectorAll('li.toc_w').reversed) {
-      var a = li.querySelector('a');
+    for (final li in fragment.querySelectorAll('li.toc_w').reversed) {
+      final a = li.querySelector('a');
       if (a == null || a.attributes['href'] == null) {
         continue;
       }
 
-      var time = li.querySelector('.fic_date_pub')?.attributes['title'];
+      final time = li.querySelector('.fic_date_pub')?.attributes['title'];
 
       // TODO add support to parse relative time ex: 20 hours ago
       DateTime? updated;

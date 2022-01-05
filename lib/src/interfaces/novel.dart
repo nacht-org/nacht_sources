@@ -1,7 +1,6 @@
+import 'package:chapturn_sources/src/interfaces/crawler.dart';
+import 'package:chapturn_sources/src/models/models.dart';
 import 'package:http/http.dart';
-
-import '../models/models.dart';
-import 'crawler.dart';
 
 abstract class NovelCrawler extends Crawler {
   NovelCrawler({
@@ -22,7 +21,7 @@ abstract class NovelCrawler extends Crawler {
   /// helper method that takes just the url and returns
   /// the parsed chapter
   Future<Chapter> parseChapterWithUrl(String url) async {
-    var chapter = Chapter.withUrl(url);
+    final chapter = Chapter.withUrl(url);
     await parseChapter(chapter);
     return chapter;
   }

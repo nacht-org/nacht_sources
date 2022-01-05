@@ -1,4 +1,4 @@
-import 'chapter.dart';
+import 'package:chapturn_sources/src/models/chapter.dart';
 
 class Volume {
   int index;
@@ -9,7 +9,7 @@ class Volume {
     required this.index,
     required this.name,
     List<Chapter>? chapters,
-  }) : this.chapters = chapters ?? [];
+  }) : chapters = chapters ?? [];
 
   Volume.def([List<Chapter>? chapters])
       : this(

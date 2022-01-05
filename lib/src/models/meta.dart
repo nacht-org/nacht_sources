@@ -114,7 +114,7 @@ class Meta {
   /// This implementation checks if the hostname of the
   /// url matches any of the base urls of the source.
   bool of(String url) {
-    for (String baseUrl in baseUrls) {
+    for (final baseUrl in baseUrls) {
       if (url.startsWith(baseUrl)) {
         return true;
       }
