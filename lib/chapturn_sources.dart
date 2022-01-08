@@ -11,7 +11,8 @@ export './src/models/models.dart';
 export './src/utils.dart';
 
 const sources = [
-  CrawlerFactory(ScribbleHub.constMeta, ScribbleHub.make, ScribbleHub.makeWith)
+  CrawlerFactory(ScribbleHub.constMeta, ScribbleHub.make, ScribbleHub.makeWith),
+  CrawlerFactory(FanFiction.constMeta, FanFiction.make, FanFiction.makeWith),
 ];
 
 CrawlerFactory? crawlerByUrl(String url, [Client? client]) {
