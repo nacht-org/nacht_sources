@@ -1,10 +1,10 @@
 import 'package:chapturn_sources/src/interfaces/crawler.dart';
 import 'package:chapturn_sources/src/models/models.dart';
-import 'package:http/http.dart';
+import 'package:dio/dio.dart';
 
 abstract class NovelCrawler extends Crawler {
   NovelCrawler({
-    required Client client,
+    required Dio client,
     required Meta meta,
   }) : super(client: client, meta: meta);
 

@@ -1,10 +1,10 @@
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:collection/collection.dart';
-import 'package:http/http.dart';
+import 'package:dio/dio.dart';
 
 class FanFiction extends NovelCrawler {
   FanFiction.make() : super(client: Crawler.defaultClient(), meta: _meta);
-  FanFiction.makeWith(Client client) : super(client: client, meta: _meta);
+  FanFiction.makeWith(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
     name: 'FanFiction',

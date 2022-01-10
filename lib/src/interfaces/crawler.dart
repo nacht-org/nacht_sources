@@ -1,19 +1,20 @@
+import 'package:chapturn_sources/src/exceptions.dart';
 import 'package:chapturn_sources/src/models/meta.dart';
+import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
-import 'package:http/http.dart' as http;
 
 abstract class Crawler {
   final Meta meta;
-  http.Client client;
+  final Dio client;
 
   Crawler({
     required this.client,
     required this.meta,
   });
 
-  static http.Client defaultClient() {
-    return http.Client();
+  static Dio defaultClient() {
+    return Dio();
   }
 
   /// Check whether the url is supported by this crawler
@@ -31,16 +32,20 @@ abstract class Crawler {
     String method = 'GET',
     bool fragment = false,
   }) async {
-    final uri = Uri.parse(url);
-    final response = await client.send(http.Request(method, uri));
+    final response = await client.fetch<String>(
+      RequestOptions(
+        path: url,
+        method: method,
+        responseType: ResponseType.plain,
+      ),
+    );
 
     if (response.statusCode != 200) {
-      throw http.ClientException(
-        "Did not get a valid response: ${response.statusCode}",
-        uri,
+      throw CrawlerException(
+        "Did not get a valid response: ${response.statusCode}: $url",
       );
     }
-    final content = await response.stream.bytesToString();
-    return parser.parse(content);
+
+    return parser.parse(response.data);
   }
 }

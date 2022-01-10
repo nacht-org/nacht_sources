@@ -1,12 +1,12 @@
 import 'package:chapturn_sources/src/interfaces/interfaces.dart';
 import 'package:chapturn_sources/src/models/models.dart';
+import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 class ScribbleHub extends NovelCrawler {
   ScribbleHub.make() : super(client: Crawler.defaultClient(), meta: _meta);
-  ScribbleHub.makeWith(Client client) : super(client: client, meta: _meta);
+  ScribbleHub.makeWith(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
     name: 'ScribbleHub',
@@ -81,16 +81,19 @@ class ScribbleHub extends NovelCrawler {
   }
 
   Future<Volume> toc(String id) async {
-    final response = await client.post(
-      Uri.parse("https://www.scribblehub.com/wp-admin/admin-ajax.php"),
-      body: {
+    final response = await client.post<String>(
+      "https://www.scribblehub.com/wp-admin/admin-ajax.php",
+      data: FormData.fromMap({
         "action": "wi_getreleases_pagination",
         "pagenum": '-1',
         "mypostid": id,
-      },
+      }),
+      options: Options(
+        responseType: ResponseType.plain,
+      ),
     );
 
-    final fragment = parseFragment(response.body);
+    final fragment = parseFragment(response.data);
 
     final volume = Volume.def();
     var index = 0;

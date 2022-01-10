@@ -2,8 +2,7 @@ library chapturn_sources;
 
 import 'package:chapturn_sources/src/impls/impls.dart';
 import 'package:chapturn_sources/src/utils.dart';
-
-import 'package:http/http.dart';
+import 'package:dio/dio.dart';
 
 export './src/impls/impls.dart';
 export './src/interfaces/interfaces.dart';
@@ -15,7 +14,7 @@ const sources = [
   CrawlerFactory(FanFiction.constMeta, FanFiction.make, FanFiction.makeWith),
 ];
 
-CrawlerFactory? crawlerByUrl(String url, [Client? client]) {
+CrawlerFactory? crawlerByUrl(String url, [Dio? client]) {
   for (final tuple in sources) {
     if (tuple.meta().of(url)) {
       return tuple;
