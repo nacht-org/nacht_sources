@@ -14,7 +14,7 @@ const sources = [
   CrawlerFactory(FanFiction.constMeta, FanFiction.make, FanFiction.makeWith),
 ];
 
-CrawlerFactory? crawlerByUrl(String url, [Dio? client]) {
+CrawlerFactory? getCrawlerFactoryWithUrl(String url, [Dio? client]) {
   for (final tuple in sources) {
     if (tuple.meta().of(url)) {
       return tuple;

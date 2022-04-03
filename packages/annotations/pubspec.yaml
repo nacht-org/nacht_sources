@@ -1,0 +1,17 @@
+name: annotations
+description: A starting point for Dart libraries or applications.
+version: 1.0.0
+# homepage: https://www.example.com
+
+publish_to: none
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  chapturn_sources:
+    path: ../..
+
+dev_dependencies:
+  lints: ^1.0.0
+  test: ^1.16.0
