@@ -1,3 +1,3 @@
 library annotations;
 
-export 'src/crawler_class.dart';
+export 'src/crawler_collector.dart';

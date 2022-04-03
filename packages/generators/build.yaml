@@ -8,8 +8,7 @@ builders:
   generators:
     target: ":generators"
     import: "package:generators/builder.dart"
-    builder_factories: ["generateCrawler"]
-    build_extensions: { ".dart": [".g.dart"] }
+    builder_factories: ["crawlerCollectorBuilder"]
+    build_extensions: { "$lib$": [".g.dart"] }
     auto_apply: dependents
-    build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
+    build_to: source

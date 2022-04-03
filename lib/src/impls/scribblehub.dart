@@ -1,9 +1,11 @@
+import 'package:annotations/annotations.dart';
 import 'package:chapturn_sources/src/interfaces/interfaces.dart';
 import 'package:chapturn_sources/src/models/models.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 
+@registerCrawler
 class ScribbleHub extends NovelCrawler {
   ScribbleHub.make() : super(client: Crawler.defaultClient(), meta: _meta);
   ScribbleHub.makeWith(Dio client) : super(client: client, meta: _meta);
