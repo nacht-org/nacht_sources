@@ -26,3 +26,7 @@ abstract class NovelCrawler extends Crawler {
     return chapter;
   }
 }
+
+abstract class NovelSearch {
+  Future<List<Novel>> search(String query);
+}
