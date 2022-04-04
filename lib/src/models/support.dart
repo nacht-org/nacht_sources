@@ -18,6 +18,11 @@ enum SupportPlatform {
 /// Base class that defines support for a crawler
 abstract class Support extends Equatable {
   const Support();
+
+  bool isPlatformSupported(SupportPlatform platform) {
+    return this is HasSupport &&
+        (this as HasSupport).platforms.contains(platform);
+  }
 }
 
 /// Defines that a crawler is supported

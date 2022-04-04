@@ -16,4 +16,6 @@ CrawlerFactory? getCrawlerFactoryWithUrl(String url, [Dio? client]) {
       return tuple;
     }
   }
+
+  return null;
 }
