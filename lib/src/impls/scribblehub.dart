@@ -14,7 +14,7 @@ class ScribbleHub extends NovelCrawler {
     name: 'ScribbleHub',
     lang: 'en',
     updated: DateHolder(2021, 12, 18),
-    baseUrls: {'https://www.scribblehub.com'},
+    baseUrls: ['https://www.scribblehub.com'],
     workTypes: [OriginalWork()],
   );
 

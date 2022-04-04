@@ -12,7 +12,7 @@ class FanFiction extends NovelCrawler {
     name: 'FanFiction',
     lang: 'mixed',
     updated: DateHolder(2022, 1, 8),
-    baseUrls: {'https://www.fanfiction.net/', 'https://m.fanfiction.net/'},
+    baseUrls: ['https://www.fanfiction.net/', 'https://m.fanfiction.net/'],
     support: HasSupport.browserOnly,
     workTypes: [OriginalWork()],
     attributes: [Attribute.fanfiction],

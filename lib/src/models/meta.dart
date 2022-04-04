@@ -1,4 +1,5 @@
 import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:chapturn_sources/src/extensions/string_strip.dart';
 
 /// Defines the optional features of a crawler
 enum Feature {
@@ -71,7 +72,7 @@ class Meta {
   /// Must include the scheme (http:,https:)
   ///
   /// ex: 'https://www.webnovel.com/', 'https://www.scribblehub.com/'
-  final Set<String> baseUrls;
+  final List<String> baseUrls;
 
   /// Optional features supported by the crawler
   ///
@@ -121,5 +122,36 @@ class Meta {
     }
 
     return false;
+  }
+
+  /// Detects the url state and converts it into the appropriate absolute url
+  ///
+  /// There are several relevant states the url could be in:
+  ///
+  /// - **absolute:** starts with either 'https://' or 'http://', in this the url
+  ///   is returned as it without any changes.
+  ///
+  /// - **missing schema:** schema is missing and the url starts with '//', in this
+  ///   case the appropriate schema from either current url or base url is prefixed.
+  ///
+  /// - **relative absolute:** the url is relative to the website and starts with '/', in
+  ///   this case the base website location (netloc) is prefixed to the url:
+  ///
+  /// - **relative current:** the url is relative to the current webpage and does not match
+  ///   any of the above conditions, in this case the url is added to the current url provided.
+  String absoluteUrl(String url, [String? current]) {
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      return url;
+    } else if (url.startsWith("//")) {
+      return '${Uri.parse(current ?? baseUrls[0]).scheme}:$url';
+    } else if (url.startsWith("/")) {
+      return baseUrls[0].stripRight("/") + url;
+    }
+
+    if (current != null) {
+      return current.stripRight("/") + url;
+    } else {
+      return url;
+    }
   }
 }

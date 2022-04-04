@@ -59,7 +59,11 @@ mixin HtmlParsing {
     }
 
     tree.attributes.clear();
-    for (final node in tree.nodes) {
+
+    final nodes = [tree];
+    while (nodes.isNotEmpty) {
+      final node = nodes.removeAt(0);
+      nodes.addAll(node.children);
       cleanNode(node);
     }
 
