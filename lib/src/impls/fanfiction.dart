@@ -1,7 +1,9 @@
+import 'package:annotations/annotations.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 
+@registerCrawler
 class FanFiction extends NovelCrawler {
   FanFiction.make() : super(client: Crawler.defaultClient(), meta: _meta);
   FanFiction.makeWith(Dio client) : super(client: client, meta: _meta);
