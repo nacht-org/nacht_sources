@@ -5,7 +5,9 @@ import 'package:chapturn_sources/src/mixins/mixins.dart';
 import 'package:dio/dio.dart';
 
 @registerCrawler
-class RoyalRoad extends NovelCrawler with HtmlParsing implements NovelSearch {
+class RoyalRoad extends Crawler
+    with HtmlParsing
+    implements NovelParse, NovelSearch {
   RoyalRoad.make() : super(client: Crawler.defaultClient(), meta: _meta);
   RoyalRoad.makeWith(Dio client) : super(client: client, meta: _meta);
 

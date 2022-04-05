@@ -7,8 +7,14 @@ void parseNovel(String url, int rangeFrom, int rangeTo) async {
   }
 
   final crawler = crawlerFactory.create();
+  if (crawler is! NovelParse) {
+    print("${crawler.meta.name} does not support novel parsing");
+    return;
+  }
 
-  final novel = await crawler.parseNovel(url);
+  final novelParser = crawler as NovelParse;
+
+  final novel = await novelParser.parseNovel(url);
   print("Novel(title='${novel.title}', chapters=${novel.chapterCount()})");
 
   final chapters = <Chapter>[];
@@ -18,7 +24,7 @@ void parseNovel(String url, int rangeFrom, int rangeTo) async {
 
   final chaptersRange = chapters.sublist(rangeFrom, rangeTo);
   for (var chapter in chaptersRange) {
-    await crawler.parseChapter(chapter);
+    await novelParser.parseChapter(chapter);
     print(
       "Chapter(index=${chapter.index}, title='${chapter.title}', content='${chapter.content?.length ?? 0}')",
     );

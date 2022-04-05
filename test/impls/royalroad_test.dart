@@ -17,7 +17,8 @@ void main() {
       });
 
       test('should be able to parse chapter', () async {
-        final chapter = await crawler.parseChapterWithUrl(chapterUrl);
+        final chapter = Chapter(index: -1, title: '', url: chapterUrl);
+        await crawler.parseChapter(chapter);
         expect(chapter, isA<Chapter>());
       });
     },

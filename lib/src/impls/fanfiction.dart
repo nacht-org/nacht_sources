@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 
 @registerCrawler
-class FanFiction extends NovelCrawler {
+class FanFiction extends Crawler implements NovelParse {
   FanFiction.make() : super(client: Crawler.defaultClient(), meta: _meta);
   FanFiction.makeWith(Dio client) : super(client: client, meta: _meta);
 

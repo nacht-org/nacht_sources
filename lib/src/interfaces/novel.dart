@@ -1,13 +1,6 @@
-import 'package:chapturn_sources/src/interfaces/crawler.dart';
 import 'package:chapturn_sources/src/models/models.dart';
-import 'package:dio/dio.dart';
 
-abstract class NovelCrawler extends Crawler {
-  NovelCrawler({
-    required Dio client,
-    required Meta meta,
-  }) : super(client: client, meta: meta);
-
+abstract class NovelParse {
   /// Parse the novel by following the url
   ///
   /// Does not check if the url matches this crawler
@@ -17,16 +10,15 @@ abstract class NovelCrawler extends Crawler {
   ///
   /// [Chapter] must have the [url] field populated
   Future<void> parseChapter(Chapter chapter);
-
-  /// helper method that takes just the url and returns
-  /// the parsed chapter
-  Future<Chapter> parseChapterWithUrl(String url) async {
-    final chapter = Chapter.withUrl(url);
-    await parseChapter(chapter);
-    return chapter;
-  }
 }
 
 abstract class NovelSearch {
+  /// Search the website for novels with the given [query]
   Future<List<Novel>> search(String query);
+}
+
+abstract class NovelLogin {
+  /// Login to the website with given [username] and [password]
+  /// and persist the session
+  Future<void> login(String username, String password);
 }
