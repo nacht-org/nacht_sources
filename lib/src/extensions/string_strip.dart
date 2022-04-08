@@ -3,7 +3,7 @@ extension Strip on String {
     if (endsWith(pattern)) {
       return substring(0, length - pattern.length);
     } else {
-      return pattern;
+      return this;
     }
   }
 }
