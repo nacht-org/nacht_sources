@@ -23,6 +23,18 @@ abstract class Support extends Equatable {
     return this is HasSupport &&
         (this as HasSupport).platforms.contains(platform);
   }
+
+  /// Union helper to distinguish between support types
+  T when<T>({
+    required T Function(List<SupportPlatform> platforms) has,
+    required T Function(String reason) no,
+  }) {
+    if (this is HasSupport) {
+      return has((this as HasSupport).platforms);
+    } else {
+      return no((this as NoSupport).reason);
+    }
+  }
 }
 
 /// Defines that a crawler is supported
