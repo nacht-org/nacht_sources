@@ -1,7 +1,7 @@
 import 'package:chapturn_sources/chapturn_sources.dart';
 
 void parseNovel(String url, int rangeFrom, int rangeTo) async {
-  final crawlerFactory = getCrawlerFactoryWithUrl(url);
+  final crawlerFactory = crawlerFactoryFor(url);
   if (crawlerFactory == null) {
     return;
   }

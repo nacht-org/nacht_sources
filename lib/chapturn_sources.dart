@@ -10,7 +10,7 @@ export './src/interfaces/interfaces.dart';
 export './src/models/models.dart';
 export './src/utils.dart';
 
-CrawlerFactory? getCrawlerFactoryWithUrl(String url, [Dio? client]) {
+CrawlerFactory? crawlerFactoryFor(String url, [Dio? client]) {
   for (final tuple in crawlers) {
     if (tuple.meta().of(url)) {
       return tuple;
