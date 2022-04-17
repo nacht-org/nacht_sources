@@ -26,14 +26,14 @@ class CrawlerCollectorBuilder extends Builder {
   static AssetId _allFileOutput(BuildStep buildStep) {
     return AssetId(
       buildStep.inputId.package,
-      path.join('lib', 'src/crawlers.dart'),
+      path.join('lib', 'generated/crawlers.g.dart'),
     );
   }
 
   @override
   Map<String, List<String>> get buildExtensions {
     return const {
-      r'$lib$': ['src/crawlers.dart'],
+      r'$lib$': ['generated/crawlers.g.dart'],
     };
   }
 
@@ -54,6 +54,7 @@ class CrawlerCollectorBuilder extends Builder {
     final buffer = StringBuffer();
 
     buffer.writeln(generatedWarning);
+    buffer.writeln('// ignore_for_file: directives_ordering');
 
     buffer.writeln();
     buffer.writeln('import "${factory.uri}";');

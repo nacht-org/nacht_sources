@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: directives_ordering
 
 import "package:chapturn_sources/src/utils.dart";
 import "package:chapturn_sources/src/impls/fanfiction.dart";
