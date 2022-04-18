@@ -64,7 +64,8 @@ class NovelPub extends Crawler with HtmlParsing implements NovelParse {
     await extractToc(doc, volume);
 
     final pages = doc.querySelectorAll(
-        ".pagenav .pagination > li:not(.PagedList-skipToNext)");
+      ".pagenav .pagination > li:not(.PagedList-skipToNext)",
+    );
 
     int start = 0;
     int end = 0;

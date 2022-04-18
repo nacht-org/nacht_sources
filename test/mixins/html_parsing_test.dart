@@ -1,6 +1,6 @@
 import 'package:chapturn_sources/src/mixins/html_parsing.dart';
-import 'package:test/test.dart';
 import 'package:html/parser.dart' as p;
+import 'package:test/test.dart';
 
 class Parser with HtmlParsing {}
 
