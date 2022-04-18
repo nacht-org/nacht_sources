@@ -55,7 +55,7 @@ class NovelPub extends Crawler with HtmlParsing implements NovelParse {
       final label = span.querySelector('small')?.text.trim().toLowerCase();
       if (label == 'status') {
         final value = span.querySelector('strong')?.text.trim();
-        novel.status = value;
+        novel.status = parseNovelStatus(value);
       }
     }
 

@@ -39,7 +39,7 @@ class ScribbleHub extends Crawler implements NovelParse {
           .querySelectorAll('.wi_fic_desc > p')
           .map((e) => e.text.trim())
           .toList(),
-      status: statusElement?.text.split('-').first,
+      status: parseNovelStatus(statusElement?.text.split('-').first),
       workType: const OriginalWork(),
     );
 

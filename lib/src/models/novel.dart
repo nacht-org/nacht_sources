@@ -1,5 +1,6 @@
 import 'package:chapturn_sources/src/models/meta.dart';
 import 'package:chapturn_sources/src/models/metadata.dart';
+import 'package:chapturn_sources/src/models/status.dart';
 import 'package:chapturn_sources/src/models/volume.dart';
 import 'package:chapturn_sources/src/models/work_type.dart';
 import 'package:collection/collection.dart';
@@ -10,7 +11,7 @@ class Novel {
   String? author;
   List<String> description;
   String? thumbnailUrl;
-  String? status;
+  NovelStatus status;
   String lang;
   List<Volume> volumes;
   List<MetaData> metadata;
@@ -23,7 +24,7 @@ class Novel {
     this.author,
     List<String>? description,
     this.thumbnailUrl,
-    this.status,
+    this.status = NovelStatus.unknown,
     required this.lang,
     List<Volume>? volumes,
     List<MetaData>? metadata,
