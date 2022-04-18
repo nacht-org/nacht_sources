@@ -9,6 +9,12 @@ enum Feature {
   /// Ability to login into the source to
   /// otherwise forbidden content
   login,
+
+  /// Ability to acquire the most popular novels.
+  popular,
+
+  /// Ability to acquire the latest updated novels.
+  latest,
 }
 
 /// Defines the reading direction of crawler
