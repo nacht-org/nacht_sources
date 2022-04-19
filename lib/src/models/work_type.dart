@@ -28,9 +28,9 @@ class TranslatedWork extends WorkType {
 
   const TranslatedWork(this.type);
 
-  static const TranslatedWork human = TranslatedWork(TranslationType.human);
-  static const TranslatedWork mtl = TranslatedWork(TranslationType.mtl);
-  static const TranslatedWork unknown = TranslatedWork(TranslationType.unknown);
+  const TranslatedWork.human() : this(TranslationType.human);
+  const TranslatedWork.mtl() : this(TranslationType.mtl);
+  const TranslatedWork.unknown() : this(TranslationType.unknown);
 
   @override
   List<Object?> get props => [type];
