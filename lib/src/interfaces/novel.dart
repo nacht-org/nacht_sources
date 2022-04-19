@@ -22,3 +22,8 @@ abstract class NovelLogin {
   /// and persist the session
   Future<void> login(String username, String password);
 }
+
+abstract class NovelPopular {
+  /// Acquire the most popular novels from the source.
+  Future<List<Novel>> parsePopular(int page);
+}

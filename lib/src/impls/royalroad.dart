@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 @registerCrawler
 class RoyalRoad extends Crawler
     with HtmlParsing
-    implements NovelParse, NovelSearch {
+    implements NovelParse, NovelSearch, NovelPopular {
   RoyalRoad.make() : super(client: Crawler.defaultClient(), meta: _meta);
   RoyalRoad.makeWith(Dio client) : super(client: client, meta: _meta);
 
@@ -16,6 +16,7 @@ class RoyalRoad extends Crawler
     lang: "en",
     updated: DateHolder(2022, 14, 03),
     baseUrls: ["https://www.royalroad.com/"],
+    features: {Feature.search, Feature.popular},
   );
 
   static Meta constMeta() => _meta;
@@ -98,5 +99,25 @@ class RoyalRoad extends Crawler
     cleanNodeTree(contentTree);
 
     chapter.content = contentTree?.outerHtml;
+  }
+
+  @override
+  Future<List<Novel>> parsePopular(int page) async {
+    final url = 'https://www.royalroad.com/fictions/weekly-popular?page-$page';
+    final doc = await pullDoc(url);
+
+    final novels = <Novel>[];
+    for (final item in doc.querySelectorAll('.fiction-list-item')) {
+      final novel = Novel(
+        title: item.querySelector('.fiction-title')?.text.trim() ?? '',
+        thumbnailUrl: item.querySelector('img')?.attributes['src'],
+        url: meta.absoluteUrl(item.querySelector('a')!.attributes['href']!),
+        lang: meta.lang,
+      );
+
+      novels.add(novel);
+    }
+
+    return novels;
   }
 }
