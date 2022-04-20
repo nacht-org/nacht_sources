@@ -6,7 +6,7 @@ import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 
 @registerCrawler
-class ScribbleHub extends Crawler implements NovelParse {
+class ScribbleHub extends Crawler implements ParseNovel {
   ScribbleHub.make() : super(client: Crawler.defaultClient(), meta: _meta);
   ScribbleHub.makeWith(Dio client) : super(client: client, meta: _meta);
 

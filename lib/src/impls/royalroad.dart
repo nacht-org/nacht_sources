@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 @registerCrawler
 class RoyalRoad extends Crawler
     with HtmlParsing
-    implements NovelParse, NovelSearch, NovelPopular {
+    implements ParseNovel, ParseSearch, ParsePopular {
   RoyalRoad.make() : super(client: Crawler.defaultClient(), meta: _meta);
   RoyalRoad.makeWith(Dio client) : super(client: client, meta: _meta);
 

@@ -17,19 +17,19 @@ void main() {
       final crawler = crawlerFactory.createWith(dio);
 
       expect(
-        crawler is NovelSearch,
+        crawler is ParseSearch,
         meta.features.contains(Feature.search),
         reason: "'search' feature not synced in '${meta.name}'",
       );
 
       expect(
-        crawler is NovelLogin,
+        crawler is ParseLogin,
         meta.features.contains(Feature.login),
         reason: "'login' feature not synced in '${meta.name}'",
       );
 
       expect(
-        crawler is NovelPopular,
+        crawler is ParsePopular,
         meta.features.contains(Feature.popular),
         reason: "'popular' feature not synced in '${meta.name}'",
       );

@@ -7,12 +7,12 @@ void parseNovel(String url, int rangeFrom, int rangeTo) async {
   }
 
   final crawler = crawlerFactory.create();
-  if (crawler is! NovelParse) {
+  if (crawler is! ParseNovel) {
     print("${crawler.meta.name} does not support novel parsing");
     return;
   }
 
-  final novelParser = crawler as NovelParse;
+  final novelParser = crawler as ParseNovel;
 
   final novel = await novelParser.parseNovel(url);
   print("Novel(title='${novel.title}', chapters=${novel.chapterCount()})");

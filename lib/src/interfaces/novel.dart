@@ -1,6 +1,6 @@
 import 'package:chapturn_sources/src/models/models.dart';
 
-abstract class NovelParse {
+abstract class ParseNovel {
   /// Parse the novel by following the url
   ///
   /// Does not check if the url matches this crawler
@@ -12,18 +12,18 @@ abstract class NovelParse {
   Future<void> parseChapter(Chapter chapter);
 }
 
-abstract class NovelSearch {
+abstract class ParseSearch {
   /// Search the website for novels with the given [query]
   Future<List<Novel>> search(String query, int page);
 }
 
-abstract class NovelLogin {
+abstract class ParseLogin {
   /// Login to the website with given [username] and [password]
   /// and persist the session
   Future<void> login(String username, String password);
 }
 
-abstract class NovelPopular {
+abstract class ParsePopular {
   /// Acquire the most popular novels from the source.
   Future<List<Novel>> parsePopular(int page);
 }

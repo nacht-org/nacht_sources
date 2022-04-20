@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 
 @registerCrawler
-class NovelPub extends Crawler with HtmlParsing implements NovelParse {
+class NovelPub extends Crawler with HtmlParsing implements ParseNovel {
   NovelPub.make() : super(client: Crawler.defaultClient(), meta: _meta);
   NovelPub.makeWith(Dio client) : super(client: client, meta: _meta);
 
