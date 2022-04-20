@@ -22,9 +22,9 @@ class RoyalRoad extends Crawler
   static Meta constMeta() => _meta;
 
   @override
-  Future<List<Novel>> search(String query) async {
+  Future<List<Novel>> search(String query, int page) async {
     final url =
-        "https://www.royalroad.com/fictions/search?title=$query&page={1}";
+        "https://www.royalroad.com/fictions/search?title=$query&page=$page";
     final doc = await pullDoc(url);
 
     final novels = <Novel>[];

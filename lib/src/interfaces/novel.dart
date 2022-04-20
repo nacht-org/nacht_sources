@@ -14,7 +14,7 @@ abstract class NovelParse {
 
 abstract class NovelSearch {
   /// Search the website for novels with the given [query]
-  Future<List<Novel>> search(String query);
+  Future<List<Novel>> search(String query, int page);
 }
 
 abstract class NovelLogin {
