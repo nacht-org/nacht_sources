@@ -2,13 +2,13 @@ import 'package:annotations/annotations.dart';
 import 'package:chapturn_sources/src/exceptions.dart';
 import 'package:chapturn_sources/src/extensions/string_strip.dart';
 import 'package:chapturn_sources/src/interfaces/interfaces.dart';
-import 'package:chapturn_sources/src/mixins/html_parsing.dart';
+import 'package:chapturn_sources/src/mixins/html_parser.dart';
 import 'package:chapturn_sources/src/models/models.dart';
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 
 @registerCrawler
-class NovelPub extends Crawler with HtmlParsing implements ParseNovel {
+class NovelPub extends Crawler with HtmlParser implements ParseNovel {
   NovelPub.make() : super(client: Crawler.defaultClient(), meta: _meta);
   NovelPub.makeWith(Dio client) : super(client: client, meta: _meta);
 

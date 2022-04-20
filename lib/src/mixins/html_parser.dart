@@ -1,7 +1,7 @@
 import 'package:chapturn_sources/src/constants.dart' as constants;
 import 'package:html/dom.dart' as dom;
 
-mixin HtmlParsing {
+mixin HtmlParser {
   /// List of names of tags that should be removed from
   /// chapter content for this specific crawler.
   List<String> get badTags {

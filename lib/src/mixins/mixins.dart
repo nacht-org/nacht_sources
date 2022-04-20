@@ -1,1 +1,1 @@
-export './html_parsing.dart';
+export 'html_parser.dart';
