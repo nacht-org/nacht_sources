@@ -13,6 +13,11 @@ void main() {
         final novel = await crawler.parseNovel(novelUrl);
         expect(novel, isA<Novel>());
       });
+
+      test('should be able to get popular novels', () async {
+        final novels = await crawler.parsePopular(1);
+        expect(novels, isA<List<Novel>>());
+      });
     },
     skip: 'Network intensive and takes a along time.',
   );

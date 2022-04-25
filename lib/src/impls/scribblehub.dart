@@ -6,7 +6,7 @@ import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 
 @registerCrawler
-class ScribbleHub extends Crawler implements ParseNovel {
+class ScribbleHub extends Crawler implements ParseNovel, ParsePopular {
   ScribbleHub.make() : super(client: Crawler.defaultClient(), meta: _meta);
   ScribbleHub.makeWith(Dio client) : super(client: client, meta: _meta);
 
@@ -16,11 +16,41 @@ class ScribbleHub extends Crawler implements ParseNovel {
     updated: DateHolder(2021, 12, 18),
     baseUrls: ['https://www.scribblehub.com'],
     workTypes: [OriginalWork()],
+    features: {Feature.popular},
   );
 
   static Meta constMeta() => _meta;
 
   DateFormat formatter = DateFormat('MMM d, y hh:mm a');
+
+  @override
+  Future<List<Novel>> parsePopular(int page) async {
+    final novels = <Novel>[];
+
+    final doc = await pullDoc(
+        'https://www.scribblehub.com/series-ranking/?sort=1&order=2&pg=$page');
+    for (final div in doc.querySelectorAll('div.search_main_box')) {
+      final a = div.querySelector(".search_title a");
+      if (a == null) {
+        continue;
+      }
+
+      final novel = Novel(
+        title: a.text.trim(),
+        thumbnailUrl: div.querySelector('.search_img img')?.attributes['src'],
+        author: div
+            .querySelector('.search_stats span[title="Author"]')
+            ?.text
+            .trim(),
+        url: meta.absoluteUrl(a.attributes['href']!),
+        lang: meta.lang,
+      );
+
+      novels.add(novel);
+    }
+
+    return novels;
+  }
 
   @override
   Future<Novel> parseNovel(String url) async {
