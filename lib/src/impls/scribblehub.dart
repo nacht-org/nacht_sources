@@ -28,7 +28,9 @@ class ScribbleHub extends Crawler implements ParseNovel, ParsePopular {
     final novels = <Novel>[];
 
     final doc = await pullDoc(
-        'https://www.scribblehub.com/series-ranking/?sort=1&order=2&pg=$page');
+      'https://www.scribblehub.com/series-ranking/?sort=1&order=3&pg=$page',
+    );
+
     for (final div in doc.querySelectorAll('div.search_main_box')) {
       final a = div.querySelector(".search_title a");
       if (a == null) {
