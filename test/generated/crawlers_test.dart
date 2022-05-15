@@ -14,7 +14,7 @@ void main() {
     final dio = Dio();
     for (final crawlerFactory in crawlers) {
       final meta = crawlerFactory.meta();
-      final crawler = crawlerFactory.createWith(dio);
+      final crawler = crawlerFactory.custom(dio);
 
       expect(
         crawler is ParseSearch,

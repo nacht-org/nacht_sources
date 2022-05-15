@@ -8,8 +8,8 @@ import 'package:dio/dio.dart';
 @registerFactory
 class CrawlerFactory {
   final Meta Function() meta;
-  final Crawler Function() create;
-  final Crawler Function(Dio) createWith;
+  final Crawler Function() basic;
+  final Crawler Function(Dio) custom;
 
-  const CrawlerFactory(this.meta, this.create, this.createWith);
+  const CrawlerFactory(this.meta, this.basic, this.custom);
 }

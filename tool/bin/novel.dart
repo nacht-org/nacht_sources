@@ -6,7 +6,7 @@ void parseNovel(String url, int rangeFrom, int rangeTo) async {
     return;
   }
 
-  final crawler = crawlerFactory.create();
+  final crawler = crawlerFactory.basic();
   if (crawler is! ParseNovel) {
     print("${crawler.meta.name} does not support novel parsing");
     return;
