@@ -54,6 +54,10 @@ class RoyalRoad extends Crawler
   Future<Novel> parseNovel(String url) async {
     final doc = await pullDoc(url);
 
+    final status = parseNovelStatus(
+      doc.querySelector('.fiction-info .label:nth-child(2)')?.text.trim(),
+    );
+
     final novel = Novel(
       title: doc.querySelector('h1[property="name"]')?.text.trim() ?? '',
       author: doc.querySelector('span[property="name"]')?.text.trim(),
@@ -64,6 +68,7 @@ class RoyalRoad extends Crawler
           .querySelectorAll('.description > [property="description"] > p')
           .map((e) => e.text.trim())
           .toList(),
+      status: status,
       url: url,
       lang: 'en',
     );
