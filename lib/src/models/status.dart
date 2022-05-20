@@ -10,6 +10,10 @@ enum NovelStatus {
   /// The novel has been completed.
   completed,
 
+  /// Parts of the novel has been removed by author.
+  /// The most common cause is third-party exclusivity contracts.
+  stub,
+
   /// The novel status is unknown.
   unknown,
 }
@@ -29,6 +33,8 @@ NovelStatus parseNovelStatus(String? value) {
       return NovelStatus.ongoing;
     case 'hiatus':
       return NovelStatus.hiatus;
+    case 'stub':
+      return NovelStatus.stub;
     case 'completed':
       return NovelStatus.completed;
     default:
