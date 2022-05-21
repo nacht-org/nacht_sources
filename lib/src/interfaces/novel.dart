@@ -24,6 +24,9 @@ abstract class ParseLogin {
 }
 
 abstract class ParsePopular {
+  /// Build the url pointing to the [page] showing popular novels.
+  String buildPopularUrl(int page);
+
   /// Acquire the most popular novels from the source.
   Future<List<Novel>> parsePopular(int page);
 }

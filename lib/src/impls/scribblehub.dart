@@ -24,12 +24,14 @@ class ScribbleHub extends Crawler implements ParseNovel, ParsePopular {
   DateFormat formatter = DateFormat('MMM d, y hh:mm a');
 
   @override
+  String buildPopularUrl(int page) =>
+      'https://www.scribblehub.com/series-ranking/?sort=1&order=3&pg=$page';
+
+  @override
   Future<List<Novel>> parsePopular(int page) async {
     final novels = <Novel>[];
 
-    final doc = await pullDoc(
-      'https://www.scribblehub.com/series-ranking/?sort=1&order=3&pg=$page',
-    );
+    final doc = await pullDoc(buildPopularUrl(page));
 
     for (final div in doc.querySelectorAll('div.search_main_box')) {
       final a = div.querySelector(".search_title a");

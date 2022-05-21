@@ -107,8 +107,12 @@ class RoyalRoad extends Crawler
   }
 
   @override
+  String buildPopularUrl(int page) =>
+      'https://www.royalroad.com/fictions/weekly-popular?page=$page';
+
+  @override
   Future<List<Novel>> parsePopular(int page) async {
-    final url = 'https://www.royalroad.com/fictions/weekly-popular?page=$page';
+    final url = buildPopularUrl(page);
     final doc = await pullDoc(url);
 
     final novels = <Novel>[];
