@@ -4,5 +4,6 @@ export './metadata.dart';
 export './novel.dart';
 export './status.dart';
 export './support.dart';
+export './version.dart';
 export './volume.dart';
 export './work_type.dart';

@@ -15,7 +15,7 @@ class NovelPub extends Crawler with HtmlParser implements ParseNovel {
   static const _meta = Meta(
     name: 'NovelPub',
     lang: 'en',
-    updated: DateHolder(2022, 04, 08),
+    version: DateVersion(2022, 04, 08),
     baseUrls: ['https://www.novelpub.com'],
   );
 

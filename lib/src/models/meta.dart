@@ -33,25 +33,6 @@ enum Attribute {
   fanfiction
 }
 
-/// Constant date holder class, because DateTime
-/// does not have a constant constructor
-///
-/// use [datetime] method to convert to [DateTime] equivalent
-class DateHolder {
-  final int year;
-  final int month;
-  final int day;
-
-  const DateHolder(this.year, this.month, this.day);
-
-  DateTime get datetime => DateTime(year, month, day);
-
-  @override
-  String toString() {
-    return '$year-$month-$day';
-  }
-}
-
 /// Defines the metadata of a crawler
 class Meta {
   /// The name of the source. Usually equivalent to the
@@ -71,7 +52,7 @@ class Meta {
   final String lang;
 
   /// The last time the source was updated
-  final DateHolder updated;
+  final CrawlerVersion version;
 
   /// The base urls / host urls of the target site
   ///
@@ -105,7 +86,7 @@ class Meta {
   const Meta({
     required this.name,
     required this.lang,
-    required this.updated,
+    required this.version,
     required this.baseUrls,
     this.features = const {},
     this.support = HasSupport.full,

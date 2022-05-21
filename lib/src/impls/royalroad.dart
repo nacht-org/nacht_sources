@@ -14,7 +14,7 @@ class RoyalRoad extends Crawler
   static const _meta = Meta(
     name: "RoyalRoad",
     lang: "en",
-    updated: DateHolder(2022, 14, 03),
+    version: DateVersion(2022, 14, 03),
     baseUrls: ["https://www.royalroad.com/"],
     features: {Feature.search, Feature.popular},
   );
