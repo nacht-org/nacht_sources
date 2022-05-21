@@ -11,7 +11,7 @@ enum NovelStatus {
   completed,
 
   /// Parts of the novel has been removed by author.
-  /// The most common cause is third-party exclusivity contracts.
+  /// Most commonly due to third-party contracts.
   stub,
 
   /// The novel status is unknown.
@@ -24,6 +24,7 @@ enum NovelStatus {
 ///
 /// - [NovelStatus.ongoing] : "ongoing"
 /// - [NovelStatus.hiatus] : "hiatus"
+/// - [NovelStatus.stub] : "stub"
 /// - [NovelStatus.completed] : "completed"
 ///
 /// If none of the above matches [NovelStatus.unknown]
