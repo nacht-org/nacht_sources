@@ -13,7 +13,7 @@ class ScribbleHub extends Crawler implements ParseNovel, ParsePopular {
   static const _meta = Meta(
     name: 'ScribbleHub',
     lang: 'en',
-    version: DateVersion(2021, 12, 18),
+    version: SemanticVersion(0, 1, 0),
     baseUrls: ['https://www.scribblehub.com'],
     workTypes: [OriginalWork()],
     features: {Feature.popular},

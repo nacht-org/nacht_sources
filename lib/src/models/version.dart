@@ -11,15 +11,13 @@ abstract class CrawlerVersion implements Comparable<CrawlerVersion> {
 }
 
 /// Version type that uses the updated date to keep track
-class DateVersion extends CrawlerVersion {
-  final int year;
-  final int month;
-  final int day;
+class SemanticVersion extends CrawlerVersion {
+  final int major;
+  final int minor;
+  final int patch;
 
-  const DateVersion(this.year, this.month, this.day);
-
-  DateTime get datetime => DateTime(year, month, day);
+  const SemanticVersion(this.major, this.minor, this.patch);
 
   @override
-  String get version => '$year.$month.$day';
+  String get version => '$major.$minor.$patch';
 }
