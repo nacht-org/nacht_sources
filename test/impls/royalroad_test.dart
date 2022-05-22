@@ -23,5 +23,6 @@ void main() {
       });
     },
     skip: 'Network intensive and takes a along time.',
+    timeout: const Timeout(Duration(minutes: 1)),
   );
 }

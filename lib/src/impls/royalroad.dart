@@ -14,7 +14,7 @@ class RoyalRoad extends Crawler
   static const _meta = Meta(
     name: "RoyalRoad",
     lang: "en",
-    version: SemanticVersion(0, 2, 0),
+    version: SemanticVersion(0, 2, 1),
     baseUrls: ["https://www.royalroad.com/"],
     features: {Feature.search, Feature.popular},
   );
@@ -84,10 +84,21 @@ class RoyalRoad extends Crawler
         continue;
       }
 
+      final unixtime = tr.querySelector('time')?.attributes['unixtime'];
+
+      DateTime? updated;
+      if (unixtime != null) {
+        updated = DateTime.fromMillisecondsSinceEpoch(
+          int.parse(unixtime) * 1000,
+          isUtc: true,
+        );
+      }
+
       final chapter = Chapter(
         index: volume.chapters.length,
         title: a.text.trim(),
         url: meta.absoluteUrl(a.attributes['href'] ?? ''),
+        updated: updated,
       );
 
       volume.chapters.add(chapter);
