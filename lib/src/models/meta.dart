@@ -97,6 +97,13 @@ class Meta {
         readingDirections = readingDirections ?? const [ReadingDirection.ltr],
         attributes = attributes ?? const [];
 
+  /// The consistent part or the root of your website's address
+  ///
+  /// For example, http://www.YourDomain.com
+  ///
+  /// Must include the scheme (http:,https:)
+  String get baseUrl => baseUrls[0];
+
   /// Check whether the url is from the this source
   ///
   /// This implementation checks if the hostname of the

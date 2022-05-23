@@ -16,12 +16,6 @@ abstract class Crawler {
   static Dio defaultClient() {
     return Dio();
   }
-  /// The consistent part or the root of your website's address
-  /// 
-  /// For example, http://www.YourDomain.com
-  ///
-  /// Must include the scheme (http:,https:)
-  String get baseUrl => meta.baseUrls[0];
 
   /// Check whether the url is supported by this crawler
   ///
