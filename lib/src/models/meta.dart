@@ -115,16 +115,16 @@ class Meta {
   ///
   /// There are several relevant states the url could be in:
   ///
-  /// - **absolute:** starts with either 'https://' or 'http://', in this the url
+  /// - absolute: starts with either 'https://' or 'http://', in this the url
   ///   is returned as it without any changes.
   ///
-  /// - **missing schema:** schema is missing and the url starts with '//', in this
+  /// - missing schema: schema is missing and the url starts with '//', in this
   ///   case the appropriate schema from either current url or base url is prefixed.
   ///
-  /// - **relative absolute:** the url is relative to the website and starts with '/', in
+  /// - relative absolute: the url is relative to the website and starts with '/', in
   ///   this case the base website location (netloc) is prefixed to the url:
   ///
-  /// - **relative current:** the url is relative to the current webpage and does not match
+  /// - relative current: the url is relative to the current webpage and does not match
   ///   any of the above conditions, in this case the url is added to the current url provided.
   String absoluteUrl(String url, [String? current]) {
     if (url.startsWith("http://") || url.startsWith("https://")) {
