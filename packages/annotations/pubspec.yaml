@@ -9,7 +9,7 @@ environment:
   sdk: ">=2.16.1 <3.0.0"
 
 dependencies:
-  chapturn_sources:
+  nacht_sources:
     path: ../..
 
 dev_dependencies:

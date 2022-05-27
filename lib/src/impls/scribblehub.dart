@@ -1,6 +1,6 @@
 import 'package:annotations/annotations.dart';
-import 'package:chapturn_sources/src/interfaces/interfaces.dart';
-import 'package:chapturn_sources/src/models/models.dart';
+import 'package:nacht_sources/src/interfaces/interfaces.dart';
+import 'package:nacht_sources/src/models/models.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';

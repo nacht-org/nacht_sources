@@ -1,9 +1,9 @@
 import 'package:annotations/annotations.dart';
-import 'package:chapturn_sources/src/exceptions.dart';
-import 'package:chapturn_sources/src/extensions/string_strip.dart';
-import 'package:chapturn_sources/src/interfaces/interfaces.dart';
-import 'package:chapturn_sources/src/mixins/html_parser.dart';
-import 'package:chapturn_sources/src/models/models.dart';
+import 'package:nacht_sources/src/exceptions.dart';
+import 'package:nacht_sources/src/extensions/string_strip.dart';
+import 'package:nacht_sources/src/interfaces/interfaces.dart';
+import 'package:nacht_sources/src/mixins/html_parser.dart';
+import 'package:nacht_sources/src/models/models.dart';
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 

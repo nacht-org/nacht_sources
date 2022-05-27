@@ -1,4 +1,4 @@
-import 'package:chapturn_sources/src/extensions/string_strip.dart';
+import 'package:nacht_sources/src/extensions/string_strip.dart';
 import 'package:test/test.dart';
 
 class _TestData {

@@ -1,4 +1,4 @@
-import 'package:chapturn_sources/src/models/models.dart';
+import 'package:nacht_sources/src/models/models.dart';
 
 abstract class ParseNovel {
   /// Parse the novel by following the url

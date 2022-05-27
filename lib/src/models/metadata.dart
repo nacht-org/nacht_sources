@@ -1,4 +1,4 @@
-import 'package:chapturn_sources/src/constants.dart' show dublinCore;
+import 'package:nacht_sources/src/constants.dart' show dublinCore;
 
 enum Namespace {
   dc,

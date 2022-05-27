@@ -1,6 +1,6 @@
 import 'package:annotations/annotations.dart';
-import 'package:chapturn_sources/chapturn_sources.dart';
-import 'package:chapturn_sources/src/mixins/mixins.dart';
+import 'package:nacht_sources/nacht_sources.dart';
+import 'package:nacht_sources/src/mixins/mixins.dart';
 
 import 'package:dio/dio.dart';
 

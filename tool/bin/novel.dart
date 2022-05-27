@@ -1,4 +1,4 @@
-import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 
 void parseNovel(String url, int rangeFrom, int rangeTo) async {
   final crawlerFactory = crawlerFactoryFor(url);

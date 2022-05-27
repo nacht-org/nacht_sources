@@ -1,5 +1,5 @@
-import 'package:chapturn_sources/chapturn_sources.dart';
-import 'package:chapturn_sources/src/extensions/string_strip.dart';
+import 'package:nacht_sources/nacht_sources.dart';
+import 'package:nacht_sources/src/extensions/string_strip.dart';
 
 /// Defines the optional features of a crawler
 enum Feature {

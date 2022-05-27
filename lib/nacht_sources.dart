@@ -1,7 +1,7 @@
-library chapturn_sources;
+library nacht_sources;
 
-import 'package:chapturn_sources/generated/crawlers.g.dart';
-import 'package:chapturn_sources/src/utils.dart';
+import 'package:nacht_sources/generated/crawlers.g.dart';
+import 'package:nacht_sources/src/utils.dart';
 import 'package:dio/dio.dart';
 
 export './generated/crawlers.g.dart';

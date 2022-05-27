@@ -1,6 +1,6 @@
 import 'package:annotations/annotations.dart';
-import 'package:chapturn_sources/src/interfaces/crawler.dart';
-import 'package:chapturn_sources/src/models/meta.dart';
+import 'package:nacht_sources/src/interfaces/crawler.dart';
+import 'package:nacht_sources/src/models/meta.dart';
 import 'package:dio/dio.dart';
 
 /// A crawler factory class used to hold crawler

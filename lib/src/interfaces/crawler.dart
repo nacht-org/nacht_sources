@@ -1,8 +1,8 @@
-import 'package:chapturn_sources/src/exceptions.dart';
-import 'package:chapturn_sources/src/models/meta.dart';
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
+import 'package:nacht_sources/src/exceptions.dart';
+import 'package:nacht_sources/src/models/meta.dart';
 
 abstract class Crawler {
   final Meta meta;

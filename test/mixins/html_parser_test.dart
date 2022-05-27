@@ -1,4 +1,4 @@
-import 'package:chapturn_sources/src/mixins/html_parser.dart';
+import 'package:nacht_sources/src/mixins/html_parser.dart';
 import 'package:html/parser.dart' as p;
 import 'package:test/test.dart';
 

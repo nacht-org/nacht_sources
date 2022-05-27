@@ -1,4 +1,4 @@
-import 'package:chapturn_sources/src/constants.dart' as constants;
+import 'package:nacht_sources/src/constants.dart' as constants;
 import 'package:html/dom.dart' as dom;
 
 mixin HtmlParser {
