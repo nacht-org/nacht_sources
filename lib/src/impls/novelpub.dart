@@ -17,7 +17,7 @@ class NovelPub extends Crawler
   static const _meta = Meta(
     name: 'NovelPub',
     lang: 'en',
-    version: SemanticVersion(0, 1, 1),
+    version: SemanticVersion(0, 1, 2),
     baseUrls: ['https://www.novelpub.com'],
     features: {Feature.popular},
   );
@@ -156,6 +156,10 @@ class NovelPub extends Crawler
     }
 
     for (final element in doc.querySelectorAll('.adsbox, .adsbygoogle')) {
+      element.remove();
+    }
+
+    for (final element in doc.querySelectorAll('strong > strong')) {
       element.remove();
     }
 
