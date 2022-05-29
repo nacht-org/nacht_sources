@@ -1,25 +1,59 @@
 import 'package:annotations/annotations.dart';
+import 'package:dio/dio.dart';
+import 'package:html/dom.dart';
 import 'package:nacht_sources/src/exceptions.dart';
 import 'package:nacht_sources/src/extensions/string_strip.dart';
 import 'package:nacht_sources/src/interfaces/interfaces.dart';
 import 'package:nacht_sources/src/mixins/html_parser.dart';
 import 'package:nacht_sources/src/models/models.dart';
-import 'package:dio/dio.dart';
-import 'package:html/dom.dart';
 
 @registerCrawler
-class NovelPub extends Crawler with HtmlParser implements ParseNovel {
+class NovelPub extends Crawler
+    with HtmlParser
+    implements ParseNovel, ParsePopular {
   NovelPub.make() : super(client: Crawler.defaultClient(), meta: _meta);
   NovelPub.makeWith(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
     name: 'NovelPub',
     lang: 'en',
-    version: SemanticVersion(0, 1, 0),
+    version: SemanticVersion(0, 1, 1),
     baseUrls: ['https://www.novelpub.com'],
+    features: {Feature.popular},
   );
 
   static Meta constMeta() => _meta;
+
+  @override
+  String buildPopularUrl(int page) =>
+      'https://www.novelpub.com/genre/all/popular/all/$page';
+
+  @override
+  Future<List<Novel>> parsePopular(int page) async {
+    final doc = await pullDoc(buildPopularUrl(page));
+
+    final novels = <Novel>[];
+    for (final li in doc.querySelectorAll('.novel-list > .novel-item')) {
+      final a = li.querySelector('.novel-title a')!;
+      final thumbnailUrl =
+          li.querySelector('.novel-cover img')?.attributes['data-src'];
+
+      final novel = Novel(
+        title: a.attributes['title']!,
+        thumbnailUrl:
+            thumbnailUrl != null ? meta.absoluteUrl(thumbnailUrl) : null,
+        url: meta.absoluteUrl(a.attributes['href']!),
+        lang: 'en',
+        status: parseNovelStatus(
+          li.querySelector('.novel-stats .status')?.text.trim(),
+        ),
+      );
+
+      novels.add(novel);
+    }
+
+    return novels;
+  }
 
   @override
   Future<Novel> parseNovel(String url) async {
