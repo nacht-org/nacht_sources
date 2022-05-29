@@ -1,12 +1,14 @@
 import 'package:annotations/annotations.dart';
-import 'package:nacht_sources/src/interfaces/interfaces.dart';
-import 'package:nacht_sources/src/models/models.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
+import 'package:nacht_sources/src/exceptions.dart';
+import 'package:nacht_sources/src/interfaces/interfaces.dart';
+import 'package:nacht_sources/src/models/models.dart';
 
 @registerCrawler
-class ScribbleHub extends Crawler implements ParseNovel, ParsePopular {
+class ScribbleHub extends Crawler
+    implements ParseNovel, ParseSearch, ParsePopular {
   ScribbleHub.make() : super(client: Crawler.defaultClient(), meta: _meta);
   ScribbleHub.makeWith(Dio client) : super(client: client, meta: _meta);
 
@@ -16,12 +18,39 @@ class ScribbleHub extends Crawler implements ParseNovel, ParsePopular {
     version: SemanticVersion(0, 1, 0),
     baseUrls: ['https://www.scribblehub.com'],
     workTypes: [OriginalWork()],
-    features: {Feature.popular},
+    features: {Feature.popular, Feature.search},
   );
 
   static Meta constMeta() => _meta;
 
   DateFormat formatter = DateFormat('MMM d, y hh:mm a');
+
+  @override
+  Future<List<Novel>> search(String query, int page) async {
+    if (page > 1) {
+      throw PageException('Does not support multi-page searches');
+    }
+
+    final url = 'https://www.scribblehub.com/?s=$query&post_type=fictionposts';
+    final doc = await pullDoc(url);
+
+    final novels = <Novel>[];
+    for (final div in doc.querySelectorAll('.search_main_box')) {
+      final a = div.querySelector('.search_title a')!;
+
+      final novel = Novel(
+        title: a.text.trim(),
+        url: a.attributes['href']!,
+        lang: 'en',
+        thumbnailUrl: div.querySelector('.search_img img')?.attributes['src'],
+        workType: const OriginalWork(),
+      );
+
+      novels.add(novel);
+    }
+
+    return novels;
+  }
 
   @override
   String buildPopularUrl(int page) =>

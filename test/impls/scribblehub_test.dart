@@ -9,6 +9,11 @@ void main() {
       const novelUrl = 'https://www.scribblehub.com/series/299966/devourer/';
       final crawler = ScribbleHub.make();
 
+      test('should be able to search novel', () async {
+        final novels = await crawler.search('solo', 1);
+        expect(novels, isA<List<Novel>>());
+      });
+
       test('should be able to parse novel', () async {
         final novel = await crawler.parseNovel(novelUrl);
         expect(novel, isA<Novel>());
