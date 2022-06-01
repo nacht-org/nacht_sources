@@ -11,6 +11,10 @@ enum TranslationType {
 /// original, translated, etc
 abstract class WorkType extends Equatable {
   const WorkType();
+
+  const factory WorkType.original() = OriginalWork;
+  const factory WorkType.translation(TranslationType type) = TranslatedWork;
+  const factory WorkType.unknown() = UnknownWorkType;
 }
 
 /// Defines an original work
