@@ -54,7 +54,7 @@ class RoyalRoad extends Crawler
     final doc = await pullDoc(url);
 
     final status = NovelStatus.parse(
-      doc.querySelectorAll('.fiction-info .label')[1].text.trim(),
+      doc.querySelectorAll('.fiction-info .label')[1].text,
     );
 
     final novel = Novel(

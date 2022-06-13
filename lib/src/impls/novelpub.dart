@@ -88,7 +88,7 @@ class NovelPub extends Crawler
     for (final span in doc.querySelectorAll('.header-stats span')) {
       final label = span.querySelector('small')?.text.trim().toLowerCase();
       if (label == 'status') {
-        final value = span.querySelector('strong')?.text.trim();
+        final value = span.querySelector('strong')?.text;
         novel.status = NovelStatus.parse(value);
       }
     }

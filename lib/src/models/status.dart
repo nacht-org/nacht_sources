@@ -19,7 +19,8 @@ enum NovelStatus {
 
   /// Acquire the novel status from a suitable string.
   ///
-  /// The matching strings are listed below (case-insensitive):
+  /// The [value] is trimmed and converted to lowercase
+  /// then matched to strings listed below:
   ///
   /// - [NovelStatus.ongoing] : "ongoing"
   /// - [NovelStatus.hiatus] : "hiatus"
@@ -28,7 +29,7 @@ enum NovelStatus {
   ///
   /// If none of the above matches [NovelStatus.unknown]
   static NovelStatus parse(String? value) {
-    switch (value?.toLowerCase()) {
+    switch (value?.trim().toLowerCase()) {
       case 'ongoing':
         return NovelStatus.ongoing;
       case 'hiatus':
