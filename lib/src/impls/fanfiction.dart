@@ -1,6 +1,5 @@
 import 'package:annotations/annotations.dart';
 import 'package:nacht_sources/nacht_sources.dart';
-import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 
 @registerCrawler
@@ -13,7 +12,7 @@ class FanFiction extends Crawler implements ParseNovel {
     lang: 'mixed',
     version: SemanticVersion(0, 1, 0),
     baseUrls: ['https://www.fanfiction.net/', 'https://m.fanfiction.net/'],
-    support: HasSupport.browserOnly,
+    support: Support.browserOnly,
     workTypes: [OriginalWork()],
     attributes: [Attribute.fanfiction],
   );

@@ -89,7 +89,7 @@ class Meta {
     required this.version,
     required this.baseUrls,
     this.features = const {},
-    this.support = HasSupport.full,
+    this.support = Support.all,
     List<WorkType>? workTypes,
     List<ReadingDirection>? readingDirections,
     List<Attribute>? attributes,

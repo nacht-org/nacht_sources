@@ -15,54 +15,69 @@ enum SupportPlatform {
   web,
 }
 
-/// Base class that defines support for a crawler
+/// Base class that defines support for a crawler.
+///
+/// See also:
+/// - [_PlatformsSupport], subclass that defines support for platforms.
+/// - [_NoneSupport], subclass that indicates no support.
 abstract class Support extends Equatable {
   const Support();
 
+  /// Defines that a crawler is supported by the [platforms]
+  ///
+  /// See also:
+  /// - [Support.all]
+  /// - [Support.browserOnly]
+  const factory Support.platforms(List<SupportPlatform> platforms) =
+      _PlatformsSupport;
+
+  /// Defines that support for crawler has either
+  /// been discontinued or rejected due to [reason]
+  const factory Support.none(String reason) = _NoneSupport;
+
+  /// Support with all [SupportPlatform]s supported
+  static const Support all = Support.platforms(SupportPlatform.values);
+
+  /// Support with only [SupportPlatform.browser] supported
+  static const Support browserOnly =
+      Support.platforms([SupportPlatform.browser]);
+
+  /// Check if a specific platform is supported.
   bool isPlatformSupported(SupportPlatform platform) {
-    return this is HasSupport &&
-        (this as HasSupport).platforms.contains(platform);
+    return this is _PlatformsSupport &&
+        (this as _PlatformsSupport).platforms.contains(platform);
   }
 
   /// Union helper to distinguish between support types
   T when<T>({
-    required T Function(List<SupportPlatform> platforms) has,
-    required T Function(String reason) no,
+    required T Function(List<SupportPlatform> platforms) platforms,
+    required T Function(String reason) none,
   }) {
-    if (this is HasSupport) {
-      return has((this as HasSupport).platforms);
+    if (this is _PlatformsSupport) {
+      return platforms((this as _PlatformsSupport).platforms);
     } else {
-      return no((this as NoSupport).reason);
+      return none((this as _NoneSupport).reason);
     }
   }
 }
 
-/// Defines that a crawler is supported
-///
-/// See [platforms] for more information
-class HasSupport extends Support {
-  /// Identifies all the platforms that
-  /// are supported
+class _PlatformsSupport extends Support {
+  /// Identifies all the platforms that are supported
   final List<SupportPlatform> platforms;
 
-  const HasSupport(this.platforms);
-
-  static const HasSupport full = HasSupport(SupportPlatform.values);
-  static const HasSupport browserOnly = HasSupport([SupportPlatform.browser]);
+  const _PlatformsSupport(this.platforms);
 
   @override
   List<Object?> get props => [platforms];
 }
 
-/// Defines that support for crawler has either
-/// been discontinued or rejected
 ///
 /// See [reason] for more information
-class NoSupport extends Support {
+class _NoneSupport extends Support {
   /// The reason why there is no support
   final String reason;
 
-  const NoSupport(this.reason);
+  const _NoneSupport(this.reason);
 
   @override
   List<Object?> get props => [reason];
