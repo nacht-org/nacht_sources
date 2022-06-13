@@ -1,8 +1,7 @@
 import 'package:annotations/annotations.dart';
+import 'package:dio/dio.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/mixins/mixins.dart';
-
-import 'package:dio/dio.dart';
 
 @registerCrawler
 class RoyalRoad extends Crawler
@@ -14,7 +13,7 @@ class RoyalRoad extends Crawler
   static const _meta = Meta(
     name: "RoyalRoad",
     lang: "en",
-    version: SemanticVersion(0, 2, 1),
+    version: SemanticVersion(0, 2, 2),
     baseUrls: ["https://www.royalroad.com/"],
     features: {Feature.search, Feature.popular},
   );
@@ -55,7 +54,7 @@ class RoyalRoad extends Crawler
     final doc = await pullDoc(url);
 
     final status = NovelStatus.parse(
-      doc.querySelector('.fiction-info .label:nth-child(2)')?.text.trim(),
+      doc.querySelectorAll('.fiction-info .label')[1].text.trim(),
     );
 
     final novel = Novel(
