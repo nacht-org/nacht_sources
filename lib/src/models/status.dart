@@ -15,30 +15,30 @@ enum NovelStatus {
   stub,
 
   /// The novel status is unknown.
-  unknown,
-}
+  unknown;
 
-/// Acquire the novel status from a suitable string.
-///
-/// The matching strings are listed below (case-insensitive):
-///
-/// - [NovelStatus.ongoing] : "ongoing"
-/// - [NovelStatus.hiatus] : "hiatus"
-/// - [NovelStatus.stub] : "stub"
-/// - [NovelStatus.completed] : "completed"
-///
-/// If none of the above matches [NovelStatus.unknown]
-NovelStatus parseNovelStatus(String? value) {
-  switch (value?.toLowerCase()) {
-    case 'ongoing':
-      return NovelStatus.ongoing;
-    case 'hiatus':
-      return NovelStatus.hiatus;
-    case 'stub':
-      return NovelStatus.stub;
-    case 'completed':
-      return NovelStatus.completed;
-    default:
-      return NovelStatus.unknown;
+  /// Acquire the novel status from a suitable string.
+  ///
+  /// The matching strings are listed below (case-insensitive):
+  ///
+  /// - [NovelStatus.ongoing] : "ongoing"
+  /// - [NovelStatus.hiatus] : "hiatus"
+  /// - [NovelStatus.stub] : "stub"
+  /// - [NovelStatus.completed] : "completed"
+  ///
+  /// If none of the above matches [NovelStatus.unknown]
+  static NovelStatus parse(String? value) {
+    switch (value?.toLowerCase()) {
+      case 'ongoing':
+        return NovelStatus.ongoing;
+      case 'hiatus':
+        return NovelStatus.hiatus;
+      case 'stub':
+        return NovelStatus.stub;
+      case 'completed':
+        return NovelStatus.completed;
+      default:
+        return NovelStatus.unknown;
+    }
   }
 }

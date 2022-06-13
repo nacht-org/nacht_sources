@@ -54,7 +54,7 @@ class RoyalRoad extends Crawler
   Future<Novel> parseNovel(String url) async {
     final doc = await pullDoc(url);
 
-    final status = parseNovelStatus(
+    final status = NovelStatus.parse(
       doc.querySelector('.fiction-info .label:nth-child(2)')?.text.trim(),
     );
 

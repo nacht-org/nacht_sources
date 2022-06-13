@@ -44,7 +44,7 @@ class NovelPub extends Crawler
             thumbnailUrl != null ? meta.absoluteUrl(thumbnailUrl) : null,
         url: meta.absoluteUrl(a.attributes['href']!),
         lang: 'en',
-        status: parseNovelStatus(
+        status: NovelStatus.parse(
           li.querySelector('.novel-stats .status')?.text.trim(),
         ),
       );
@@ -89,7 +89,7 @@ class NovelPub extends Crawler
       final label = span.querySelector('small')?.text.trim().toLowerCase();
       if (label == 'status') {
         final value = span.querySelector('strong')?.text.trim();
-        novel.status = parseNovelStatus(value);
+        novel.status = NovelStatus.parse(value);
       }
     }
 

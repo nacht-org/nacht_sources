@@ -102,7 +102,7 @@ class ScribbleHub extends Crawler
           .querySelectorAll('.wi_fic_desc > p')
           .map((e) => e.text.trim())
           .toList(),
-      status: parseNovelStatus(statusElement?.text.split('-').first),
+      status: NovelStatus.parse(statusElement?.text.split('-').first),
       workType: const OriginalWork(),
     );
 
