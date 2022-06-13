@@ -1,6 +1,7 @@
 import 'package:annotations/annotations.dart';
-import 'package:nacht_sources/nacht_sources.dart';
+import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 
 @registerCrawler
 class FanFiction extends Crawler implements ParseNovel {
