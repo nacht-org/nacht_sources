@@ -13,6 +13,7 @@ class ScribbleHub extends Crawler
   ScribbleHub.makeWith(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
+    id: 'com.scribblehub',
     name: 'ScribbleHub',
     lang: 'en',
     version: SemanticVersion(0, 1, 0),

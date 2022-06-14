@@ -35,6 +35,16 @@ enum Attribute {
 
 /// Defines the metadata of a crawler
 class Meta {
+  /// A string that uniquely identifies this crawler
+  ///
+  /// While no style is enforced, It is recommended to
+  /// use the package name convention.
+  ///
+  /// For example: com.royalroad
+  ///
+  /// Caution: This value should be changed very rarely.
+  final String id;
+
   /// The name of the source. Usually equivalent to the
   /// name of the crawler class
   final String name;
@@ -84,6 +94,7 @@ class Meta {
   final List<Attribute> attributes;
 
   const Meta({
+    required this.id,
     required this.name,
     required this.lang,
     required this.version,

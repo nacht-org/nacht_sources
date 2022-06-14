@@ -11,6 +11,7 @@ class RoyalRoad extends Crawler
   RoyalRoad.makeWith(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
+    id: 'com.royalroad',
     name: "RoyalRoad",
     lang: "en",
     version: SemanticVersion(0, 2, 2),

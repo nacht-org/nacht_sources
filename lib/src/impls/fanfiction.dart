@@ -9,6 +9,7 @@ class FanFiction extends Crawler implements ParseNovel {
   FanFiction.makeWith(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
+    id: 'com.fanfiction',
     name: 'FanFiction',
     lang: 'mixed',
     version: SemanticVersion(0, 1, 0),

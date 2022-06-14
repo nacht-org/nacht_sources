@@ -15,6 +15,7 @@ class NovelPub extends Crawler
   NovelPub.makeWith(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
+    id: 'com.novelpub',
     name: 'NovelPub',
     lang: 'en',
     version: SemanticVersion(0, 1, 2),
