@@ -37,22 +37,21 @@ class IsolatedRunner {
   }
 
   void _send(Event event) => _channel.sink.add(event);
+  void _error(Event event, Object exception) => _send(event.error(exception));
 
   Future<void> parseNovel(NovelRequest request) async {
     if (_crawler is! ParseNovel) {
-      return _send(
-        ExceptionEvent(
-          request.key,
-          FeatureException("Novel parsing is not supported."),
-        ),
+      return _error(
+        request,
+        FeatureException("Novel parsing is not supported."),
       );
     }
 
     try {
       final novel = await (_crawler as ParseNovel).parseNovel(request.url);
-      return _send(NovelResponse(request.key, novel));
+      return _send(request.response(novel));
     } catch (e) {
-      return _send(ExceptionEvent(request.key, e));
+      return _error(request, e);
     }
   }
 }
