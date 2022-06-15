@@ -41,7 +41,7 @@ class IsolatedRunner {
   Future<void> parseNovel(NovelRequest request) async {
     if (_crawler is! ParseNovel) {
       return _send(
-        NovelErrorEvent(
+        ExceptionEvent(
           request.key,
           FeatureException("Novel parsing is not supported."),
         ),
@@ -50,9 +50,9 @@ class IsolatedRunner {
 
     try {
       final novel = await (_crawler as ParseNovel).parseNovel(request.url);
-      return _send(NovelDataEvent(request.key, novel));
+      return _send(NovelResponse(request.key, novel));
     } catch (e) {
-      return _send(NovelErrorEvent(request.key, e));
+      return _send(ExceptionEvent(request.key, e));
     }
   }
 }

@@ -30,14 +30,12 @@ class IsolatedHandler {
     );
   }
 
-  /// Throws
   Future<Novel> parseNovel(String url) async {
-    final response =
-        await _send<NovelRequest, NovelResponse>(NovelRequest(count++, url));
+    final response = await _send(NovelRequest(count++, url));
 
-    if (response is NovelDataEvent) {
+    if (response is NovelResponse) {
       return response.novel;
-    } else if (response is NovelErrorEvent) {
+    } else if (response is ExceptionEvent) {
       throw response.exception;
     }
 

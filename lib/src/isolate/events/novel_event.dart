@@ -6,16 +6,7 @@ class NovelRequest extends Event {
   final String url;
 }
 
-abstract class NovelResponse extends Event {
-  const NovelResponse(super.key);
-}
-
-class NovelDataEvent extends NovelResponse {
-  const NovelDataEvent(super.key, this.novel);
+class NovelResponse extends Event {
+  const NovelResponse(super.key, this.novel);
   final Novel novel;
-}
-
-class NovelErrorEvent extends NovelResponse {
-  const NovelErrorEvent(super.key, this.exception);
-  final Object exception;
 }

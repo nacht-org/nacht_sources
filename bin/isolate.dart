@@ -9,7 +9,9 @@ void main() async {
     final novel = await handler.parseNovel(
         'https://www.novelupdates.com/series/good-man-operation-guide-quick-wear/');
     print(novel.title);
-  } catch (e) {}
+  } catch (e) {
+    print(e.runtimeType);
+  }
 
   handler.close();
 }
