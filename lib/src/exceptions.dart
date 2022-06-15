@@ -4,5 +4,9 @@ class CrawlerException implements Exception {
 }
 
 class PageException extends CrawlerException {
-  PageException(String message) : super(message);
+  PageException(super.message);
+}
+
+class FeatureException extends CrawlerException {
+  FeatureException(super.message);
 }

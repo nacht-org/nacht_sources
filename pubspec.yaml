@@ -18,13 +18,14 @@ dependencies:
   equatable: ^2.0.3
   html: ^0.15.0
   intl: ^0.17.0
+  stream_channel: ^2.1.0
 
 dev_dependencies:
   build_runner:
   generators:
     path: ./packages/generators
   lint: ^1.8.1
-  mockito: ^3.0.2
+  mockito: ^5.2.0
   test: ^1.20.0
 
 # For information on the generic Dart part of this file, see the
