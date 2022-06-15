@@ -1,21 +1,21 @@
 library nacht_sources;
 
-import 'package:nacht_sources/generated/crawlers.g.dart';
-import 'package:nacht_sources/src/utils.dart';
-import 'package:dio/dio.dart';
-
+// Generated.
 export './generated/crawlers.g.dart';
+
+// Impls.
 export './src/impls/impls.dart';
+
+// Interfaces.
 export './src/interfaces/interfaces.dart';
+
+// Isolate.
+export './src/isolate/comm.dart';
+export './src/isolate/isolated_handler.dart';
+export './src/isolate/isolated_runner.dart';
+
+// Models.
 export './src/models/models.dart';
+
+// Utils.
 export './src/utils.dart';
-
-CrawlerFactory? crawlerFactoryFor(String url, [Dio? client]) {
-  for (final tuple in crawlers) {
-    if (tuple.meta().of(url)) {
-      return tuple;
-    }
-  }
-
-  return null;
-}
