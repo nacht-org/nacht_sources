@@ -30,6 +30,8 @@ class IsolatedRunner {
     _channel.stream.listen((event) {
       if (event is NovelRequest) {
         parseNovel(event);
+      } else if (event is ChapterRequest) {
+        parseChapter(event);
       } else if (event is ExitEvent) {
         _channel.sink.close();
       }
@@ -50,6 +52,23 @@ class IsolatedRunner {
     try {
       final novel = await (_crawler as ParseNovel).parseNovel(request.url);
       return _send(request.response(novel));
+    } catch (e) {
+      return _error(request, e);
+    }
+  }
+
+  Future<void> parseChapter(ChapterRequest request) async {
+    if (_crawler is! ParseNovel) {
+      return _error(
+        request,
+        FeatureException("Chapter parsing is not supported."),
+      );
+    }
+
+    try {
+      final chapter = Chapter.withUrl(request.url);
+      await (_crawler as ParseNovel).parseChapter(chapter);
+      return _send(request.response(chapter.content));
     } catch (e) {
       return _error(request, e);
     }

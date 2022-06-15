@@ -42,6 +42,18 @@ class IsolatedHandler {
     throw Exception(); // Unreachable.
   }
 
+  Future<String?> fetchChapterContent(String url) async {
+    final response = await _send(ChapterRequest(count++, url));
+
+    if (response is ChapterResponse) {
+      return response.content;
+    } else if (response is ExceptionEvent) {
+      throw response.exception;
+    }
+
+    throw Exception(); // Unreachable.
+  }
+
   /// Helper method to send a [request] and wait for an response
   Future<R> _send<T extends Event, R>(T request) async {
     await _ensureInitialized;

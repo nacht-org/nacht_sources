@@ -4,11 +4,10 @@ void main() async {
   final handler = IsolatedHandler(factory: crawlers[3]);
 
   final url =
-      'https://www.scribblehub.com/series/511379/i-am-just-a-dclass-hunter/';
+      'https://www.scribblehub.com/read/383775-weaponsmith--a-crafting-litrpg/chapter/507614/';
   try {
-    final novel = await handler.parseNovel(
-        'https://www.novelupdates.com/series/good-man-operation-guide-quick-wear/');
-    print(novel.title);
+    final data = await handler.fetchChapterContent(url);
+    print(data);
   } catch (e) {
     print(e.runtimeType);
   }
