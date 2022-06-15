@@ -1,10 +1,8 @@
 import 'dart:isolate';
 
 import 'package:nacht_sources/nacht_sources.dart';
+import 'package:nacht_sources/src/isolate/events/events.dart';
 import 'package:stream_channel/isolate_channel.dart';
-
-import 'events/events.dart';
-import 'events/novel_event.dart';
 
 class IsolatedHandler {
   IsolatedHandler({
@@ -17,6 +15,7 @@ class IsolatedHandler {
   final CrawlerFactory factory;
 
   Isolate? _isolate;
+  int count = 0;
 
   late final ReceivePort _receivePort;
   late final IsolateChannel<Event> _channel;
@@ -34,7 +33,7 @@ class IsolatedHandler {
   /// Throws
   Future<Novel> parseNovel(String url) async {
     final response =
-        await _send<NovelRequest, NovelResponse>(NovelRequest(url));
+        await _send<NovelRequest, NovelResponse>(NovelRequest(count++, url));
 
     if (response is NovelDataEvent) {
       return response.novel;
@@ -49,7 +48,8 @@ class IsolatedHandler {
   Future<R> _send<T extends Event, R>(T request) async {
     await _ensureInitialized;
     _channel.sink.add(request);
-    return await _channel.stream.firstWhere((event) => event is R) as R;
+    return await _channel.stream.firstWhere((event) => event.key == request.key)
+        as R;
   }
 
   /// Closes the handler and the corresponding isolate.
