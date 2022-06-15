@@ -20,7 +20,7 @@ class IsolatedHandler {
   late final ReceivePort _receivePort;
   late final IsolateChannel<Event> _channel;
 
-  Future<Isolate> get _ensureInitialized async {
+  Future<Isolate> _ensureInitialized() async {
     return _isolate ??= await Isolate.spawn(
       IsolatedRunner.start,
       IsolatedInput(
@@ -56,7 +56,7 @@ class IsolatedHandler {
 
   /// Helper method to send a [request] and wait for an response
   Future<R> _send<T extends Event, R>(T request) async {
-    await _ensureInitialized;
+    await _ensureInitialized();
     _channel.sink.add(request);
     return await _channel.stream.firstWhere((event) => event.key == request.key)
         as R;
