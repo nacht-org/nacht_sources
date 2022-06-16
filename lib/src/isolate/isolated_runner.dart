@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/exceptions.dart';
 import 'package:nacht_sources/src/isolate/events/events.dart';
+import 'package:nacht_sources/src/isolate/events/popular_event.dart';
 import 'package:stream_channel/isolate_channel.dart';
 
 class IsolatedInput {
@@ -32,6 +33,8 @@ class IsolatedRunner {
         parseNovel(event);
       } else if (event is ChapterRequest) {
         parseChapter(event);
+      } else if (event is PopularRequest) {
+        parsePopular(event);
       } else if (event is ExitEvent) {
         _channel.sink.close();
       }
@@ -69,6 +72,23 @@ class IsolatedRunner {
       final chapter = Chapter.withUrl(request.url);
       await (_crawler as ParseNovel).parseChapter(chapter);
       return _send(request.response(chapter.content));
+    } catch (e) {
+      return _error(request, e);
+    }
+  }
+
+  Future<void> parsePopular(PopularRequest request) async {
+    if (_crawler is! ParsePopular) {
+      return _error(
+        request,
+        FeatureException('Popular parsing is not supported'),
+      );
+    }
+
+    try {
+      final novels =
+          await (_crawler as ParsePopular).parsePopular(request.page);
+      return _send(request.response(novels));
     } catch (e) {
       return _error(request, e);
     }
