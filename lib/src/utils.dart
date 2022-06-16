@@ -15,10 +15,10 @@ class CrawlerFactory {
   const CrawlerFactory(this.meta, this.basic, this.custom);
 }
 
-CrawlerFactory? crawlerFactoryFor(String url, [Dio? client]) {
-  for (final tuple in crawlers) {
-    if (tuple.meta().of(url)) {
-      return tuple;
+CrawlerFactory? crawlerFactoryFor(String url) {
+  for (final factory in crawlers.values) {
+    if (factory.meta().of(url)) {
+      return factory;
     }
   }
 

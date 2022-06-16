@@ -9,9 +9,12 @@ import 'package:path/path.dart' as path;
 import 'package:source_gen/source_gen.dart';
 
 class RegisteredCrawler {
+  RegisteredCrawler(
+      {required this.className, required this.pathUri, required this.id});
+
   final String className;
-  final Uri uri;
-  RegisteredCrawler(this.className, this.uri);
+  final Uri pathUri;
+  final String id;
 }
 
 class RegisteredFactory {
@@ -59,19 +62,19 @@ class CrawlerCollectorBuilder extends Builder {
     buffer.writeln();
     buffer.writeln('import "${factory.uri}";');
     for (var crawler in crawlers) {
-      buffer.writeln('import "${crawler.uri}";');
+      buffer.writeln('import "${crawler.pathUri}";');
     }
 
     buffer.writeln();
-    buffer.writeln('const crawlers = [');
+    buffer.writeln('const crawlers = {');
 
     for (var crawler in crawlers) {
       buffer.writeln(
-        '${factory.className}(${crawler.className}.getMeta, ${crawler.className}.basic, ${crawler.className}.custom),',
+        '  "${crawler.id}": ${factory.className}(${crawler.className}.getMeta, ${crawler.className}.basic, ${crawler.className}.custom),',
       );
     }
 
-    buffer.writeln('];');
+    buffer.writeln('};');
 
     return buildStep.writeAsString(
         _allFileOutput(buildStep), buffer.toString());
@@ -86,7 +89,10 @@ class CrawlerCollectorBuilder extends Builder {
       annotated.element.visitChildren(visitor);
 
       return RegisteredCrawler(
-          visitor.className, annotated.element.source!.uri);
+        className: annotated.element.name!,
+        pathUri: annotated.element.source!.uri,
+        id: annotated.annotation.read('id').stringValue,
+      );
     }).toSet();
   }
 

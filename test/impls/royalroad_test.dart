@@ -9,7 +9,7 @@ void main() {
       const novelUrl = 'https://www.royalroad.com/fiction/52322/space-dork';
       const chapterUrl =
           'https://www.royalroad.com/fiction/52322/space-dork/chapter/865223/chapter-1';
-      final crawler = RoyalRoad.make();
+      final crawler = RoyalRoad.basic();
 
       test('should be able to parse novel', () async {
         final novel = await crawler.parseNovel(novelUrl);

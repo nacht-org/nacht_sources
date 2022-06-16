@@ -4,7 +4,7 @@ import 'package:html/dom.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/misc/misc.dart';
 
-@registerCrawler
+@RegisterCrawler('com.novelpub')
 class NovelPub extends Crawler with htmlCleaner, ParseNovel {
   NovelPub.basic() : super(client: Crawler.defaultClient(), meta: _meta);
   NovelPub.custom(Dio client) : super(client: client, meta: _meta);

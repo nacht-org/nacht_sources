@@ -4,7 +4,7 @@ import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 
-@registerCrawler
+@RegisterCrawler('com.scribblehub')
 class ScribbleHub extends Crawler with ParseNovel {
   ScribbleHub.basic() : super(client: Crawler.defaultClient(), meta: _meta);
   ScribbleHub.custom(Dio client) : super(client: client, meta: _meta);

@@ -1,8 +1,8 @@
 class RegisterCrawler {
-  const RegisterCrawler();
-}
+  const RegisterCrawler(this.id);
 
-const registerCrawler = RegisterCrawler();
+  final String id;
+}
 
 class RegisterFactory {
   const RegisterFactory();
