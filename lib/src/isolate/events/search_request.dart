@@ -1,7 +1,7 @@
 import 'package:nacht_sources/nacht_sources.dart';
-import 'package:nacht_sources/src/isolate/events/event.dart';
+import 'package:nacht_sources/src/isolate/events/events.dart';
 
-class SearchRequest extends Event {
+class SearchRequest extends Request<List<Novel>> {
   SearchRequest(super.key, this.query, this.page);
 
   final String query;

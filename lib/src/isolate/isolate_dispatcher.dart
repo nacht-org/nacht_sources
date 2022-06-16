@@ -39,8 +39,8 @@ class IsolateDispatcher {
   }
 
   Future<String?> fetchChapterContent(String url) {
-    return _request<ChapterRequest, String?>(
-      ChapterRequest(count++, url),
+    return _request<ChapterContentRequest, String?>(
+      ChapterContentRequest(count++, url),
     );
   }
 
@@ -63,9 +63,9 @@ class IsolateDispatcher {
   }
 
   /// Helper method that combines [_send] and [_expect]
-  Future<R> _request<T extends Event, R>(T request) async {
-    final response = await _send(request);
-    return _expect(response);
+  Future<R> _request<T extends Request<R>, R>(T request) async {
+    final response = await _send<T>(request);
+    return _expect<R>(response);
   }
 
   /// Helper method to send a [request] and wait for an response

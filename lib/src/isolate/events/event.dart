@@ -1,5 +1,3 @@
-import 'package:nacht_sources/src/isolate/events/exception_event.dart';
-
 /// The base event for communication between [IsolatedHandler] and [IsolatedRunner]
 ///
 /// [key] is used to determine the corresponding response from
@@ -17,14 +15,17 @@ abstract class Event {
 
   /// Create an exception event with this events key.
   ExceptionEvent error(Object exception) => ExceptionEvent(key, exception);
-
-  /// Create a reply event with this events key.
-  ReplyEvent reply<T>(T value) => ReplyEvent<T>(key, value);
 }
 
 /// Signal that the isolate must be closed.
 class ExitEvent extends Event {
   const ExitEvent() : super(-1);
+}
+
+/// Event used by isolate to indicate that an error has occured
+class ExceptionEvent extends Event {
+  const ExceptionEvent(super.key, this.exception);
+  final Object exception;
 }
 
 /// Return a [value] from the isolate to the main thread.
