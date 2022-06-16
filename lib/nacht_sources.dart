@@ -14,7 +14,6 @@ export 'src/interfaces/interfaces.dart';
 
 // Isolate.
 export 'src/isolate/isolate_handler.dart';
-export 'src/isolate/isolate_worker.dart';
 
 // Models.
 export 'src/models/models.dart';
