@@ -2,7 +2,7 @@ import 'package:annotations/annotations.dart';
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:nacht_sources/nacht_sources.dart';
-import 'package:nacht_sources/src/extensions/string_strip.dart';
+import 'package:nacht_sources/src/misc/misc.dart';
 
 @registerCrawler
 class NovelPub extends Crawler with htmlCleaner, ParseNovel {
