@@ -16,6 +16,7 @@ void main() async {
   );
   await popularUrl(handler, 1);
   await popular(handler, 1);
+  await search(handler, 'solo', 1);
 
   handler.close();
 }
@@ -41,6 +42,15 @@ Future<void> popularUrl(IsolatedHandler handler, int page) {
   return scope(() async {
     final data = await handler.buildPopularUrl(page);
     print('page: $page,\n  url: $data');
+    print('');
+  });
+}
+
+Future<void> search(IsolatedHandler handler, String query, int page) {
+  return scope(() async {
+    final data = await handler.fetchSearch(query, page);
+    print('query: $query, page: $page,');
+    printNovels(data);
     print('');
   });
 }

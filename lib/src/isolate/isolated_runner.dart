@@ -38,6 +38,8 @@ class IsolatedRunner {
         buildPopularUrl(event);
       } else if (event is PopularRequest) {
         parsePopular(event);
+      } else if (event is SearchRequest) {
+        parseSearch(event);
       } else if (event is ExitEvent) {
         _channel.sink.close();
       }
@@ -107,6 +109,20 @@ class IsolatedRunner {
     try {
       final novels =
           await (_crawler as ParsePopular).parsePopular(request.page);
+      return _send(request.response(novels));
+    } catch (e) {
+      return _error(request, e);
+    }
+  }
+
+  Future<void> parseSearch(SearchRequest request) async {
+    if (_crawler is! ParseSearch) {
+      return _error(request, FeatureException('Search is not supported'));
+    }
+
+    try {
+      final novels =
+          await (_crawler as ParseSearch).search(request.query, request.page);
       return _send(request.response(novels));
     } catch (e) {
       return _error(request, e);

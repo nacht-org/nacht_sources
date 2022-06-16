@@ -82,6 +82,18 @@ class IsolatedHandler {
     throw Exception(); // Unreachable.
   }
 
+  Future<List<Novel>> fetchSearch(String query, int page) async {
+    final response = await _send(SearchRequest(count++, query, page));
+
+    if (response is SearchResponse) {
+      return response.novels;
+    } else if (response is ExceptionEvent) {
+      throw response.exception;
+    }
+
+    throw Exception(); // Unreachable.
+  }
+
   /// Helper method to send a [request] and wait for an response
   Future<R> _send<T extends Event, R>(T request) async {
     await _ensureInitialized();
