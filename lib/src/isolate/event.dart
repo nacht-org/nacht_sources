@@ -1,4 +1,7 @@
-/// The base event for communication between [IsolatedHandler] and [IsolatedRunner]
+import 'package:nacht_sources/src/isolate/isolate_dispatcher.dart';
+import 'package:nacht_sources/src/isolate/isolate_handler.dart';
+
+/// The base event for communication between [IsolateDispatcher] and [IsolateHandler]
 ///
 /// [key] is used to determine the corresponding response from
 /// the isolate to the request event.
