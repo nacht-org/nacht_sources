@@ -10,15 +10,17 @@ class IsolatedHandler {
   }) {
     _receivePort = ReceivePort();
     _channel = IsolateChannel.connectReceive(_receivePort);
+    _stream = _channel.stream.asBroadcastStream();
   }
 
   final CrawlerFactory factory;
 
-  Isolate? _isolate;
-  int count = 0;
-
   late final ReceivePort _receivePort;
   late final IsolateChannel<Event> _channel;
+  late final Stream<Event> _stream;
+
+  Isolate? _isolate;
+  int count = 0;
 
   Future<Isolate> _ensureInitialized() async {
     return _isolate ??= await Isolate.spawn(
@@ -58,8 +60,7 @@ class IsolatedHandler {
   Future<R> _send<T extends Event, R>(T request) async {
     await _ensureInitialized();
     _channel.sink.add(request);
-    return await _channel.stream.firstWhere((event) => event.key == request.key)
-        as R;
+    return await _stream.firstWhere((event) => event.key == request.key) as R;
   }
 
   /// Closes the handler and the corresponding isolate.
