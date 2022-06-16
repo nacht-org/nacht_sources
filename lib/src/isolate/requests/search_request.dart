@@ -8,12 +8,7 @@ class SearchRequest extends RequestEvent<List<Novel>> {
   final int page;
 
   @override
-  Future<List<Novel>> handle(Crawler crawler) async {
-    if (crawler is! ParseSearch) {
-      throw FeatureException('Search is not supported');
-    }
-
-    final novels = await (crawler as ParseSearch).search(query, page);
-    return novels;
+  Future<List<Novel>> handle(Crawler crawler) {
+    return (crawler as ParseNovel).search(query, page);
   }
 }

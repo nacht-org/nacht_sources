@@ -1,16 +1,11 @@
 import 'package:annotations/annotations.dart';
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
-import 'package:nacht_sources/src/exceptions.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/extensions/string_strip.dart';
-import 'package:nacht_sources/src/interfaces/interfaces.dart';
-import 'package:nacht_sources/src/mixins/html_parser.dart';
-import 'package:nacht_sources/src/models/models.dart';
 
 @registerCrawler
-class NovelPub extends Crawler
-    with HtmlParser
-    implements ParseNovel, ParsePopular {
+class NovelPub extends Crawler with HtmlParser, ParseNovel {
   NovelPub.make() : super(client: Crawler.defaultClient(), meta: _meta);
   NovelPub.makeWith(Dio client) : super(client: client, meta: _meta);
 

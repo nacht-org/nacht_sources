@@ -8,10 +8,6 @@ class BuildPopularUrlRequest extends RequestEvent<String> {
 
   @override
   Future<String> handle(Crawler crawler) async {
-    if (crawler is! ParsePopular) {
-      throw FeatureException('Popular parsing is not supported');
-    }
-
-    return (crawler as ParsePopular).buildPopularUrl(page);
+    return (crawler as ParseNovel).buildPopularUrl(page);
   }
 }

@@ -1,6 +1,10 @@
+import 'package:nacht_sources/src/exceptions.dart';
 import 'package:nacht_sources/src/models/models.dart';
 
-abstract class ParseNovel {
+/// Base class for parsing novels.
+///
+/// implementations for [parseNovel] and [parseChapter] are mandatory.
+mixin ParseNovel {
   /// Parse the novel by following the url
   ///
   /// Does not check if the url matches this crawler
@@ -10,17 +14,19 @@ abstract class ParseNovel {
   ///
   /// [Chapter] must have the [url] field populated
   Future<void> parseChapter(Chapter chapter);
-}
 
-abstract class ParseSearch {
   /// Search the website for novels with the given [query]
-  Future<List<Novel>> search(String query, int page);
-}
+  Future<List<Novel>> search(String query, int page) {
+    throw FeatureException('Search not supported');
+  }
 
-abstract class ParsePopular {
   /// Build the url pointing to the [page] showing popular novels.
-  String buildPopularUrl(int page);
+  String buildPopularUrl(int page) {
+    throw FeatureException('Popular not supported');
+  }
 
   /// Acquire the most popular novels from the source.
-  Future<List<Novel>> parsePopular(int page);
+  Future<List<Novel>> parsePopular(int page) {
+    throw FeatureException('Popular not supported');
+  }
 }

@@ -2,13 +2,10 @@ import 'package:annotations/annotations.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
-import 'package:nacht_sources/src/exceptions.dart';
-import 'package:nacht_sources/src/interfaces/interfaces.dart';
-import 'package:nacht_sources/src/models/models.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 
 @registerCrawler
-class ScribbleHub extends Crawler
-    implements ParseNovel, ParseSearch, ParsePopular {
+class ScribbleHub extends Crawler with ParseNovel {
   ScribbleHub.make() : super(client: Crawler.defaultClient(), meta: _meta);
   ScribbleHub.makeWith(Dio client) : super(client: client, meta: _meta);
 

@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 
 @registerCrawler
-class FanFiction extends Crawler implements ParseNovel {
+class FanFiction extends Crawler with ParseNovel {
   FanFiction.make() : super(client: Crawler.defaultClient(), meta: _meta);
   FanFiction.makeWith(Dio client) : super(client: client, meta: _meta);
 
