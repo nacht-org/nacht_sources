@@ -6,8 +6,8 @@ import 'package:nacht_sources/nacht_sources.dart';
 
 @registerCrawler
 class ScribbleHub extends Crawler with ParseNovel {
-  ScribbleHub.make() : super(client: Crawler.defaultClient(), meta: _meta);
-  ScribbleHub.makeWith(Dio client) : super(client: client, meta: _meta);
+  ScribbleHub.basic() : super(client: Crawler.defaultClient(), meta: _meta);
+  ScribbleHub.custom(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
     id: 'com.scribblehub',
@@ -19,7 +19,7 @@ class ScribbleHub extends Crawler with ParseNovel {
     features: {Feature.popular, Feature.search},
   );
 
-  static Meta constMeta() => _meta;
+  static Meta getMeta() => _meta;
 
   DateFormat formatter = DateFormat('MMM d, y hh:mm a');
 

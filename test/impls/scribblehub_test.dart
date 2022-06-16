@@ -7,7 +7,7 @@ void main() {
     'Scribblehub',
     () {
       const novelUrl = 'https://www.scribblehub.com/series/299966/devourer/';
-      final crawler = ScribbleHub.make();
+      final crawler = ScribbleHub.basic();
 
       test('should be able to search novel', () async {
         final novels = await crawler.search('solo', 1);

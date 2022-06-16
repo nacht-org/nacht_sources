@@ -4,8 +4,8 @@ import 'package:nacht_sources/nacht_sources.dart';
 
 @registerCrawler
 class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
-  RoyalRoad.make() : super(client: Crawler.defaultClient(), meta: _meta);
-  RoyalRoad.makeWith(Dio client) : super(client: client, meta: _meta);
+  RoyalRoad.basic() : super(client: Crawler.defaultClient(), meta: _meta);
+  RoyalRoad.custom(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
     id: 'com.royalroad',
@@ -16,7 +16,7 @@ class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
     features: {Feature.search, Feature.popular},
   );
 
-  static Meta constMeta() => _meta;
+  static Meta getMeta() => _meta;
 
   @override
   Future<List<Novel>> search(String query, int page) async {

@@ -6,8 +6,8 @@ import 'package:nacht_sources/src/misc/misc.dart';
 
 @registerCrawler
 class NovelPub extends Crawler with htmlCleaner, ParseNovel {
-  NovelPub.make() : super(client: Crawler.defaultClient(), meta: _meta);
-  NovelPub.makeWith(Dio client) : super(client: client, meta: _meta);
+  NovelPub.basic() : super(client: Crawler.defaultClient(), meta: _meta);
+  NovelPub.custom(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
     id: 'com.novelpub',
@@ -18,7 +18,7 @@ class NovelPub extends Crawler with htmlCleaner, ParseNovel {
     features: {Feature.popular},
   );
 
-  static Meta constMeta() => _meta;
+  static Meta getMeta() => _meta;
 
   @override
   String buildPopularUrl(int page) =>

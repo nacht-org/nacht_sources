@@ -5,8 +5,8 @@ import 'package:nacht_sources/nacht_sources.dart';
 
 @registerCrawler
 class FanFiction extends Crawler with ParseNovel {
-  FanFiction.make() : super(client: Crawler.defaultClient(), meta: _meta);
-  FanFiction.makeWith(Dio client) : super(client: client, meta: _meta);
+  FanFiction.basic() : super(client: Crawler.defaultClient(), meta: _meta);
+  FanFiction.custom(Dio client) : super(client: client, meta: _meta);
 
   static const _meta = Meta(
     id: 'com.fanfiction',
@@ -19,7 +19,7 @@ class FanFiction extends Crawler with ParseNovel {
     attributes: [Attribute.fanfiction],
   );
 
-  static Meta constMeta() => _meta;
+  static Meta getMeta() => _meta;
 
   @override
   Future<Novel> parseNovel(String url) async {

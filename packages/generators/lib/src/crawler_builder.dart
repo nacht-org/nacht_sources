@@ -67,7 +67,7 @@ class CrawlerCollectorBuilder extends Builder {
 
     for (var crawler in crawlers) {
       buffer.writeln(
-        '${factory.className}(${crawler.className}.constMeta, ${crawler.className}.make, ${crawler.className}.makeWith),',
+        '${factory.className}(${crawler.className}.getMeta, ${crawler.className}.basic, ${crawler.className}.custom),',
       );
     }
 

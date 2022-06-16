@@ -10,7 +10,7 @@ void main() {
           'https://www.novelpub.com/novel/top-tier-providence-secretly-cultivate-for-a-thousand-years-12032016';
       const chapterUrl =
           'https://www.novelpub.com/novel/top-tier-providence-secretly-cultivate-for-a-thousand-years-12032016/1208-chapter-1';
-      final crawler = NovelPub.make();
+      final crawler = NovelPub.basic();
 
       test('should be able to parse novel', () async {
         final novels = await crawler.parsePopular(1);
