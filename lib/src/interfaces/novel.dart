@@ -17,12 +17,6 @@ abstract class ParseSearch {
   Future<List<Novel>> search(String query, int page);
 }
 
-abstract class ParseLogin {
-  /// Login to the website with given [username] and [password]
-  /// and persist the session
-  Future<void> login(String username, String password);
-}
-
 abstract class ParsePopular {
   /// Build the url pointing to the [page] showing popular novels.
   String buildPopularUrl(int page);
