@@ -5,7 +5,7 @@ import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/extensions/string_strip.dart';
 
 @registerCrawler
-class NovelPub extends Crawler with HtmlParser, ParseNovel {
+class NovelPub extends Crawler with htmlCleaner, ParseNovel {
   NovelPub.make() : super(client: Crawler.defaultClient(), meta: _meta);
   NovelPub.makeWith(Dio client) : super(client: client, meta: _meta);
 

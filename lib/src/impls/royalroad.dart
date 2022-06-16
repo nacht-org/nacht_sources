@@ -1,10 +1,9 @@
 import 'package:annotations/annotations.dart';
 import 'package:dio/dio.dart';
 import 'package:nacht_sources/nacht_sources.dart';
-import 'package:nacht_sources/src/mixins/mixins.dart';
 
 @registerCrawler
-class RoyalRoad extends Crawler with HtmlParser, ParseNovel {
+class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
   RoyalRoad.make() : super(client: Crawler.defaultClient(), meta: _meta);
   RoyalRoad.makeWith(Dio client) : super(client: client, meta: _meta);
 

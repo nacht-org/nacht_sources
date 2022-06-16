@@ -1,2 +1,2 @@
-export 'html_parser.dart';
+export 'html_cleaner.dart';
 export 'parse_novel.dart';
