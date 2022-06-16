@@ -15,7 +15,7 @@ abstract class Event {
   /// Links requests from main to isolate to responses from isolate to main.
   final int key;
 
-  /// Create an exception with this events key.
+  /// Create an exception event with this events key.
   ExceptionEvent error(Object exception) => ExceptionEvent(key, exception);
 }
 
