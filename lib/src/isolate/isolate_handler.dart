@@ -2,13 +2,11 @@ import 'dart:isolate';
 
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/exceptions.dart';
-import 'package:nacht_sources/src/isolate/events/build_popular_url_event.dart';
 import 'package:nacht_sources/src/isolate/events/events.dart';
-import 'package:nacht_sources/src/isolate/events/popular_event.dart';
 import 'package:stream_channel/isolate_channel.dart';
 
-class IsolatedInput {
-  const IsolatedInput({
+class IsolateInput {
+  const IsolateInput({
     required this.sendPort,
     required this.factory,
   });
@@ -17,18 +15,18 @@ class IsolatedInput {
   final CrawlerFactory factory;
 }
 
-class IsolatedRunner {
-  IsolatedRunner(IsolatedInput input) {
+class IsolateHandler {
+  IsolateHandler(IsolateInput input) {
     _channel = IsolateChannel.connectSend(input.sendPort);
     _crawler = input.factory.basic();
   }
 
-  static void start(IsolatedInput input) => IsolatedRunner(input).listen();
+  static void start(IsolateInput input) => IsolateHandler(input).handle();
 
   late final IsolateChannel<Event> _channel;
   late final Crawler _crawler;
 
-  void listen() {
+  void handle() {
     _channel.stream.listen((event) {
       if (event is NovelRequest) {
         parseNovel(event);

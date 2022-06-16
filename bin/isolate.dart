@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:nacht_sources/nacht_sources.dart';
 
 void main() async {
-  final handler = IsolatedHandler(factory: crawlers[3]);
+  final handler = IsolateDispatcher(factory: crawlers[3]);
   await content(
     handler,
     'https://www.scribblehub.com/read/383775-weaponsmith--a-crafting-litrpg/chapter/507614/',
@@ -21,7 +21,7 @@ void main() async {
   handler.close();
 }
 
-Future<void> content(IsolatedHandler handler, String url) async {
+Future<void> content(IsolateDispatcher handler, String url) async {
   return scope(() async {
     final data = await handler.fetchChapterContent(url);
     print('url: $url,\n  content: ${data?.substring(0, 75)}');
@@ -29,7 +29,7 @@ Future<void> content(IsolatedHandler handler, String url) async {
   });
 }
 
-Future<void> popular(IsolatedHandler handler, int page) {
+Future<void> popular(IsolateDispatcher handler, int page) {
   return scope(() async {
     final data = await handler.fetchPopular(page);
     print('page: $page,');
@@ -38,7 +38,7 @@ Future<void> popular(IsolatedHandler handler, int page) {
   });
 }
 
-Future<void> popularUrl(IsolatedHandler handler, int page) {
+Future<void> popularUrl(IsolateDispatcher handler, int page) {
   return scope(() async {
     final data = await handler.buildPopularUrl(page);
     print('page: $page,\n  url: $data');
@@ -46,7 +46,7 @@ Future<void> popularUrl(IsolatedHandler handler, int page) {
   });
 }
 
-Future<void> search(IsolatedHandler handler, String query, int page) {
+Future<void> search(IsolateDispatcher handler, String query, int page) {
   return scope(() async {
     final data = await handler.fetchSearch(query, page);
     print('query: $query, page: $page,');

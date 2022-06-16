@@ -1,13 +1,11 @@
 import 'dart:isolate';
 
 import 'package:nacht_sources/nacht_sources.dart';
-import 'package:nacht_sources/src/isolate/events/build_popular_url_event.dart';
 import 'package:nacht_sources/src/isolate/events/events.dart';
-import 'package:nacht_sources/src/isolate/events/popular_event.dart';
 import 'package:stream_channel/isolate_channel.dart';
 
-class IsolatedHandler {
-  IsolatedHandler({
+class IsolateDispatcher {
+  IsolateDispatcher({
     required this.factory,
   }) {
     _receivePort = ReceivePort();
@@ -26,8 +24,8 @@ class IsolatedHandler {
 
   Future<Isolate> _ensureInitialized() async {
     return _isolate ??= await Isolate.spawn(
-      IsolatedRunner.start,
-      IsolatedInput(
+      IsolateHandler.start,
+      IsolateInput(
         sendPort: _receivePort.sendPort,
         factory: factory,
       ),

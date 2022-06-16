@@ -10,8 +10,8 @@ export 'src/impls/impls.dart';
 export 'src/interfaces/interfaces.dart';
 
 // Isolate.
-export 'src/isolate/isolated_handler.dart';
-export 'src/isolate/isolated_runner.dart';
+export 'src/isolate/isolate_dispatcher.dart';
+export 'src/isolate/isolate_handler.dart';
 
 // Models.
 export 'src/models/models.dart';
