@@ -34,7 +34,7 @@ class IsolatedHandler {
     );
   }
 
-  Future<Novel> parseNovel(String url) async {
+  Future<Novel> fetchNovel(String url) async {
     final response = await _send(NovelRequest(count++, url));
 
     if (response is NovelResponse) {
