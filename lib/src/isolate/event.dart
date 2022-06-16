@@ -27,11 +27,3 @@ class ExceptionEvent extends Event {
   const ExceptionEvent(super.key, this.exception);
   final Object exception;
 }
-
-/// Return a [value] from the isolate to the main thread.
-class ReplyEvent<T> extends Event {
-  ReplyEvent(super.key, this.value);
-
-  /// The value being sent from the isolate thread.
-  final T value;
-}

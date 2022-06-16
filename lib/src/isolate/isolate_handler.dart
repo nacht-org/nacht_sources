@@ -2,8 +2,7 @@ import 'dart:isolate';
 
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/exceptions.dart';
-import 'package:nacht_sources/src/isolate/events/events.dart';
-import 'package:nacht_sources/src/isolate/requests/requests.dart';
+import 'package:nacht_sources/src/isolate/isolate.dart';
 import 'package:stream_channel/isolate_channel.dart';
 
 class IsolateInput {
