@@ -1,6 +1,6 @@
 export 'event.dart';
-export 'isolate_dispatcher.dart';
 export 'isolate_handler.dart';
+export 'isolate_worker.dart';
 export 'request.dart';
 
 export 'requests/build_popular_url_request.dart';

@@ -4,51 +4,101 @@ import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/isolate/isolate.dart';
 import 'package:stream_channel/isolate_channel.dart';
 
-class IsolateInput {
-  const IsolateInput({
-    required this.sendPort,
-    required this.factory,
-  });
-
-  final SendPort sendPort;
-  final CrawlerFactory factory;
-}
-
 class IsolateHandler {
-  IsolateHandler(IsolateInput input) {
-    _channel = IsolateChannel.connectSend(input.sendPort);
-    _crawler = input.factory.basic();
+  IsolateHandler({
+    required this.factory,
+  }) {
+    _receivePort = ReceivePort();
+    _channel = IsolateChannel.connectReceive(_receivePort);
+    _stream = _channel.stream.asBroadcastStream();
   }
 
-  static void start(IsolateInput input) => IsolateHandler(input).handle();
+  final CrawlerFactory factory;
 
+  late final ReceivePort _receivePort;
   late final IsolateChannel<Event> _channel;
-  late final Crawler _crawler;
+  late final Stream<Event> _stream;
 
-  void handle() {
-    _channel.stream.listen((event) {
-      if (event is RequestEvent) {
-        handleRequest(event);
-      } else if (event is ExitEvent) {
-        close();
-      }
-    });
+  Isolate? _isolate;
+  int count = 0;
+
+  Future<Isolate> _ensureInitialized() async {
+    return _isolate ??= await Isolate.spawn(
+      IsolateWorker.start,
+      IsolateInput(
+        sendPort: _receivePort.sendPort,
+        factory: factory,
+      ),
+    );
   }
 
-  void _send(Event event) => _channel.sink.add(event);
-  void _error(Event event, Object exception) => _send(event.error(exception));
+  /// Equivalent to [ParseNovel.parseNovel]
+  Future<Novel> fetchNovel(String url) {
+    return _request<NovelRequest, Novel>(
+      NovelRequest(count++, url),
+    );
+  }
 
-  Future<void> handleRequest<T>(RequestEvent<T> event) async {
-    try {
-      final response = await event.handle(_crawler);
-      return _send(event.respond(response));
-    } catch (e) {
-      return _error(event, e);
+  /// Equivalent to [ParseNovel.parseChapter]
+  Future<String?> fetchChapterContent(String url) {
+    return _request<ChapterContentRequest, String?>(
+      ChapterContentRequest(count++, url),
+    );
+  }
+
+  /// Equivalent to [ParsePopular.buildPopularUrl]
+  Future<String> buildPopularUrl(int page) {
+    return _request<BuildPopularUrlRequest, String>(
+      BuildPopularUrlRequest(count++, page),
+    );
+  }
+
+  /// Equivalent to [ParsePopular.parsePopular]
+  Future<List<Novel>> fetchPopular(int page) {
+    return _request<PopularRequest, List<Novel>>(
+      PopularRequest(count++, page),
+    );
+  }
+
+  /// Equivalent to [ParseSearch.search]
+  Future<List<Novel>> fetchSearch(String query, int page) {
+    return _request<SearchRequest, List<Novel>>(
+      SearchRequest(count++, query, page),
+    );
+  }
+
+  /// Helper method that combines [_send] and [_expect]
+  Future<R> _request<T extends RequestEvent<R>, R>(T request) async {
+    final response = await _send<T>(request);
+    return _expect<R>(response);
+  }
+
+  /// Helper method to send a [request] and wait for an response
+  Future<Event> _send<T extends Event>(T request) async {
+    await _ensureInitialized();
+    _channel.sink.add(request);
+    return _stream.firstWhere((event) => event.key == request.key);
+  }
+
+  /// Helper method to extract a [value] from a [response] of type [ReplyEvent<R>]
+  R _expect<R>(Event response) {
+    if (response is ResponseEvent<R>) {
+      return response.value;
+    } else if (response is ExceptionEvent) {
+      throw response.exception;
     }
+
+    throw Exception(); // Unreachable.
   }
 
+  /// Closes the handler and the corresponding isolate.
   void close() {
+    /// Send exit event to isolate if initialized.
+    if (_isolate != null) {
+      _channel.sink.add(const ExitEvent());
+    }
+
     _channel.sink.close();
-    Isolate.current.kill();
+    _receivePort.close();
   }
 }
