@@ -96,7 +96,6 @@ class IsolateDispatcher {
     /// Send exit event to isolate if initialized.
     if (_isolate != null) {
       _channel.sink.add(const ExitEvent());
-      _isolate!.kill();
     }
 
     _channel.sink.close();

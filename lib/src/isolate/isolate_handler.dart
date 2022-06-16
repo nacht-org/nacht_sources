@@ -30,7 +30,7 @@ class IsolateHandler {
       if (event is RequestEvent) {
         handleRequest(event);
       } else if (event is ExitEvent) {
-        _channel.sink.close();
+        close();
       }
     });
   }
@@ -45,5 +45,10 @@ class IsolateHandler {
     } catch (e) {
       return _error(event, e);
     }
+  }
+
+  void close() {
+    _channel.sink.close();
+    Isolate.current.kill();
   }
 }
