@@ -57,7 +57,7 @@ class IsolateHandler {
 
     try {
       final novel = await (_crawler as ParseNovel).parseNovel(request.url);
-      return _send(request.reply(novel));
+      return _send(request.respond(novel));
     } catch (e) {
       return _error(request, e);
     }
@@ -74,7 +74,7 @@ class IsolateHandler {
     try {
       final chapter = Chapter.withUrl(request.url);
       await (_crawler as ParseNovel).parseChapter(chapter);
-      return _send(request.reply(chapter.content));
+      return _send(request.respond(chapter.content));
     } catch (e) {
       return _error(request, e);
     }
@@ -90,7 +90,7 @@ class IsolateHandler {
 
     try {
       final url = (_crawler as ParsePopular).buildPopularUrl(request.page);
-      return _send(request.reply(url));
+      return _send(request.respond(url));
     } catch (e) {
       return _error(request, e);
     }
@@ -107,7 +107,7 @@ class IsolateHandler {
     try {
       final novels =
           await (_crawler as ParsePopular).parsePopular(request.page);
-      return _send(request.reply(novels));
+      return _send(request.respond(novels));
     } catch (e) {
       return _error(request, e);
     }
@@ -121,7 +121,7 @@ class IsolateHandler {
     try {
       final novels =
           await (_crawler as ParseSearch).search(request.query, request.page);
-      return _send(request.reply(novels));
+      return _send(request.respond(novels));
     } catch (e) {
       return _error(request, e);
     }

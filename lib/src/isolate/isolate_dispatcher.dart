@@ -63,7 +63,7 @@ class IsolateDispatcher {
   }
 
   /// Helper method that combines [_send] and [_expect]
-  Future<R> _request<T extends Request<R>, R>(T request) async {
+  Future<R> _request<T extends RequestEvent<R>, R>(T request) async {
     final response = await _send<T>(request);
     return _expect<R>(response);
   }
@@ -77,7 +77,7 @@ class IsolateDispatcher {
 
   /// Helper method to extract a [value] from a [response] of type [ReplyEvent<R>]
   R _expect<R>(Event response) {
-    if (response is ReplyEvent<R>) {
+    if (response is ResponseEvent<R>) {
       return response.value;
     } else if (response is ExceptionEvent) {
       throw response.exception;
