@@ -3,6 +3,9 @@ library nacht_sources;
 // Generated.
 export 'generated/crawlers.g.dart';
 
+// Exceptions.
+export 'src/exceptions.dart';
+
 // Impls.
 export 'src/impls/impls.dart';
 
