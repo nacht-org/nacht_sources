@@ -1,6 +1,7 @@
 import 'dart:isolate';
 
 import 'package:nacht_sources/nacht_sources.dart';
+import 'package:nacht_sources/src/isolate/events/build_popular_url_event.dart';
 import 'package:nacht_sources/src/isolate/events/events.dart';
 import 'package:nacht_sources/src/isolate/events/popular_event.dart';
 import 'package:stream_channel/isolate_channel.dart';
@@ -50,6 +51,18 @@ class IsolatedHandler {
 
     if (response is ChapterResponse) {
       return response.content;
+    } else if (response is ExceptionEvent) {
+      throw response.exception;
+    }
+
+    throw Exception(); // Unreachable.
+  }
+
+  Future<String> buildPopularUrl(int page) async {
+    final response = await _send(BuildPopularUrlRequest(count++, page));
+
+    if (response is BuildPopularUrlResponse) {
+      return response.url;
     } else if (response is ExceptionEvent) {
       throw response.exception;
     }

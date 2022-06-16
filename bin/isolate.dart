@@ -14,6 +14,7 @@ void main() async {
     handler,
     'https://www.scribblehub.com/read/397857-stealing-spotlight-of-protagonist/chapter/493208/',
   );
+  await popularUrl(handler, 1);
   await popular(handler, 1);
 
   handler.close();
@@ -32,6 +33,14 @@ Future<void> popular(IsolatedHandler handler, int page) {
     final data = await handler.fetchPopular(page);
     print('page: $page,');
     printNovels(data);
+    print('');
+  });
+}
+
+Future<void> popularUrl(IsolatedHandler handler, int page) {
+  return scope(() async {
+    final data = await handler.buildPopularUrl(page);
+    print('page: $page,\n  url: $data');
     print('');
   });
 }
