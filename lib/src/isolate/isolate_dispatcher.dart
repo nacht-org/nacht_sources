@@ -32,30 +32,35 @@ class IsolateDispatcher {
     );
   }
 
+  /// Equivalent to [ParseNovel.parseNovel]
   Future<Novel> fetchNovel(String url) {
     return _request<NovelRequest, Novel>(
       NovelRequest(count++, url),
     );
   }
 
+  /// Equivalent to [ParseNovel.parseChapter]
   Future<String?> fetchChapterContent(String url) {
     return _request<ChapterContentRequest, String?>(
       ChapterContentRequest(count++, url),
     );
   }
 
+  /// Equivalent to [ParsePopular.buildPopularUrl]
   Future<String> buildPopularUrl(int page) {
     return _request<BuildPopularUrlRequest, String>(
       BuildPopularUrlRequest(count++, page),
     );
   }
 
+  /// Equivalent to [ParsePopular.parsePopular]
   Future<List<Novel>> fetchPopular(int page) {
     return _request<PopularRequest, List<Novel>>(
       PopularRequest(count++, page),
     );
   }
 
+  /// Equivalent to [ParseSearch.search]
   Future<List<Novel>> fetchSearch(String query, int page) {
     return _request<SearchRequest, List<Novel>>(
       SearchRequest(count++, query, page),
