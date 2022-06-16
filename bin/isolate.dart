@@ -6,6 +6,12 @@ import 'package:nacht_sources/nacht_sources.dart';
 
 void main() async {
   final handler = IsolateDispatcher(factory: crawlers[3]);
+
+  await novel(
+    handler,
+    'https://www.scribblehub.com/series/255716/the-great-cores-paradox-monster-mc-litrpg/',
+  );
+
   await content(
     handler,
     'https://www.scribblehub.com/read/383775-weaponsmith--a-crafting-litrpg/chapter/507614/',
@@ -14,11 +20,21 @@ void main() async {
     handler,
     'https://www.scribblehub.com/read/397857-stealing-spotlight-of-protagonist/chapter/493208/',
   );
+
   await popularUrl(handler, 1);
   await popular(handler, 1);
+
   await search(handler, 'solo', 1);
 
   handler.close();
+}
+
+Future<void> novel(IsolateDispatcher dispatcher, String url) async {
+  return scope(() async {
+    final data = await dispatcher.fetchNovel(url);
+    print('url: $url,\n  title: ${data.title}\n  author: ${data.author}');
+    print('');
+  });
 }
 
 Future<void> content(IsolateDispatcher handler, String url) async {

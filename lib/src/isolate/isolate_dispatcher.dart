@@ -32,71 +32,58 @@ class IsolateDispatcher {
     );
   }
 
-  Future<Novel> fetchNovel(String url) async {
-    final response = await _send(NovelRequest(count++, url));
-
-    if (response is NovelResponse) {
-      return response.novel;
-    } else if (response is ExceptionEvent) {
-      throw response.exception;
-    }
-
-    throw Exception(); // Unreachable.
+  Future<Novel> fetchNovel(String url) {
+    return _request<NovelRequest, Novel>(
+      NovelRequest(count++, url),
+    );
   }
 
-  Future<String?> fetchChapterContent(String url) async {
-    final response = await _send(ChapterRequest(count++, url));
-
-    if (response is ChapterResponse) {
-      return response.content;
-    } else if (response is ExceptionEvent) {
-      throw response.exception;
-    }
-
-    throw Exception(); // Unreachable.
+  Future<String?> fetchChapterContent(String url) {
+    return _request<ChapterRequest, String?>(
+      ChapterRequest(count++, url),
+    );
   }
 
-  Future<String> buildPopularUrl(int page) async {
-    final response = await _send(BuildPopularUrlRequest(count++, page));
-
-    if (response is BuildPopularUrlResponse) {
-      return response.url;
-    } else if (response is ExceptionEvent) {
-      throw response.exception;
-    }
-
-    throw Exception(); // Unreachable.
+  Future<String> buildPopularUrl(int page) {
+    return _request<BuildPopularUrlRequest, String>(
+      BuildPopularUrlRequest(count++, page),
+    );
   }
 
-  Future<List<Novel>> fetchPopular(int page) async {
-    final response = await _send(PopularRequest(count++, page));
-
-    if (response is PopularResponse) {
-      return response.novels;
-    } else if (response is ExceptionEvent) {
-      throw response.exception;
-    }
-
-    throw Exception(); // Unreachable.
+  Future<List<Novel>> fetchPopular(int page) {
+    return _request<PopularRequest, List<Novel>>(
+      PopularRequest(count++, page),
+    );
   }
 
-  Future<List<Novel>> fetchSearch(String query, int page) async {
-    final response = await _send(SearchRequest(count++, query, page));
+  Future<List<Novel>> fetchSearch(String query, int page) {
+    return _request<SearchRequest, List<Novel>>(
+      SearchRequest(count++, query, page),
+    );
+  }
 
-    if (response is SearchResponse) {
-      return response.novels;
-    } else if (response is ExceptionEvent) {
-      throw response.exception;
-    }
-
-    throw Exception(); // Unreachable.
+  /// Helper method that combines [_send] and [_expect]
+  Future<R> _request<T extends Event, R>(T request) async {
+    final response = await _send(request);
+    return _expect(response);
   }
 
   /// Helper method to send a [request] and wait for an response
-  Future<R> _send<T extends Event, R>(T request) async {
+  Future<Event> _send<T extends Event>(T request) async {
     await _ensureInitialized();
     _channel.sink.add(request);
-    return await _stream.firstWhere((event) => event.key == request.key) as R;
+    return _stream.firstWhere((event) => event.key == request.key);
+  }
+
+  /// Helper method to extract a [value] from a [response] of type [ReplyEvent<R>]
+  R _expect<R>(Event response) {
+    if (response is ReplyEvent<R>) {
+      return response.value;
+    } else if (response is ExceptionEvent) {
+      throw response.exception;
+    }
+
+    throw Exception(); // Unreachable.
   }
 
   /// Closes the handler and the corresponding isolate.

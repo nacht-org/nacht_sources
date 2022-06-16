@@ -17,9 +17,20 @@ abstract class Event {
 
   /// Create an exception event with this events key.
   ExceptionEvent error(Object exception) => ExceptionEvent(key, exception);
+
+  /// Create a reply event with this events key.
+  ReplyEvent reply<T>(T value) => ReplyEvent<T>(key, value);
 }
 
 /// Signal that the isolate must be closed.
 class ExitEvent extends Event {
   const ExitEvent() : super(-1);
+}
+
+/// Return a [value] from the isolate to the main thread.
+class ReplyEvent<T> extends Event {
+  ReplyEvent(super.key, this.value);
+
+  /// The value being sent from the isolate thread.
+  final T value;
 }
