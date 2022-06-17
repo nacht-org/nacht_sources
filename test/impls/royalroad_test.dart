@@ -12,7 +12,7 @@ void main() {
       final crawler = RoyalRoad.basic();
 
       test('should be able to parse novel', () async {
-        final novel = await crawler.parseNovel(novelUrl);
+        final novel = await crawler.fetchNovel(novelUrl);
         expect(novel, isA<Novel>());
       });
 

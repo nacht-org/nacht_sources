@@ -25,7 +25,7 @@ class NovelPub extends Crawler with CleanHtml, ParseNovel {
       'https://www.novelpub.com/genre/all/popular/all/$page';
 
   @override
-  Future<List<Novel>> parsePopular(int page) async {
+  Future<List<Novel>> fetchPopular(int page) async {
     final doc = await pullDoc(buildPopularUrl(page));
 
     final novels = <Novel>[];
@@ -52,7 +52,7 @@ class NovelPub extends Crawler with CleanHtml, ParseNovel {
   }
 
   @override
-  Future<Novel> parseNovel(String url) async {
+  Future<Novel> fetchNovel(String url) async {
     var doc = await pullDoc(url);
 
     final novel = Novel(

@@ -49,7 +49,7 @@ class RoyalRoad extends Crawler with CleanHtml, ParseNovel {
   }
 
   @override
-  Future<Novel> parseNovel(String url) async {
+  Future<Novel> fetchNovel(String url) async {
     final doc = await pullDoc(url);
 
     final status = NovelStatus.parse(
@@ -117,7 +117,7 @@ class RoyalRoad extends Crawler with CleanHtml, ParseNovel {
       'https://www.royalroad.com/fictions/weekly-popular?page=$page';
 
   @override
-  Future<List<Novel>> parsePopular(int page) async {
+  Future<List<Novel>> fetchPopular(int page) async {
     final url = buildPopularUrl(page);
     final doc = await pullDoc(url);
 

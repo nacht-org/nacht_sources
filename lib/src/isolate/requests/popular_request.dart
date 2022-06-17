@@ -8,6 +8,6 @@ class PopularRequest extends RequestEvent<List<Novel>> {
 
   @override
   Future<List<Novel>> handle(Crawler crawler) {
-    return (crawler as ParseNovel).parsePopular(page);
+    return (crawler as ParseNovel).fetchPopular(page);
   }
 }

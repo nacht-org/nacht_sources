@@ -23,7 +23,7 @@ class FanFiction extends Crawler with ParseNovel {
   static Meta getMeta() => _meta;
 
   @override
-  Future<Novel> parseNovel(String url) async {
+  Future<Novel> fetchNovel(String url) async {
     final doc = await pullDoc(url);
 
     final attributes =

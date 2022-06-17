@@ -32,7 +32,7 @@ class IsolateHandler {
     );
   }
 
-  /// Equivalent to [ParseNovel.parseNovel]
+  /// Equivalent to [ParseNovel.fetchNovel]
   Future<Novel> fetchNovel(String url) {
     return _request<NovelRequest, Novel>(
       NovelRequest(count++, url),
@@ -53,7 +53,7 @@ class IsolateHandler {
     );
   }
 
-  /// Equivalent to [ParsePopular.parsePopular]
+  /// Equivalent to [ParsePopular.fetchPopular]
   Future<List<Novel>> fetchPopular(int page) {
     return _request<PopularRequest, List<Novel>>(
       PopularRequest(count++, page),

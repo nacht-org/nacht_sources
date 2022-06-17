@@ -57,7 +57,7 @@ class ScribbleHub extends Crawler with ParseNovel {
       'https://www.scribblehub.com/series-ranking/?sort=1&order=3&pg=$page';
 
   @override
-  Future<List<Novel>> parsePopular(int page) async {
+  Future<List<Novel>> fetchPopular(int page) async {
     final novels = <Novel>[];
 
     final doc = await pullDoc(buildPopularUrl(page));
@@ -83,7 +83,7 @@ class ScribbleHub extends Crawler with ParseNovel {
   }
 
   @override
-  Future<Novel> parseNovel(String url) async {
+  Future<Novel> fetchNovel(String url) async {
     final doc = await pullDoc(url);
 
     final statusElement =

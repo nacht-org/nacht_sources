@@ -15,12 +15,12 @@ void main() {
       });
 
       test('should be able to parse novel', () async {
-        final novel = await crawler.parseNovel(novelUrl);
+        final novel = await crawler.fetchNovel(novelUrl);
         expect(novel, isA<Novel>());
       });
 
       test('should be able to get popular novels', () async {
-        final novels = await crawler.parsePopular(1);
+        final novels = await crawler.fetchPopular(1);
         expect(novels, isA<List<Novel>>());
       });
     },
