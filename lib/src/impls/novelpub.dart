@@ -1,11 +1,10 @@
 import 'package:annotations/annotations.dart';
-import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/misc/misc.dart';
 
 @RegisterCrawler('com.novelpub')
-class NovelPub extends Crawler with htmlCleaner, ParseNovel {
+class NovelPub extends Crawler with CleanHtml, ParseNovel {
   NovelPub.basic() : super(options: CrawlerOptions.basic(), meta: _meta);
   NovelPub.custom(CrawlerOptions options)
       : super(options: options, meta: _meta);

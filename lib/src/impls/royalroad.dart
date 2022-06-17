@@ -3,7 +3,7 @@ import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/misc/misc.dart';
 
 @RegisterCrawler('com.royalroad')
-class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
+class RoyalRoad extends Crawler with CleanHtml, ParseNovel {
   RoyalRoad.basic() : super(options: CrawlerOptions.basic(), meta: _meta);
   RoyalRoad.custom(CrawlerOptions options)
       : super(options: options, meta: _meta);

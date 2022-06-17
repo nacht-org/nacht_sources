@@ -1,8 +1,8 @@
 import 'package:html/parser.dart' as p;
-import 'package:nacht_sources/src/mixins/html_cleaner.dart';
+import 'package:nacht_sources/src/mixins/clean_html.dart';
 import 'package:test/test.dart';
 
-class Parser with htmlCleaner {}
+class Parser with CleanHtml {}
 
 void main() {
   group("HtmlParsing", () {
