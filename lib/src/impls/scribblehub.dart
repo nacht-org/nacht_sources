@@ -2,15 +2,14 @@ import 'package:annotations/annotations.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
-import 'package:nacht_sources/src/exceptions.dart';
-import 'package:nacht_sources/src/interfaces/interfaces.dart';
-import 'package:nacht_sources/src/models/models.dart';
+import 'package:nacht_sources/nacht_sources.dart';
+import 'package:nacht_sources/src/misc/misc.dart';
 
-@registerCrawler
-class ScribbleHub extends Crawler
-    implements ParseNovel, ParseSearch, ParsePopular {
-  ScribbleHub.make() : super(client: Crawler.defaultClient(), meta: _meta);
-  ScribbleHub.makeWith(Dio client) : super(client: client, meta: _meta);
+@RegisterCrawler('com.scribblehub')
+class ScribbleHub extends Crawler with ParseNovel {
+  ScribbleHub.basic() : super(options: CrawlerOptions.basic(), meta: _meta);
+  ScribbleHub.custom(CrawlerOptions options)
+      : super(options: options, meta: _meta);
 
   static const _meta = Meta(
     id: 'com.scribblehub',
@@ -22,7 +21,7 @@ class ScribbleHub extends Crawler
     features: {Feature.popular, Feature.search},
   );
 
-  static Meta constMeta() => _meta;
+  static Meta getMeta() => _meta;
 
   DateFormat formatter = DateFormat('MMM d, y hh:mm a');
 
@@ -36,14 +35,14 @@ class ScribbleHub extends Crawler
     final doc = await pullDoc(url);
 
     final novels = <Novel>[];
-    for (final div in doc.querySelectorAll('.search_main_box')) {
-      final a = div.querySelector('.search_title a')!;
+    for (final div in doc.selectAll('.search_main_box')) {
+      final a = div.select('.search_title a')!;
 
       final novel = Novel(
         title: a.text.trim(),
         url: a.attributes['href']!,
         lang: 'en',
-        thumbnailUrl: div.querySelector('.search_img img')?.attributes['src'],
+        thumbnailUrl: div.select('.search_img img')?.attributes['src'],
         workType: const OriginalWork(),
       );
 
@@ -58,24 +57,21 @@ class ScribbleHub extends Crawler
       'https://www.scribblehub.com/series-ranking/?sort=1&order=3&pg=$page';
 
   @override
-  Future<List<Novel>> parsePopular(int page) async {
+  Future<List<Novel>> fetchPopular(int page) async {
     final novels = <Novel>[];
 
     final doc = await pullDoc(buildPopularUrl(page));
 
-    for (final div in doc.querySelectorAll('div.search_main_box')) {
-      final a = div.querySelector(".search_title a");
+    for (final div in doc.selectAll('div.search_main_box')) {
+      final a = div.select(".search_title a");
       if (a == null) {
         continue;
       }
 
       final novel = Novel(
         title: a.text.trim(),
-        thumbnailUrl: div.querySelector('.search_img img')?.attributes['src'],
-        author: div
-            .querySelector('.search_stats span[title="Author"]')
-            ?.text
-            .trim(),
+        thumbnailUrl: div.select('.search_img img')?.attributes['src'],
+        author: div.select('.search_stats span[title="Author"]')?.text.trim(),
         url: meta.absoluteUrl(a.attributes['href']!),
         lang: meta.lang,
       );
@@ -87,43 +83,40 @@ class ScribbleHub extends Crawler
   }
 
   @override
-  Future<Novel> parseNovel(String url) async {
+  Future<Novel> fetchNovel(String url) async {
     final doc = await pullDoc(url);
 
-    final statusElement = doc
-        .querySelector('.widget_fic_similar > li:last-child > span:last-child');
+    final statusElement =
+        doc.select('.widget_fic_similar > li:last-child > span:last-child');
 
     final novel = Novel(
-      title: doc.querySelector('div.fic_title')?.text.trim() ?? '',
-      author: doc.querySelector('span.auth_name_fic')?.text.trim(),
+      title: doc.selectText('div.fic_title') ?? '',
+      author: doc.selectText('span.auth_name_fic'),
       url: url,
       lang: meta.lang,
-      thumbnailUrl: doc.querySelector('.fic_image img')?.attributes['src'],
-      description: doc
-          .querySelectorAll('.wi_fic_desc > p')
-          .map((e) => e.text.trim())
-          .toList(),
+      thumbnailUrl: doc.select('.fic_image img')?.attributes['src'],
+      description: doc.selectAllText('.wi_fic_desc > p'),
       status: NovelStatus.parse(statusElement?.text.split('-').first),
       workType: const OriginalWork(),
     );
 
     // Genre
-    for (final a in doc.querySelectorAll("a.fic_genre")) {
+    for (final a in doc.selectAll("a.fic_genre")) {
       novel.addMeta('subject', a.text.trim());
     }
 
     // Tags
-    for (final a in doc.querySelectorAll('a.stag')) {
+    for (final a in doc.selectAll('a.stag')) {
       novel.addMeta('tag', a.text.trim());
     }
 
     // Content Warning
-    for (final a in doc.querySelectorAll('.mature_contains > a')) {
+    for (final a in doc.selectAll('.mature_contains > a')) {
       novel.addMeta('warning', a.text.trim());
     }
 
     // Rating
-    final ratingElement = doc.querySelector('#ratefic_user > span');
+    final ratingElement = doc.select('#ratefic_user > span');
     if (ratingElement != null) {
       novel.addMeta('rating', ratingElement.text.trim());
     }
@@ -135,15 +128,15 @@ class ScribbleHub extends Crawler
   }
 
   @override
-  Future<void> parseChapter(Chapter chapter) async {
-    final doc = await pullDoc(chapter.url);
+  Future<String?> fetchChapterContent(String url) async {
+    final doc = await pullDoc(url);
 
-    final titleNode = doc.querySelector('.chapter-title');
-    if (titleNode == null) {
-      chapter.title = titleNode!.text.trim();
-    }
+    // final titleNode = doc.select('.chapter-title');
+    // if (titleNode == null) {
+    //   chapter.title = titleNode!.text.trim();
+    // }
 
-    chapter.content = doc.querySelector('#chp_raw')?.outerHtml;
+    return doc.select('#chp_raw')?.outerHtml;
   }
 
   Future<Volume> toc(String id) async {
@@ -163,13 +156,13 @@ class ScribbleHub extends Crawler
 
     final volume = Volume.def();
     var index = 0;
-    for (final li in fragment.querySelectorAll('li.toc_w').reversed) {
-      final a = li.querySelector('a');
+    for (final li in fragment.selectAll('li.toc_w').reversed) {
+      final a = li.select('a');
       if (a == null || a.attributes['href'] == null) {
         continue;
       }
 
-      final time = li.querySelector('.fic_date_pub')?.attributes['title'];
+      final time = li.select('.fic_date_pub')?.attributes['title'];
 
       // TODO add support to parse relative time ex: 20 hours ago
       DateTime? updated;

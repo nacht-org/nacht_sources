@@ -1,7 +1,8 @@
-import 'package:nacht_sources/src/constants.dart' as constants;
 import 'package:html/dom.dart' as dom;
+import 'package:nacht_sources/src/constants.dart' as constants;
 
-mixin HtmlParser {
+/// A mixin that provides functionality to clean a html tree
+mixin CleanHtml {
   /// List of names of tags that should be removed from
   /// chapter content for this specific crawler.
   List<String> get badTags {

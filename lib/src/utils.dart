@@ -1,24 +1,22 @@
 import 'package:annotations/annotations.dart';
-import 'package:dio/dio.dart';
 import 'package:nacht_sources/generated/crawlers.g.dart';
 import 'package:nacht_sources/src/interfaces/crawler.dart';
-import 'package:nacht_sources/src/models/meta.dart';
+import 'package:nacht_sources/src/models/models.dart';
 
-/// A crawler factory class used to hold crawler
-/// helper methods
+/// A crawler factory class used to hold crawler helper methods
 @registerFactory
 class CrawlerFactory {
   final Meta Function() meta;
   final Crawler Function() basic;
-  final Crawler Function(Dio) custom;
+  final Crawler Function(CrawlerOptions) custom;
 
   const CrawlerFactory(this.meta, this.basic, this.custom);
 }
 
-CrawlerFactory? crawlerFactoryFor(String url, [Dio? client]) {
-  for (final tuple in crawlers) {
-    if (tuple.meta().of(url)) {
-      return tuple;
+CrawlerFactory? crawlerFactoryFor(String url) {
+  for (final factory in crawlers.values) {
+    if (factory.meta().of(url)) {
+      return factory;
     }
   }
 

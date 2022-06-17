@@ -15,6 +15,9 @@ export 'src/interfaces/interfaces.dart';
 // Isolate.
 export 'src/isolate/isolate_handler.dart';
 
+// Mixins.
+export 'src/mixins/mixins.dart';
+
 // Models.
 export 'src/models/models.dart';
 

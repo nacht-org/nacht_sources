@@ -1,12 +1,13 @@
 import 'package:annotations/annotations.dart';
 import 'package:collection/collection.dart';
-import 'package:dio/dio.dart';
 import 'package:nacht_sources/nacht_sources.dart';
+import 'package:nacht_sources/src/misc/misc.dart';
 
-@registerCrawler
-class FanFiction extends Crawler implements ParseNovel {
-  FanFiction.make() : super(client: Crawler.defaultClient(), meta: _meta);
-  FanFiction.makeWith(Dio client) : super(client: client, meta: _meta);
+@RegisterCrawler('com.fanfiction')
+class FanFiction extends Crawler with ParseNovel {
+  FanFiction.basic() : super(options: CrawlerOptions.basic(), meta: _meta);
+  FanFiction.custom(CrawlerOptions options)
+      : super(options: options, meta: _meta);
 
   static const _meta = Meta(
     id: 'com.fanfiction',
@@ -19,44 +20,36 @@ class FanFiction extends Crawler implements ParseNovel {
     attributes: [Attribute.fanfiction],
   );
 
-  static Meta constMeta() => _meta;
+  static Meta getMeta() => _meta;
 
   @override
-  Future<Novel> parseNovel(String url) async {
+  Future<Novel> fetchNovel(String url) async {
     final doc = await pullDoc(url);
 
-    final attributes = doc
-        .querySelector('.xgray.xcontrast_txt')!
-        .text
-        .trim()
-        .split(' - ')
-        .toList();
+    final attributes =
+        doc.selectText('.xgray.xcontrast_txt')!.split(' - ').toList();
 
     String? thumbnail;
-    final imageElement = doc.querySelector('#profile_top img.cimage');
+    final imageElement = doc.select('#profile_top img.cimage');
     if (imageElement != null) {
       thumbnail = 'https:${imageElement.attributes["src"]}';
     }
 
     final novel = Novel(
-      title: doc
-              .querySelector('#profile_top b.xcontrast_txt, #content b')
-              ?.text
-              .trim() ??
-          '',
+      title: doc.selectText('#profile_top b.xcontrast_txt, #content b') ?? '',
       thumbnailUrl: thumbnail,
       url: url,
       lang: attributes[1],
     );
 
     final id = Uri.parse(url).path.split('/')[2];
-    final chapterSelect = doc.querySelector('#chap_select, select#jump');
+    final chapterSelect = doc.select('#chap_select, select#jump');
 
     final volume = novel.singleVolume();
     if (chapterSelect != null) {
       // multi chapter
       volume.chapters = chapterSelect
-          .querySelectorAll('option')
+          .selectAll('option')
           .mapIndexed(
             (i, element) => Chapter(
               index: i,
@@ -81,9 +74,8 @@ class FanFiction extends Crawler implements ParseNovel {
   }
 
   @override
-  Future<void> parseChapter(Chapter chapter) async {
-    final doc = await pullDoc(chapter.url);
-
-    chapter.content = doc.querySelector('#storytext, #storycontent')?.outerHtml;
+  Future<String?> fetchChapterContent(String url) async {
+    final doc = await pullDoc(url);
+    return doc.select('#storytext, #storycontent')?.outerHtml;
   }
 }

@@ -32,14 +32,14 @@ class IsolateHandler {
     );
   }
 
-  /// Equivalent to [ParseNovel.parseNovel]
+  /// Equivalent to [ParseNovel.fetchNovel]
   Future<Novel> fetchNovel(String url) {
     return _request<NovelRequest, Novel>(
       NovelRequest(count++, url),
     );
   }
 
-  /// Equivalent to [ParseNovel.parseChapter]
+  /// Equivalent to [ParseNovel.fetchChapterContent]
   Future<String?> fetchChapterContent(String url) {
     return _request<ChapterContentRequest, String?>(
       ChapterContentRequest(count++, url),
@@ -53,7 +53,7 @@ class IsolateHandler {
     );
   }
 
-  /// Equivalent to [ParsePopular.parsePopular]
+  /// Equivalent to [ParsePopular.fetchPopular]
   Future<List<Novel>> fetchPopular(int page) {
     return _request<PopularRequest, List<Novel>>(
       PopularRequest(count++, page),

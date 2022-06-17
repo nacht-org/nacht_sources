@@ -7,7 +7,7 @@ void main() {
     'Scribblehub',
     () {
       const novelUrl = 'https://www.scribblehub.com/series/299966/devourer/';
-      final crawler = ScribbleHub.make();
+      final crawler = ScribbleHub.basic();
 
       test('should be able to search novel', () async {
         final novels = await crawler.search('solo', 1);
@@ -15,12 +15,12 @@ void main() {
       });
 
       test('should be able to parse novel', () async {
-        final novel = await crawler.parseNovel(novelUrl);
+        final novel = await crawler.fetchNovel(novelUrl);
         expect(novel, isA<Novel>());
       });
 
       test('should be able to get popular novels', () async {
-        final novels = await crawler.parsePopular(1);
+        final novels = await crawler.fetchPopular(1);
         expect(novels, isA<List<Novel>>());
       });
     },

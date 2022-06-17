@@ -12,7 +12,7 @@ class NovelRequest extends RequestEvent<Novel> {
       throw FeatureException("Novel parsing is not supported.");
     }
 
-    final novel = await (crawler as ParseNovel).parseNovel(url);
+    final novel = await (crawler as ParseNovel).fetchNovel(url);
     return novel;
   }
 }

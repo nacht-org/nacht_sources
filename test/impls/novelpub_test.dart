@@ -10,22 +10,21 @@ void main() {
           'https://www.novelpub.com/novel/top-tier-providence-secretly-cultivate-for-a-thousand-years-12032016';
       const chapterUrl =
           'https://www.novelpub.com/novel/top-tier-providence-secretly-cultivate-for-a-thousand-years-12032016/1208-chapter-1';
-      final crawler = NovelPub.make();
+      final crawler = NovelPub.basic();
 
       test('should be able to parse novel', () async {
-        final novels = await crawler.parsePopular(1);
+        final novels = await crawler.fetchPopular(1);
         expect(novels, isA<List<Novel>>());
       });
 
       test('should be able to parse novel', () async {
-        final novel = await crawler.parseNovel(novelUrl);
+        final novel = await crawler.fetchNovel(novelUrl);
         expect(novel, isA<Novel>());
       });
 
       test('should be able to parse chapter', () async {
-        final chapter = Chapter(index: -1, title: '', url: chapterUrl);
-        await crawler.parseChapter(chapter);
-        expect(chapter, isA<Chapter>());
+        final content = await crawler.fetchChapterContent(chapterUrl);
+        expect(content, isA<String?>());
       });
     },
     skip: 'Network intensive and takes a along time.',

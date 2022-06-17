@@ -1,21 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
-import 'package:nacht_sources/src/exceptions.dart';
-import 'package:nacht_sources/src/models/meta.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 
 abstract class Crawler {
   final Meta meta;
-  final Dio client;
+  late final Dio client;
 
   Crawler({
-    required this.client,
+    required CrawlerOptions options,
     required this.meta,
-  });
-
-  static Dio defaultClient() {
-    return Dio();
-  }
+  }) : client = options.client;
 
   /// Check whether the url is supported by this crawler
   ///

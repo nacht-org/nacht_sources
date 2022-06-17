@@ -9,17 +9,16 @@ void main() {
       const novelUrl = 'https://www.royalroad.com/fiction/52322/space-dork';
       const chapterUrl =
           'https://www.royalroad.com/fiction/52322/space-dork/chapter/865223/chapter-1';
-      final crawler = RoyalRoad.make();
+      final crawler = RoyalRoad.basic();
 
       test('should be able to parse novel', () async {
-        final novel = await crawler.parseNovel(novelUrl);
+        final novel = await crawler.fetchNovel(novelUrl);
         expect(novel, isA<Novel>());
       });
 
       test('should be able to parse chapter', () async {
-        final chapter = Chapter(index: -1, title: '', url: chapterUrl);
-        await crawler.parseChapter(chapter);
-        expect(chapter, isA<Chapter>());
+        final content = await crawler.fetchChapterContent(chapterUrl);
+        expect(content, isA<String?>());
       });
     },
     skip: 'Network intensive and takes a along time.',

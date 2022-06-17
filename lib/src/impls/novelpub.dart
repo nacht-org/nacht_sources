@@ -1,18 +1,13 @@
 import 'package:annotations/annotations.dart';
-import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
-import 'package:nacht_sources/src/exceptions.dart';
-import 'package:nacht_sources/src/extensions/string_strip.dart';
-import 'package:nacht_sources/src/interfaces/interfaces.dart';
-import 'package:nacht_sources/src/mixins/html_parser.dart';
-import 'package:nacht_sources/src/models/models.dart';
+import 'package:nacht_sources/nacht_sources.dart';
+import 'package:nacht_sources/src/misc/misc.dart';
 
-@registerCrawler
-class NovelPub extends Crawler
-    with HtmlParser
-    implements ParseNovel, ParsePopular {
-  NovelPub.make() : super(client: Crawler.defaultClient(), meta: _meta);
-  NovelPub.makeWith(Dio client) : super(client: client, meta: _meta);
+@RegisterCrawler('com.novelpub')
+class NovelPub extends Crawler with CleanHtml, ParseNovel {
+  NovelPub.basic() : super(options: CrawlerOptions.basic(), meta: _meta);
+  NovelPub.custom(CrawlerOptions options)
+      : super(options: options, meta: _meta);
 
   static const _meta = Meta(
     id: 'com.novelpub',
@@ -23,21 +18,21 @@ class NovelPub extends Crawler
     features: {Feature.popular},
   );
 
-  static Meta constMeta() => _meta;
+  static Meta getMeta() => _meta;
 
   @override
   String buildPopularUrl(int page) =>
       'https://www.novelpub.com/genre/all/popular/all/$page';
 
   @override
-  Future<List<Novel>> parsePopular(int page) async {
+  Future<List<Novel>> fetchPopular(int page) async {
     final doc = await pullDoc(buildPopularUrl(page));
 
     final novels = <Novel>[];
-    for (final li in doc.querySelectorAll('.novel-list > .novel-item')) {
-      final a = li.querySelector('.novel-title a')!;
+    for (final li in doc.selectAll('.novel-list > .novel-item')) {
+      final a = li.select('.novel-title a')!;
       final thumbnailUrl =
-          li.querySelector('.novel-cover img')?.attributes['data-src'];
+          li.select('.novel-cover img')?.attributes['data-src'];
 
       final novel = Novel(
         title: a.attributes['title']!,
@@ -46,7 +41,7 @@ class NovelPub extends Crawler
         url: meta.absoluteUrl(a.attributes['href']!),
         lang: 'en',
         status: NovelStatus.parse(
-          li.querySelector('.novel-stats .status')?.text.trim(),
+          li.selectText('.novel-stats .status'),
         ),
       );
 
@@ -57,39 +52,35 @@ class NovelPub extends Crawler
   }
 
   @override
-  Future<Novel> parseNovel(String url) async {
+  Future<Novel> fetchNovel(String url) async {
     var doc = await pullDoc(url);
 
     final novel = Novel(
-      title: doc.querySelector('.novel-title')?.text.trim() ?? '',
-      author: doc.querySelector('.author a')?.text.trim(),
-      thumbnailUrl: doc.querySelector('.cover img')?.attributes['data-src'],
-      description: doc
-          .querySelectorAll('.summary .content p')
-          .map((element) => element.text.trim())
-          .where((text) => text.isNotEmpty)
-          .toList(),
+      title: doc.selectText('.novel-title') ?? '',
+      author: doc.selectText('.author a'),
+      thumbnailUrl: doc.select('.cover img')?.attributes['data-src'],
+      description: doc.selectAllText('.summary .content p'),
       url: url,
       lang: 'en',
     );
 
-    final altTitle = doc.querySelector('.alternative-title')?.text.trim();
+    final altTitle = doc.selectText('.alternative-title');
     if (altTitle != null && altTitle.isNotEmpty) {
       novel.addMeta('title', altTitle, {'role': 'alt'});
     }
 
-    for (final li in doc.querySelectorAll('.categories > ul > li')) {
+    for (final li in doc.selectAll('.categories > ul > li')) {
       novel.addMeta('subject', li.text.trim());
     }
 
-    for (final a in doc.querySelectorAll('.content .tag')) {
+    for (final a in doc.selectAll('.content .tag')) {
       novel.addMeta('tag', a.text.trim());
     }
 
-    for (final span in doc.querySelectorAll('.header-stats span')) {
-      final label = span.querySelector('small')?.text.trim().toLowerCase();
+    for (final span in doc.selectAll('.header-stats span')) {
+      final label = span.selectText('small')?.toLowerCase();
       if (label == 'status') {
-        final value = span.querySelector('strong')?.text;
+        final value = span.selectText('strong');
         novel.status = NovelStatus.parse(value);
       }
     }
@@ -98,7 +89,7 @@ class NovelPub extends Crawler
     doc = await pullDoc(tocUrl(url, 1));
     await extractToc(doc, volume);
 
-    final pages = doc.querySelectorAll(
+    final pages = doc.selectAll(
       ".pagenav .pagination > li:not(.PagedList-skipToNext)",
     );
 
@@ -107,12 +98,7 @@ class NovelPub extends Crawler
     if (pages.length > 1) {
       start = 2;
       end = int.parse(
-            pages.last
-                .querySelector('a')!
-                .attributes['href']!
-                .split('-')
-                .last
-                .trim(),
+            pages.last.select('a')!.attributes['href']!.split('-').last.trim(),
           ) +
           1;
     }
@@ -129,17 +115,17 @@ class NovelPub extends Crawler
   }
 
   Future<void> extractToc(Document doc, Volume volume) async {
-    for (final li in doc.querySelectorAll('.chapter-list > li')) {
-      final a = li.querySelector('a');
+    for (final li in doc.selectAll('.chapter-list > li')) {
+      final a = li.select('a');
       if (a == null) {
         return;
       }
 
-      final updated = li.querySelector('time')?.attributes['datetime'];
+      final updated = li.select('time')?.attributes['datetime'];
 
       final chapter = Chapter(
         index: int.parse(li.attributes['data-orderno']!),
-        title: a.querySelector('.chapter-title')?.text.trim() ?? '',
+        title: a.selectText('.chapter-title') ?? '',
         url: meta.absoluteUrl(a.attributes['href']!),
         updated: updated == null ? null : DateTime.parse(updated),
       );
@@ -149,23 +135,23 @@ class NovelPub extends Crawler
   }
 
   @override
-  Future<void> parseChapter(Chapter chapter) async {
-    final doc = await pullDoc(chapter.url);
-    final content = doc.querySelector("#chapter-container");
+  Future<String?> fetchChapterContent(String url) async {
+    final doc = await pullDoc(url);
+    final content = doc.select("#chapter-container");
     if (content == null) {
       throw CrawlerException("Unable to find main chapter content.");
     }
 
-    for (final element in doc.querySelectorAll('.adsbox, .adsbygoogle')) {
+    for (final element in doc.selectAll('.adsbox, .adsbygoogle')) {
       element.remove();
     }
 
-    for (final element in doc.querySelectorAll('strong > strong')) {
+    for (final element in doc.selectAll('strong > strong')) {
       element.remove();
     }
 
     cleanNodeTree(content);
 
-    chapter.content = content.outerHtml;
+    return content.outerHtml;
   }
 }
