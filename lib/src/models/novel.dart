@@ -1,9 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:nacht_sources/src/models/meta.dart';
 import 'package:nacht_sources/src/models/metadata.dart';
 import 'package:nacht_sources/src/models/status.dart';
 import 'package:nacht_sources/src/models/volume.dart';
 import 'package:nacht_sources/src/models/work_type.dart';
-import 'package:collection/collection.dart';
 
 class Novel {
   String title;
