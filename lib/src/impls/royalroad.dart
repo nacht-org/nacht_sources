@@ -103,13 +103,13 @@ class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
   }
 
   @override
-  Future<void> parseChapter(Chapter chapter) async {
-    final doc = await pullDoc(chapter.url);
+  Future<String?> fetchChapterContent(String url) async {
+    final doc = await pullDoc(url);
 
     final contentTree = doc.select(".chapter-content");
     cleanNodeTree(contentTree);
 
-    chapter.content = contentTree?.outerHtml;
+    return contentTree?.outerHtml;
   }
 
   @override

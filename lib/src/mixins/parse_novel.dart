@@ -3,7 +3,7 @@ import 'package:nacht_sources/src/models/models.dart';
 
 /// Base class for parsing novels.
 ///
-/// implementations for [parseNovel] and [parseChapter] are mandatory.
+/// implementations for [parseNovel] and [fetchChapterContent] are mandatory.
 mixin ParseNovel {
   /// Parse the novel by following the url
   ///
@@ -13,7 +13,7 @@ mixin ParseNovel {
   /// Parse the chapter and populate the content field
   ///
   /// [Chapter] must have the [url] field populated
-  Future<void> parseChapter(Chapter chapter);
+  Future<String?> fetchChapterContent(String url);
 
   /// Search the website for novels with the given [query]
   Future<List<Novel>> search(String query, int page) {

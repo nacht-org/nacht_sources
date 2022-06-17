@@ -39,7 +39,7 @@ class IsolateHandler {
     );
   }
 
-  /// Equivalent to [ParseNovel.parseChapter]
+  /// Equivalent to [ParseNovel.fetchChapterContent]
   Future<String?> fetchChapterContent(String url) {
     return _request<ChapterContentRequest, String?>(
       ChapterContentRequest(count++, url),

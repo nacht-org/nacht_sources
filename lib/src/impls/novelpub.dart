@@ -135,8 +135,8 @@ class NovelPub extends Crawler with htmlCleaner, ParseNovel {
   }
 
   @override
-  Future<void> parseChapter(Chapter chapter) async {
-    final doc = await pullDoc(chapter.url);
+  Future<String?> fetchChapterContent(String url) async {
+    final doc = await pullDoc(url);
     final content = doc.select("#chapter-container");
     if (content == null) {
       throw CrawlerException("Unable to find main chapter content.");
@@ -152,6 +152,6 @@ class NovelPub extends Crawler with htmlCleaner, ParseNovel {
 
     cleanNodeTree(content);
 
-    chapter.content = content.outerHtml;
+    return content.outerHtml;
   }
 }

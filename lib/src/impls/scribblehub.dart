@@ -127,15 +127,15 @@ class ScribbleHub extends Crawler with ParseNovel {
   }
 
   @override
-  Future<void> parseChapter(Chapter chapter) async {
-    final doc = await pullDoc(chapter.url);
+  Future<String?> fetchChapterContent(String url) async {
+    final doc = await pullDoc(url);
 
-    final titleNode = doc.select('.chapter-title');
-    if (titleNode == null) {
-      chapter.title = titleNode!.text.trim();
-    }
+    // final titleNode = doc.select('.chapter-title');
+    // if (titleNode == null) {
+    //   chapter.title = titleNode!.text.trim();
+    // }
 
-    chapter.content = doc.select('#chp_raw')?.outerHtml;
+    return doc.select('#chp_raw')?.outerHtml;
   }
 
   Future<Volume> toc(String id) async {

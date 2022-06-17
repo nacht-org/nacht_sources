@@ -23,9 +23,8 @@ void main() {
       });
 
       test('should be able to parse chapter', () async {
-        final chapter = Chapter(index: -1, title: '', url: chapterUrl);
-        await crawler.parseChapter(chapter);
-        expect(chapter, isA<Chapter>());
+        final content = await crawler.fetchChapterContent(chapterUrl);
+        expect(content, isA<String?>());
       });
     },
     skip: 'Network intensive and takes a along time.',

@@ -12,8 +12,7 @@ class ChapterContentRequest extends RequestEvent<String?> {
       throw FeatureException("Chapter parsing is not supported.");
     }
 
-    final chapter = Chapter.withUrl(url);
-    await (crawler as ParseNovel).parseChapter(chapter);
-    return chapter.content;
+    final content = await (crawler as ParseNovel).fetchChapterContent(url);
+    return content;
   }
 }

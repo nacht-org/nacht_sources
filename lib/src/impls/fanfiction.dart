@@ -74,9 +74,8 @@ class FanFiction extends Crawler with ParseNovel {
   }
 
   @override
-  Future<void> parseChapter(Chapter chapter) async {
-    final doc = await pullDoc(chapter.url);
-
-    chapter.content = doc.select('#storytext, #storycontent')?.outerHtml;
+  Future<String?> fetchChapterContent(String url) async {
+    final doc = await pullDoc(url);
+    return doc.select('#storytext, #storycontent')?.outerHtml;
   }
 }
