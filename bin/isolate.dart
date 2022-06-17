@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:nacht_sources/nacht_sources.dart';
 
 void main() async {
-  final handler = IsolateHandler(factory: crawlers[3]);
+  final handler = IsolateHandler(factory: crawlers.values.elementAt(3));
 
   await novel(
     handler,

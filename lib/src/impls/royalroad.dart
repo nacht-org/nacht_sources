@@ -1,6 +1,7 @@
 import 'package:annotations/annotations.dart';
 import 'package:dio/dio.dart';
 import 'package:nacht_sources/nacht_sources.dart';
+import 'package:nacht_sources/src/misc/misc.dart';
 
 @RegisterCrawler('com.royalroad')
 class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
@@ -25,11 +26,11 @@ class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
     final doc = await pullDoc(url);
 
     final novels = <Novel>[];
-    for (final div in doc.querySelectorAll(".fiction-list-item")) {
-      final a = div.querySelector(".fiction-title a");
+    for (final div in doc.selectAll(".fiction-list-item")) {
+      final a = div.select(".fiction-title a");
       if (a == null) continue;
 
-      var thumbnailUrl = div.querySelector("img")?.attributes['src'];
+      var thumbnailUrl = div.select("img")?.attributes['src'];
       if (thumbnailUrl != null) {
         thumbnailUrl = meta.absoluteUrl(thumbnailUrl);
       }
@@ -52,36 +53,33 @@ class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
     final doc = await pullDoc(url);
 
     final status = NovelStatus.parse(
-      doc.querySelectorAll('.fiction-info .label')[1].text,
+      doc.selectAll('.fiction-info .label')[1].text,
     );
 
     final novel = Novel(
-      title: doc.querySelector('h1[property="name"]')?.text.trim() ?? '',
-      author: doc.querySelector('span[property="name"]')?.text.trim(),
-      thumbnailUrl: doc
-          .querySelector('.page-content-inner .thumbnail')
-          ?.attributes['src'],
-      description: doc
-          .querySelectorAll('.description > [property="description"] > p')
-          .map((e) => e.text.trim())
-          .toList(),
+      title: doc.selectText('h1[property="name"]') ?? '',
+      author: doc.selectText('span[property="name"]'),
+      thumbnailUrl:
+          doc.select('.page-content-inner .thumbnail')?.attributes['src'],
+      description:
+          doc.selectAllText('.description > [property="description"] > p'),
       status: status,
       url: url,
       lang: 'en',
     );
 
-    for (final a in doc.querySelectorAll('a.label[href*="tag"]')) {
+    for (final a in doc.selectAll('a.label[href*="tag"]')) {
       novel.addMeta("subject", a.text.trim());
     }
 
     final volume = novel.singleVolume();
-    for (final tr in doc.querySelectorAll("tbody > tr")) {
-      final a = tr.querySelector("a[href]");
+    for (final tr in doc.selectAll("tbody > tr")) {
+      final a = tr.select("a[href]");
       if (a == null) {
         continue;
       }
 
-      final unixtime = tr.querySelector('time')?.attributes['unixtime'];
+      final unixtime = tr.select('time')?.attributes['unixtime'];
 
       DateTime? updated;
       if (unixtime != null) {
@@ -108,7 +106,7 @@ class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
   Future<void> parseChapter(Chapter chapter) async {
     final doc = await pullDoc(chapter.url);
 
-    final contentTree = doc.querySelector(".chapter-content");
+    final contentTree = doc.select(".chapter-content");
     cleanNodeTree(contentTree);
 
     chapter.content = contentTree?.outerHtml;
@@ -124,11 +122,11 @@ class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
     final doc = await pullDoc(url);
 
     final novels = <Novel>[];
-    for (final item in doc.querySelectorAll('.fiction-list-item')) {
+    for (final item in doc.selectAll('.fiction-list-item')) {
       final novel = Novel(
-        title: item.querySelector('.fiction-title')?.text.trim() ?? '',
-        thumbnailUrl: item.querySelector('img')?.attributes['src'],
-        url: meta.absoluteUrl(item.querySelector('a')!.attributes['href']!),
+        title: item.selectText('.fiction-title') ?? '',
+        thumbnailUrl: item.select('img')?.attributes['src'],
+        url: meta.absoluteUrl(item.select('a')!.attributes['href']!),
         lang: meta.lang,
       );
 
