@@ -1,13 +1,13 @@
 import 'package:annotations/annotations.dart';
 import 'package:collection/collection.dart';
-import 'package:dio/dio.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/misc/misc.dart';
 
 @RegisterCrawler('com.fanfiction')
 class FanFiction extends Crawler with ParseNovel {
-  FanFiction.basic() : super(client: Crawler.defaultClient(), meta: _meta);
-  FanFiction.custom(Dio client) : super(client: client, meta: _meta);
+  FanFiction.basic() : super(options: CrawlerOptions.basic(), meta: _meta);
+  FanFiction.custom(CrawlerOptions options)
+      : super(options: options, meta: _meta);
 
   static const _meta = Meta(
     id: 'com.fanfiction',

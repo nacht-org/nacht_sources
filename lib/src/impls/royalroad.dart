@@ -1,12 +1,12 @@
 import 'package:annotations/annotations.dart';
-import 'package:dio/dio.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/misc/misc.dart';
 
 @RegisterCrawler('com.royalroad')
 class RoyalRoad extends Crawler with htmlCleaner, ParseNovel {
-  RoyalRoad.basic() : super(client: Crawler.defaultClient(), meta: _meta);
-  RoyalRoad.custom(Dio client) : super(client: client, meta: _meta);
+  RoyalRoad.basic() : super(options: CrawlerOptions.basic(), meta: _meta);
+  RoyalRoad.custom(CrawlerOptions options)
+      : super(options: options, meta: _meta);
 
   static const _meta = Meta(
     id: 'com.royalroad',
