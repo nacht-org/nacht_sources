@@ -13,7 +13,7 @@ export 'src/impls/impls.dart';
 export 'src/interfaces/interfaces.dart';
 
 // Isolate.
-export 'src/isolate/isolate_handler.dart';
+export 'src/isolate/crawler_isolate.dart';
 
 // Mixins.
 export 'src/mixins/mixins.dart';

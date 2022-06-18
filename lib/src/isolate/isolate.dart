@@ -1,5 +1,5 @@
 export 'event.dart';
-export 'isolate_handler.dart';
+export 'crawler_isolate.dart';
 export 'isolate_worker.dart';
 export 'request.dart';
 

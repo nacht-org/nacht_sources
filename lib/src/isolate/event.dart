@@ -1,7 +1,7 @@
-import 'package:nacht_sources/src/isolate/isolate_handler.dart';
+import 'package:nacht_sources/src/isolate/crawler_isolate.dart';
 import 'package:nacht_sources/src/isolate/isolate_worker.dart';
 
-/// The base event for communication between [IsolateHandler] and [IsolateWorker]
+/// The base event for communication between [CrawlerIsolate] and [IsolateWorker]
 ///
 /// [key] is used to determine the corresponding response from
 /// the isolate to the request event.

@@ -4,10 +4,12 @@ import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/isolate/isolate.dart';
 import 'package:stream_channel/isolate_channel.dart';
 
-class IsolateHandler {
-  IsolateHandler({
+class CrawlerIsolate {
+  CrawlerIsolate({
     required this.factory,
+    String? name,
   }) {
+    name = name ?? 'Crawler(${factory.meta().id})';
     _receivePort = ReceivePort();
     _channel = IsolateChannel.connectReceive(_receivePort);
     _stream = _channel.stream.asBroadcastStream();
@@ -15,6 +17,7 @@ class IsolateHandler {
 
   final CrawlerFactory factory;
 
+  late final String debugName;
   late final ReceivePort _receivePort;
   late final IsolateChannel<Event> _channel;
   late final Stream<Event> _stream;
@@ -29,6 +32,7 @@ class IsolateHandler {
         sendPort: _receivePort.sendPort,
         factory: factory,
       ),
+      debugName: debugName,
     );
   }
 
