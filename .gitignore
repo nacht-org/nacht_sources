@@ -30,3 +30,6 @@ build/
 
 # Generated files.
 *.freezed.dart
+
+# Temporary files.
+/temp
