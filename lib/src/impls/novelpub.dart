@@ -150,6 +150,14 @@ class NovelPub extends Crawler with CleanHtml, ParseNovel {
       element.remove();
     }
 
+    for (final element in doc.selectAll('strong i i')) {
+      element.remove();
+    }
+
+    for (final element in doc.selectAll('p > sub')) {
+      element.remove();
+    }
+
     cleanNodeTree(content);
 
     return content.outerHtml;
