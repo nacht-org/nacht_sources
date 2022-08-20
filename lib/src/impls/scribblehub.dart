@@ -1,4 +1,5 @@
 import 'package:annotations/annotations.dart';
+import 'package:dateparser/dateparser.dart' as dateparser;
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
@@ -164,12 +165,13 @@ class ScribbleHub extends Crawler with ParseNovel {
 
       final time = li.select('.fic_date_pub')?.attributes['title'];
 
-      // TODO add support to parse relative time ex: 20 hours ago
       DateTime? updated;
       try {
         updated = time != null ? formatter.parse(time) : null;
       } on FormatException {
-        updated = null;
+        try {
+          updated = dateparser.parse(time!);
+        } catch (_) {}
       }
 
       volume.chapters.add(

@@ -1,7 +1,6 @@
 name: nacht_sources
 description: A new Flutter package project.
 version: 0.1.0
-homepage:
 
 publish_to: none
 
@@ -14,6 +13,8 @@ dependencies:
     path: ./packages/annotations
 
   collection: ^1.15.0
+  dateparser:
+    git: https://github.com/mensch272/dateparser
   dio: ^4.0.4
   equatable: ^2.0.3
   html: ^0.15.0
