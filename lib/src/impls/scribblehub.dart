@@ -1,10 +1,10 @@
 import 'package:annotations/annotations.dart';
-import 'package:dateparser/dateparser.dart' as dateparser;
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/misc/misc.dart';
+import 'package:rechron/rechron.dart' as rechron;
 
 @RegisterCrawler('com.scribblehub')
 class ScribbleHub extends Crawler with ParseNovel {
@@ -170,7 +170,7 @@ class ScribbleHub extends Crawler with ParseNovel {
         updated = time != null ? formatter.parse(time) : null;
       } on FormatException {
         try {
-          updated = dateparser.parse(time!);
+          updated = rechron.parse(time!);
         } catch (_) {}
       }
 

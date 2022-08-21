@@ -13,12 +13,11 @@ dependencies:
     path: ./packages/annotations
 
   collection: ^1.15.0
-  dateparser:
-    git: https://github.com/mensch272/dateparser
   dio: ^4.0.4
   equatable: ^2.0.3
   html: ^0.15.0
   intl: ^0.17.0
+  rechron: ^0.1.1-dev.1
   stream_channel: ^2.1.0
 
 dev_dependencies:
