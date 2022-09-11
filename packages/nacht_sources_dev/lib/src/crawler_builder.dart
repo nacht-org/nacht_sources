@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:annotations/annotations.dart';
+import 'package:nacht_sources_annotations/nacht_sources_annotations.dart';
 import 'package:build/build.dart';
-import 'package:generators/src/constants.dart';
-import 'package:generators/src/model_visitor.dart';
+import 'package:nacht_sources_dev/src/constants.dart';
+import 'package:nacht_sources_dev/src/model_visitor.dart';
 import 'package:glob/glob.dart';
 import 'package:path/path.dart' as path;
 import 'package:source_gen/source_gen.dart';

@@ -1,7 +1,7 @@
-import 'package:annotations/annotations.dart';
 import 'package:nacht_sources/generated/crawlers.g.dart';
 import 'package:nacht_sources/src/interfaces/crawler.dart';
 import 'package:nacht_sources/src/models/models.dart';
+import 'package:nacht_sources_annotations/nacht_sources_annotations.dart';
 
 /// A crawler factory class used to hold crawler helper methods
 @registerFactory

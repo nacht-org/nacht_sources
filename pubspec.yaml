@@ -9,21 +9,21 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  annotations:
-    path: ./packages/annotations
 
   collection: ^1.15.0
   dio: ^4.0.4
   equatable: ^2.0.3
   html: ^0.15.0
   intl: ^0.17.0
+  nacht_sources_annotations:
+    path: ./packages/nacht_sources_annotations
   rechron: ^0.1.1-dev.1
   stream_channel: ^2.1.0
 
 dev_dependencies:
   build_runner:
-  generators:
-    path: ./packages/generators
+  nacht_sources_dev:
+    path: ./packages/nacht_sources_dev
   lint: ^1.8.1
   mockito: ^5.2.0
   test: ^1.20.0

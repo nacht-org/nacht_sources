@@ -1,9 +1,9 @@
-import 'package:annotations/annotations.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/misc/misc.dart';
+import 'package:nacht_sources_annotations/nacht_sources_annotations.dart';
 import 'package:rechron/rechron.dart' as rechron;
 
 @RegisterCrawler('com.scribblehub')

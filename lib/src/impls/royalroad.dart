@@ -1,6 +1,6 @@
-import 'package:annotations/annotations.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/misc/misc.dart';
+import 'package:nacht_sources_annotations/nacht_sources_annotations.dart';
 
 @RegisterCrawler('com.royalroad')
 class RoyalRoad extends Crawler with CleanHtml, ParseNovel {
