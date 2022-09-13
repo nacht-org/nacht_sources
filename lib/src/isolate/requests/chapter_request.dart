@@ -1,5 +1,6 @@
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/isolate/isolate.dart';
+import 'package:nacht_sources/src/minify/minify.dart';
 
 class ChapterContentRequest extends RequestEvent<String?> {
   ChapterContentRequest(super.key, this.url);
@@ -13,6 +14,11 @@ class ChapterContentRequest extends RequestEvent<String?> {
     }
 
     final content = await (crawler as ParseNovel).fetchChapterContent(url);
-    return content;
+
+    if (content == null) {
+      return null;
+    } else {
+      return minify(content);
+    }
   }
 }
