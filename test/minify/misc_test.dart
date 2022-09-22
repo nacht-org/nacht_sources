@@ -69,14 +69,4 @@ void main() {
       );
     });
   });
-
-  group("combine", () {
-    test("should combine nodes adjacent", () {
-      final document =
-          parseFragment("<p>First</p><span>Second</span>  <div>Third</div>");
-      final combined = combine(document.children);
-
-      expect(combined, "<p>First</p><span>Second</span><div>Third</div>");
-    });
-  });
 }
