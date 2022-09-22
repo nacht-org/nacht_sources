@@ -49,12 +49,3 @@ void wrapNode(Node parent, int index, Node node, String wrapWith) {
   parent.nodes[index] = replacement;
   replacement.append(node);
 }
-
-String combine(List<Element> elements) {
-  final buffer = StringBuffer();
-  for (final element in elements) {
-    buffer.write(element.outerHtml);
-  }
-
-  return buffer.toString();
-}

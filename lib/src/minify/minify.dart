@@ -24,5 +24,5 @@ String minify(String source) {
     removeVisitor.visitElement(element);
   }
 
-  return combine(root.children);
+  return root.children.map((element) => element.outerHtml).join("\u2561");
 }
