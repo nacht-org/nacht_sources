@@ -1,6 +1,7 @@
 library minify;
 
 import 'package:html/parser.dart';
+import 'package:nacht_sources/src/constants.dart';
 import 'package:nacht_sources/src/minify/allowed_visitor.dart';
 import 'package:nacht_sources/src/minify/constants.dart';
 import 'package:nacht_sources/src/minify/misc.dart';
@@ -24,5 +25,5 @@ String minify(String source) {
     removeVisitor.visitElement(element);
   }
 
-  return root.children.map((element) => element.outerHtml).join("\u2561");
+  return root.children.map((element) => element.outerHtml).join(separator);
 }

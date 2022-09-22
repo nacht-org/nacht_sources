@@ -49,3 +49,5 @@ const preserveAttrs = [
   "src",
   "alt",
 ];
+
+const separator = "\u2561";
