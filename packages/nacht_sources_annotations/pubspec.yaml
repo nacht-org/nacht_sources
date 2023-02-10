@@ -1,6 +1,6 @@
 name: nacht_sources_annotations
 description: A starting point for Dart libraries or applications.
-version: 1.0.0
+version: 0.2.1
 # homepage: https://www.example.com
 
 publish_to: none
