@@ -7,10 +7,10 @@ import 'package:nacht_sources/nacht_sources.dart';
 void main() async {
   final handler = CrawlerIsolate(factory: crawlers.values.elementAt(3));
 
-  await novel(
-    handler,
-    'https://www.scribblehub.com/series/255716/the-great-cores-paradox-monster-mc-litrpg/',
-  );
+  // await novel(
+  //   handler,
+  //   'https://www.scribblehub.com/series/255716/the-great-cores-paradox-monster-mc-litrpg/',
+  // );
 
   await content(
     handler,
@@ -21,10 +21,10 @@ void main() async {
     'https://www.scribblehub.com/read/397857-stealing-spotlight-of-protagonist/chapter/493208/',
   );
 
-  await popularUrl(handler, 1);
-  await popular(handler, 1);
+  // await popularUrl(handler, 1);
+  // await popular(handler, 1);
 
-  await search(handler, 'solo', 1);
+  // await search(handler, 'solo', 1);
 
   handler.close();
 }

@@ -25,5 +25,5 @@ String minify(String source) {
     removeVisitor.visitElement(element);
   }
 
-  return root.children.map((element) => element.outerHtml).join(separator);
+  return root.children.map((element) => element.outerHtml).join();
 }
