@@ -13,7 +13,7 @@ dependencies:
   source_gen:
   nacht_sources_annotations:
     path: ../nacht_sources_annotations
-  glob: ^2.0.2
+  glob: ^2.1.0
 
 dev_dependencies:
   lints: ^1.0.0
