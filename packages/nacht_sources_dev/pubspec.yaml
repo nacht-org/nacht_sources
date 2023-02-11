@@ -1,6 +1,6 @@
 name: nacht_sources_dev
 description: A starting point for Dart libraries or applications.
-version: 0.2.1+1
+version: 0.2.1+2
 # homepage: https://www.example.com
 
 publish_to: none
