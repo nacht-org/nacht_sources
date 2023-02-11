@@ -25,5 +25,12 @@ String minify(String source) {
     removeVisitor.visitElement(element);
   }
 
+  // Remove empty elements
+  for (final element in root.children) {
+    if (element.text.trim().isEmpty) {
+      element.remove();
+    }
+  }
+
   return root.children.map((element) => element.outerHtml).join();
 }
