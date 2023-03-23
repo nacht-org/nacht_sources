@@ -1,8 +1,6 @@
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/misc/misc.dart';
-import 'package:nacht_sources_annotations/nacht_sources_annotations.dart';
 
-@RegisterCrawler('com.royalroad')
 class RoyalRoad extends Crawler with CleanHtml, ParseNovel {
   RoyalRoad.basic() : super(options: CrawlerOptions.basic(), meta: _meta);
   RoyalRoad.custom(CrawlerOptions options)
@@ -52,12 +50,11 @@ class RoyalRoad extends Crawler with CleanHtml, ParseNovel {
   Future<Novel> fetchNovel(String url) async {
     final doc = await pullDoc(url);
 
-    final status = NovelStatus.parse(
-      doc
-          .selectAll('.fiction-info > .portlet.row span:nth-child(2)')
-          .first
-          .text,
-    );
+    final statusSpans =
+        doc.select(".fiction-info > .portlet.row")?.selectAll("span");
+    final secondSpan =
+        statusSpans != null && statusSpans.length > 2 ? statusSpans[1] : null;
+    final status = NovelStatus.parse(secondSpan?.text.trim());
 
     final novel = Novel(
       title: doc.selectText('.fic-header h1') ?? '',

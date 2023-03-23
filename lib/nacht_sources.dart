@@ -1,7 +1,7 @@
 library nacht_sources;
 
-// Generated.
-export 'generated/crawlers.g.dart';
+// Crawler
+export 'src/crawlers.dart';
 
 // Exceptions.
 export 'src/exceptions.dart';
