@@ -53,16 +53,18 @@ class RoyalRoad extends Crawler with CleanHtml, ParseNovel {
     final doc = await pullDoc(url);
 
     final status = NovelStatus.parse(
-      doc.selectAll('.fiction-info .label')[1].text,
+      doc
+          .selectAll('.fiction-info > .portlet.row span:nth-child(2)')
+          .first
+          .text,
     );
 
     final novel = Novel(
-      title: doc.selectText('h1[property="name"]') ?? '',
-      author: doc.selectText('span[property="name"]'),
+      title: doc.selectText('.fic-header h1') ?? '',
+      author: doc.selectText('.fic-header h4 a'),
       thumbnailUrl:
           doc.select('.page-content-inner .thumbnail')?.attributes['src'],
-      description:
-          doc.selectAllText('.description > [property="description"] > p'),
+      description: doc.selectAllText('.description > div > p'),
       status: status,
       url: url,
       lang: 'en',
