@@ -1,8 +1,7 @@
-export 'event.dart';
 export 'crawler_isolate.dart';
+export 'event.dart';
 export 'isolate_worker.dart';
 export 'request.dart';
-
 export 'requests/build_popular_url_request.dart';
 export 'requests/chapter_request.dart';
 export 'requests/novel_request.dart';
