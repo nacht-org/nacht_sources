@@ -12,7 +12,7 @@ void main() {
           'https://www.novelpub.com/novel/top-tier-providence-secretly-cultivate-for-a-thousand-years-12032016/1208-chapter-1';
       final crawler = NovelPub.basic();
 
-      test('should be able to parse novel', () async {
+      test('should be able fetch popular', () async {
         final novels = await crawler.fetchPopular(1);
         expect(novels, isA<List<Novel>>());
       });
@@ -28,5 +28,6 @@ void main() {
       });
     },
     skip: 'Network intensive and takes a along time.',
+    timeout: const Timeout(Duration(minutes: 2)),
   );
 }

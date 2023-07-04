@@ -96,7 +96,7 @@ class NovelPub extends Crawler with CleanHtml, ParseNovel {
     if (pages.length > 1) {
       start = 2;
       end = int.parse(
-            pages.last.select('a')!.attributes['href']!.split('-').last.trim(),
+            pages.last.select('a')!.attributes['href']!.split('=').last.trim(),
           ) +
           1;
     }
