@@ -22,4 +22,9 @@ const crawlers = {
     ScribbleHub.basic,
     ScribbleHub.custom,
   ),
+  "com.novelfull": CrawlerFactory(
+    NovelFull.getMeta,
+    NovelFull.basic,
+    NovelFull.custom,
+  ),
 };
