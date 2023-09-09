@@ -27,4 +27,9 @@ const crawlers = {
     NovelFull.basic,
     NovelFull.custom,
   ),
+  "com.mtlreader": CrawlerFactory(
+    MTLReader.getMeta,
+    MTLReader.basic,
+    MTLReader.custom,
+  ),
 };

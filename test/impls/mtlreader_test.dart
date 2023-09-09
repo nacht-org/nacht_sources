@@ -4,13 +4,11 @@ import 'package:test/test.dart';
 
 void main() {
   group(
-    'NovelFull',
+    'MTLReader',
     () {
-      const novelUrl =
-          'https://novelfull.com/lord-of-mysteries-2-circle-of-inevitability.html';
-      const chapterUrl =
-          'https://novelfull.com/lord-of-mysteries-2-circle-of-inevitability/chapter-1-1-foreigners.html';
-      final crawler = NovelFull.basic();
+      const novelUrl = 'https://mtlreader.com/novels/90';
+      const chapterUrl = 'https://mtlreader.com/novels/90/chapters/18438';
+      final crawler = MTLReader.basic();
 
       test('should be able fetch popular', () async {
         final novels = await crawler.fetchPopular(1);
