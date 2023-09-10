@@ -102,7 +102,7 @@ class MTLReader extends Crawler with CleanHtml, ParseNovel {
         .replaceAll(RegExp(r"([\r\n]?<br>[\r\n]?)+"), "\n\n")
         .replaceAll(r"\u3000", "")
         .split("\n\n")
-        .map((x) => x.replaceAll(r"\n", ""))
+        .map((x) => x.replaceAll(r"\n", "").replaceAll(r'\"', '"'))
         .map((x) => "<p>${x.trim()}</p>")
         .whereNot((element) => element == "<p></p>")
         .whereNot((element) => element == '<p>"</p>');

@@ -1,5 +1,6 @@
 import 'package:html/dom.dart' as dom;
 import 'package:nacht_sources/src/constants.dart' as constants;
+import 'package:nacht_sources/src/misc/misc.dart';
 
 /// A mixin that provides functionality to clean a html tree
 mixin CleanHtml {
@@ -53,6 +54,18 @@ mixin CleanHtml {
     return false;
   }
 
+  // Remove empty wrappers
+  dom.Element findRoot(dom.Element element) {
+    dom.Element root = element;
+    while (root.children.length == 1 &&
+        root.firstChild!.nodeType == dom.Node.ELEMENT_NODE &&
+        (root.firstChild! as dom.Element).localName == 'div') {
+      root = root.firstChild! as dom.Element;
+    }
+
+    return root;
+  }
+
   /// Remove unnecessary elements and attributes
   dom.Node? cleanNodeTree(dom.Node? tree) {
     if (tree == null) {
@@ -99,7 +112,7 @@ mixin CleanHtml {
       node.remove();
 
       // empty text
-    } else if (element.text.trim().isEmpty) {
+    } else if (element.text.clean().isEmpty) {
       // if not a notext tag and has no content
       if (!notextTags.contains(element.localName) && !element.hasContent()) {
         element.remove();

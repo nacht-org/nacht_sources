@@ -14,6 +14,10 @@ enum NovelStatus {
   /// Most commonly due to third-party contracts.
   stub,
 
+  /// The novel has been discontinued and further content
+  /// is not expected.
+  dropped,
+
   /// The novel status is unknown.
   unknown;
 
@@ -38,6 +42,9 @@ enum NovelStatus {
         return NovelStatus.stub;
       case 'completed':
         return NovelStatus.completed;
+      case 'dropped':
+      case 'discontinued':
+        return NovelStatus.dropped;
       default:
         return NovelStatus.unknown;
     }
