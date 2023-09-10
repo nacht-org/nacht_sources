@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:intl/intl.dart';
@@ -82,8 +83,10 @@ class Foxaholic extends Crawler with CleanHtml, ParseNovel {
           doc.select("#manga-chapters-holder")!.attributes["data-id"]!;
       final payload = {"action": "manga_get_chapters", "manga": novelId};
 
-      final response =
-          await client.post("$baseUrl/wp-admin/admin-ajax.php", data: payload);
+      final response = await client.post(
+        "$baseUrl/wp-admin/admin-ajax.php",
+        data: FormData.fromMap(payload),
+      );
       doc = parser.parse(response.data);
     }
 
