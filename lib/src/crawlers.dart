@@ -33,8 +33,8 @@ const crawlers = {
     MTLReader.custom,
   ),
   "com.foxaholic": CrawlerFactory(
-    FanFiction.getMeta,
-    FanFiction.basic,
-    FanFiction.custom,
+    Foxaholic.getMeta,
+    Foxaholic.basic,
+    Foxaholic.custom,
   ),
 };
