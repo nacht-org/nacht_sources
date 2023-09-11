@@ -1,3 +1,4 @@
+import "package:nacht_sources/src/impls/allnovel.dart";
 import "package:nacht_sources/src/impls/impls.dart";
 import "package:nacht_sources/src/utils.dart";
 
@@ -36,5 +37,10 @@ const crawlers = {
     Foxaholic.getMeta,
     Foxaholic.basic,
     Foxaholic.custom,
+  ),
+  "org.allnovel": CrawlerFactory(
+    AllNovel.getMeta,
+    AllNovel.basic,
+    AllNovel.custom,
   ),
 };

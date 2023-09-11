@@ -1,4 +1,5 @@
 import 'package:html/dom.dart';
+import 'package:nacht_sources/src/misc/misc.dart';
 
 extension DocumentSelect on Document {
   Element? select(String selector) => querySelector(selector);
@@ -6,7 +7,7 @@ extension DocumentSelect on Document {
 }
 
 extension DocumentSelectText on Document {
-  String? selectText(String selector) => querySelector(selector)?.text.trim();
+  String? selectText(String selector) => querySelector(selector)?.text.clean();
   List<String> selectAllText(String selector) => querySelectorAll(selector)
       .map((element) => element.text.trim())
       .where((text) => text.isNotEmpty)

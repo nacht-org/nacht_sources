@@ -1,17 +1,17 @@
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/templates/templates.dart';
 
-class NovelFull extends NovelFullTemplate {
-  NovelFull.basic() : super(options: CrawlerOptions.basic(), meta: _meta);
-  NovelFull.custom(CrawlerOptions options)
+class AllNovel extends NovelFullTemplate {
+  AllNovel.basic() : super(options: CrawlerOptions.basic(), meta: _meta);
+  AllNovel.custom(CrawlerOptions options)
       : super(options: options, meta: _meta);
 
   static const _meta = Meta(
-    id: 'com.novelfull',
-    name: "NovelFull",
+    id: 'org.allnovel',
+    name: "All Novel",
     lang: "en",
     version: SemanticVersion(0, 1, 0),
-    baseUrls: ["https://novelfull.com", "http://novelfull.com"],
+    baseUrls: ["https://allnovel.org", "http://novelfull.org"],
     features: {Feature.search, Feature.popular},
   );
 

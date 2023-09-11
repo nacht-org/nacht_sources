@@ -77,7 +77,7 @@ mixin CleanHtml {
     final nodes = [tree];
     while (nodes.isNotEmpty) {
       final node = nodes.removeAt(0);
-      nodes.addAll(node.children);
+      nodes.addAll(node.nodes);
       cleanNode(node);
     }
 
