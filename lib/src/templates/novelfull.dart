@@ -27,23 +27,37 @@ class NovelFullTemplate extends Crawler with CleanHtml, ParseNovel {
       author: parseAuthor(doc),
       thumbnailUrl:
           thumbnailUrl == null ? null : meta.absoluteUrl(thumbnailUrl),
-      description: doc.selectAllText(".desc-text > p"),
+      description: selectDescription(doc),
       url: url,
       lang: meta.lang,
       volumes: await parseVolumes(url, doc, hasChapterOptionsUrl),
     );
 
-    final statusText = doc.selectText("a[href^='/status/']");
+    final statusText = selectStatus(doc);
     if (statusText != null) {
       novel.status = NovelStatus.parse(statusText.trim());
     }
 
-    final elements = doc.selectAll(".info a[href^='/genre/']");
+    final elements = doc.selectAll(".info a[href*='/genre']");
     for (final element in elements) {
       novel.addMeta("subject", element.text.trim());
     }
 
     return novel;
+  }
+
+  List<String> selectDescription(Document doc) {
+    final paragraphs = doc.selectAllText(".desc-text > p");
+    if (paragraphs.isNotEmpty) {
+      return paragraphs;
+    }
+
+    final paragraph = doc.selectText(".desc-text");
+    return [if (paragraph != null) paragraph];
+  }
+
+  String? selectStatus(Document doc) {
+    return doc.selectText("a[href^='/status/']");
   }
 
   String? parseAuthor(Document doc) {
@@ -52,9 +66,16 @@ class NovelFullTemplate extends Crawler with CleanHtml, ParseNovel {
       "a[href*='/au/']",
       "a[href*='/authors/']",
       "a[href*='/author/']",
+      "a[href*='/novel-bin-author/']",
     ];
 
     return doc.selectAllText(possibleSelectors.join(",")).join(",");
+  }
+
+  String buildChapterListUrl(String novelId, bool hasChapterOptionsUrl) {
+    return hasChapterOptionsUrl
+        ? "${meta.baseUrl}/ajax-chapter-option?novelId=$novelId"
+        : "${meta.baseUrl}/ajax-chapter-archive?novelId=$novelId";
   }
 
   Future<List<Volume>> parseVolumes(
@@ -66,9 +87,7 @@ class NovelFullTemplate extends Crawler with CleanHtml, ParseNovel {
     final novelId =
         novelDoc.select("#rating[data-novel-id]")!.attributes["data-novel-id"];
 
-    final url = hasChapterOptionsUrl
-        ? "${meta.baseUrl}/ajax-chapter-option?novelId=$novelId"
-        : "${meta.baseUrl}/ajax-chapter-archive?novelId=$novelId";
+    final url = buildChapterListUrl(novelId!, hasChapterOptionsUrl);
 
     final doc = await pullDoc(url);
     final elements =
@@ -109,7 +128,7 @@ class NovelFullTemplate extends Crawler with CleanHtml, ParseNovel {
 
     cleanNodeTree(content);
 
-    for (final element in content!.selectAll("div")) {
+    for (final element in content!.selectAll("p, div")) {
       if (element.text.trim().isEmpty) {
         element.remove();
       }
@@ -118,9 +137,13 @@ class NovelFullTemplate extends Crawler with CleanHtml, ParseNovel {
     return content.outerHtml;
   }
 
+  String buildSearchUrl(String query, int page) {
+    return "${meta.baseUrl}/search?keyword=$query&page=$page";
+  }
+
   @override
   Future<List<Novel>> search(String query, int page) async {
-    final url = "${meta.baseUrl}/search?keyword=$query&page=$page";
+    final url = buildSearchUrl(query, page);
     final doc = await pullDoc(url);
     return parseSearch(url, doc);
   }

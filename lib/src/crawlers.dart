@@ -1,4 +1,3 @@
-import "package:nacht_sources/src/impls/allnovel.dart";
 import "package:nacht_sources/src/impls/impls.dart";
 import "package:nacht_sources/src/utils.dart";
 
@@ -42,5 +41,10 @@ const crawlers = {
     AllNovel.getMeta,
     AllNovel.basic,
     AllNovel.custom,
+  ),
+  "com.novel-bin": CrawlerFactory(
+    NovelBin.getMeta,
+    NovelBin.basic,
+    NovelBin.custom,
   ),
 };

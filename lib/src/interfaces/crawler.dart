@@ -35,12 +35,6 @@ abstract class Crawler {
       ),
     );
 
-    if (response.statusCode != 200) {
-      throw CrawlerException(
-        "Did not get a valid response: ${response.statusCode}: $url",
-      );
-    }
-
     return parser.parse(response.data);
   }
 }

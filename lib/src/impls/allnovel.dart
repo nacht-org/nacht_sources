@@ -11,7 +11,7 @@ class AllNovel extends NovelFullTemplate {
     name: "All Novel",
     lang: "en",
     version: SemanticVersion(0, 1, 0),
-    baseUrls: ["https://allnovel.org", "http://novelfull.org"],
+    baseUrls: ["https://allnovel.org", "http://allnovel.org"],
     features: {Feature.search, Feature.popular},
   );
 
