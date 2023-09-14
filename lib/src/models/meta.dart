@@ -1,5 +1,6 @@
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/src/misc/misc.dart';
+import 'package:nacht_sources/src/models/logo.dart';
 
 /// Defines the optional features of a crawler
 enum Feature {
@@ -71,6 +72,9 @@ class Meta {
   /// ex: 'https://www.webnovel.com/', 'https://www.scribblehub.com/'
   final List<String> baseUrls;
 
+  /// The logo of the crawler
+  final Logo logo;
+
   /// Optional features supported by the crawler
   ///
   /// ex: search, login
@@ -99,6 +103,7 @@ class Meta {
     required this.lang,
     required this.version,
     required this.baseUrls,
+    required this.logo,
     this.features = const {},
     this.support = Support.all,
     List<WorkType>? workTypes,

@@ -16,6 +16,7 @@ class ScribbleHub extends Crawler with ParseNovel {
     lang: 'en',
     version: SemanticVersion(0, 1, 0),
     baseUrls: ['https://www.scribblehub.com'],
+    logo: Logo.github("com.scribblehub.png", 0xff040c2c),
     workTypes: [OriginalWork()],
     features: {Feature.popular, Feature.search},
   );

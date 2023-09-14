@@ -1,4 +1,5 @@
 export 'chapter.dart';
+export 'logo.dart';
 export 'meta.dart';
 export 'metadata.dart';
 export 'novel.dart';

@@ -14,6 +14,7 @@ class NovelBin extends NovelFullTemplate {
     lang: "en",
     version: SemanticVersion(0, 1, 0),
     baseUrls: ["https://novel-bin.com"],
+    logo: Logo.github("com.novel-bin.png", 0xfff5f4f4),
     features: {Feature.search, Feature.popular},
   );
 

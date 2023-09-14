@@ -13,6 +13,7 @@ class FanFiction extends Crawler with ParseNovel {
     lang: 'mixed',
     version: SemanticVersion(0, 1, 0),
     baseUrls: ['https://www.fanfiction.net/', 'https://m.fanfiction.net/'],
+    logo: Logo.github("com.fanfiction.png", 0xff3c54b4),
     support: Support.browserOnly,
     workTypes: [OriginalWork()],
     attributes: [Attribute.fanfiction],

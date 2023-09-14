@@ -12,6 +12,7 @@ class NovelPub extends Crawler with CleanHtml, ParseNovel {
     name: 'NovelPub',
     lang: 'en',
     version: SemanticVersion(0, 1, 2),
+    logo: Logo.github("com.novelpub.png", 0xff040c2c),
     baseUrls: ['https://www.novelpub.com'],
     features: {Feature.popular},
   );

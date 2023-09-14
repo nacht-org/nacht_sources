@@ -12,6 +12,7 @@ class RoyalRoad extends Crawler with CleanHtml, ParseNovel {
     lang: "en",
     version: SemanticVersion(0, 2, 2),
     baseUrls: ["https://www.royalroad.com/"],
+    logo: Logo.github("com.royalroad.png", 0xfff4a814),
     features: {Feature.search, Feature.popular},
   );
 

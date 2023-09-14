@@ -12,6 +12,7 @@ class NovelFull extends NovelFullTemplate {
     lang: "en",
     version: SemanticVersion(0, 1, 0),
     baseUrls: ["https://novelfull.com", "http://novelfull.com"],
+    logo: Logo.github("com.novelfull.png", 0xffcfd4d2),
     features: {Feature.search, Feature.popular},
   );
 

@@ -12,6 +12,7 @@ class AllNovel extends NovelFullTemplate {
     lang: "en",
     version: SemanticVersion(0, 1, 0),
     baseUrls: ["https://allnovel.org", "http://allnovel.org"],
+    logo: Logo.github("org.allnovel.png", 0xffa63077),
     features: {Feature.search, Feature.popular},
   );
 

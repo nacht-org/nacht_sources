@@ -20,6 +20,7 @@ class MTLReader extends Crawler with CleanHtml, ParseNovel {
       "https://mtlreader.com",
       "https://www.mtlreader.com",
     ],
+    logo: Logo.github("com.mtlreader.png", 0xfff4f4f4),
     features: {Feature.search, Feature.popular},
     attributes: [Attribute.fanfiction],
   );

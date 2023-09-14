@@ -24,6 +24,7 @@ class Foxaholic extends Crawler with CleanHtml, ParseNovel {
       "https://18.foxaholic.com/",
       "https://global.foxaholic.com/",
     ],
+    logo: Logo.github("com.foxaholic.png", 0xffe14d08),
     features: {Feature.search, Feature.popular},
   );
 
