@@ -1,6 +1,6 @@
 name: nacht_sources
 description: The collection of sources used in nacht app
-version: 0.2.10
+version: 0.2.11
 
 publish_to: none
 
